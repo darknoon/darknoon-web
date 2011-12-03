@@ -1,0 +1,434 @@
+--- !ruby/object:Comment 
+author_email: vade@vade.info
+author_name: vade
+author_url: http://abstrakt.vade.info
+content: Oops, I guess its not 100% correct, but it seems a touch closer. But importantly, thanks! :)
+created_at: 2008-08-08 11:27:56 -07:00
+post_url: http://darknoon.com/2007/12/28/dnyellowtail-source-code/
+
+--- !ruby/object:Comment 
+author_email: vade@vade.info
+author_name: vade
+author_url: http://abstrakt.vade.info
+content: |-
+  Hi.
+  
+  This is very nice, thanks for the port.
+  
+  I fixed the mouse coordinate issue by the way,
+  
+  	update(port, (self.inputX+1)*self.imageBounds.size.width*0.5, (self.inputY+1)*self.imageBounds.size.height*0.5, self.inputPressure);
+  
+  
+  on line 42 in DNYellowtailRender.m
+  
+  Ill see what can be done about antialiasing. Could always do supersampling perhaps? Anyway, its very nice!
+created_at: 2008-08-08 11:22:18 -07:00
+post_url: http://darknoon.com/2007/12/28/dnyellowtail-source-code/
+
+--- !ruby/object:Comment 
+author_email: jamison.hiner@gmail.com
+author_name: Jamison Hiner
+author_url: http://www.jamisonhiner.com
+content: |-
+  I am trying to get this to work and it seems that the test wont load up or anything I installed it in the plugins and even tried the patches folder.
+  
+  this is what I get when I run the test
+  -[QCCompositionRepository doesPatch:conformToProtocol:]: Argument "patch" cannot be null
+created_at: 2008-10-21 11:52:17 -07:00
+post_url: http://darknoon.com/2007/12/28/dnyellowtail-source-code/
+
+--- !ruby/object:Comment 
+author_email: andrew@darknoon.com
+author_name: andpoul
+author_url: http://darknoon.com/andrew
+content: |-
+  @JamisonHiner The install location should be "~/Library/Graphics/Quartz Composer Plug-Ins" instead of "~/Graphics/Quartz Composer Plug-Ins"
+  
+  Does that help?
+created_at: 2008-11-25 12:16:29 -08:00
+post_url: http://darknoon.com/2007/12/28/dnyellowtail-source-code/
+
+--- !ruby/object:Comment 
+author_email: jasonbelec@rogers.com
+author_name: Jason Belec
+author_url: ""
+content: Very cool and useful idea. Thanks for sharing.
+created_at: 2009-02-21 07:55:22 -08:00
+post_url: http://darknoon.com/2007/12/28/dnyellowtail-source-code/
+
+--- !ruby/object:Comment 
+author_email: cybero@cybero.co.uk
+author_name: cybero
+author_url: http://cybero.co.uk
+content: |-
+  Prompted by a post on Kineme site <a> I downloaded the source code and compiled the same for 10.6 active architecture only and found that the plugin is running beautifully.
+  
+  It had been a trifle problematic in between OS &amp; QC updates previously.
+  
+  Thanks for sharing.
+created_at: 2010-09-28 04:20:53 -07:00
+post_url: http://darknoon.com/2007/12/28/dnyellowtail-source-code/
+
+--- !ruby/object:Comment 
+author_email: sweet0608@ua.fm
+author_name: Indessencoro
+author_url: http://www.answerbag.com/profile/?id=444391
+content: Brilliant!
+created_at: 2008-08-02 19:05:45 -07:00
+post_url: http://darknoon.com/2007/12/10/yellowtail-in8230-quartz-composer/
+
+--- !ruby/object:Comment 
+author_email: sandrar@gmail.com
+author_name: sandrar
+author_url: http://google.com/uzkbs
+content: Hi! I was surfing and found your blog post... nice! I love your blog.  :) Cheers! Sandra. R.
+created_at: 2009-09-10 07:05:54 -07:00
+post_url: http://darknoon.com/2008/07/01/less-than-10-days/
+
+--- !ruby/object:Comment 
+author_email: tqvnsz@gmail.com
+author_name: angelina jolie
+author_url: http://angelinajoliefacts.blogspot.com
+content: "I love your site.  :) Love design!!! I just came across your blog and wanted to say that I\xC2\x92ve really enjoyed browsing your blog posts. Sign: ndsam"
+created_at: 2009-09-10 09:18:52 -07:00
+post_url: http://darknoon.com/2008/07/01/less-than-10-days/
+
+--- !ruby/object:Comment 
+author_email: andrew@darknoon.com
+author_name: Andrew
+author_url: http://darknoon.com
+content: |-
+  If you're looking for the app demoed at iPhoneDevCamp 2 (PDX), it's called Substrate and can be found over here:
+  
+  http://darknoon.com/blog/2008/08/03/iphone-dev-camp/
+created_at: 2008-08-08 16:33:35 -07:00
+post_url: http://darknoon.com/2008/08/02/propagate-at-iphonedevcamp-2-portland/
+
+--- !ruby/object:Comment 
+author_email: ""
+author_name: Darknoon Blog &raquo; Deconstructing Classics.app
+author_url: http://darknoon.com/blog/2008/12/08/deconstructing-classicsapp/
+content: "[...] week, in Peeking Into iPhone Apps, I talked about the process by which the contents of an App bundle can be read and deciphered. In [...] "
+created_at: 2008-12-08 02:20:40 -08:00
+post_url: http://darknoon.com/2008/11/26/peeking-into-iphone-apps/
+
+--- !ruby/object:Comment 
+author_email: reinaldo@ufscar.br
+author_name: Reinaldo
+author_url: ""
+content: |-
+  Great post!!! Helps me a lot.
+  
+  There is a way to see the code too? I'm a beginner iPhone dev and I'm stucked in find an example of how to do the flip effect in book readers like Stanza.
+created_at: 2009-04-28 07:26:21 -07:00
+post_url: http://darknoon.com/2008/11/26/peeking-into-iphone-apps/
+
+--- !ruby/object:Comment 
+author_email: andrew@darknoon.com
+author_name: Andrew Pouliot
+author_url: http://darknoon.com/andrew
+content: |-
+  @memedai Xcode's build scripts run them through pngcrush automatically, so all you need to get them back into the iPhone format is to add them to your project. If you want to do it manually, IIRC, the command is:
+  
+  /Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/pngcrush -iphone
+created_at: 2009-07-09 11:43:48 -07:00
+post_url: http://darknoon.com/2008/11/26/peeking-into-iphone-apps/
+
+--- !ruby/object:Comment 
+author_email: memedai@gmail.com
+author_name: memedai
+author_url: ""
+content: How to undo the normalize so I can change the PNG and put them back to iPhone again? Is there any Python solution?
+created_at: 2009-07-08 14:08:10 -07:00
+post_url: http://darknoon.com/2008/11/26/peeking-into-iphone-apps/
+
+--- !ruby/object:Comment 
+author_email: johnmabassa@yahoo.com
+author_name: johmabassa
+author_url: ""
+content: WoW!! great thanks for the info
+created_at: 2009-05-12 22:18:36 -07:00
+post_url: http://darknoon.com/2008/11/26/peeking-into-iphone-apps/
+
+--- !ruby/object:Comment 
+author_email: clee@mg8.org
+author_name: clee
+author_url: ""
+content: |-
+  So Classics would be even more fun for me if I could add my own books to it (since I have a jailbroken phone).
+  
+  Have you tried to do this?
+  
+  I did, but it ignored my additions - it seemed like the app had a hardcoded maximum number of books built in or something. I was able to replace all of the contents of one of the existing books - the cover image, the PDF files, the Info.plist - but I had to leave the name of the folder bundle unchanged or else the app wouldn't see it. 
+  
+  I tried adding my custom book's bundle name to the CSBookOrdering list in com.classicsapp.classics.plist, but it didn't work. Any ideas?
+created_at: 2009-01-28 23:48:42 -08:00
+post_url: http://darknoon.com/2008/12/08/deconstructing-classicsapp/
+
+--- !ruby/object:Comment 
+author_email: clee@mg8.org
+author_name: clee
+author_url: ""
+content: Hm, maybe I missed a step before. I seem to have it working now. Maybe they fixed a bug in one of their updates!
+created_at: 2009-01-28 23:58:29 -08:00
+post_url: http://darknoon.com/2008/12/08/deconstructing-classicsapp/
+
+--- !ruby/object:Comment 
+author_email: gsbninja@gmail.com
+author_name: GB
+author_url: ""
+content: Hmmm, how much do you think is the file size for each PDF page?
+created_at: 2009-02-09 08:59:25 -08:00
+post_url: http://darknoon.com/2008/12/08/deconstructing-classicsapp/
+
+--- !ruby/object:Comment 
+author_email: fidel.chavez@gmail.com
+author_name: coalla
+author_url: ""
+content: given your comment on html/webkit, is there no way to render a page into a texture with the available components on the iphone? thanks
+created_at: 2009-03-10 02:57:08 -07:00
+post_url: http://darknoon.com/2008/12/08/deconstructing-classicsapp/
+
+--- !ruby/object:Comment 
+author_email: daniel_salazar@hotmail.com
+author_name: Daniel
+author_url: http://www.gic.com.mx
+content: |-
+  Hi,
+  
+  I appreciate the pointers. I'll start from there. Thank you very much.
+  
+  Daniel
+created_at: 2010-03-08 11:08:32 -08:00
+post_url: http://darknoon.com/2008/12/08/deconstructing-classicsapp/
+
+--- !ruby/object:Comment 
+author_email: andrew@darknoon.com
+author_name: Andrew Pouliot
+author_url: http://darknoon.com/andrew
+content: "@Daniel I haven't done too much with PDF, but I presume you can create your CGPDFDocumentRef with CGPDFDocumentCreateWithURL, then use CGPDFDocumentGetPage to get a CGPDFPageRef and then pass that to  CGContextDrawPDFPage."
+created_at: 2010-03-06 11:18:28 -08:00
+post_url: http://darknoon.com/2008/12/08/deconstructing-classicsapp/
+
+--- !ruby/object:Comment 
+author_email: tsunami89869@gmail.com
+author_name: Gord
+author_url: ""
+content: |-
+  Could you show me or tell me how exactly you put your own books in Classics app?
+  I have a jailbroken Ipod touch and would love to do this.
+  Thanks.
+created_at: 2009-05-12 18:58:57 -07:00
+post_url: http://darknoon.com/2008/12/08/deconstructing-classicsapp/
+
+--- !ruby/object:Comment 
+author_email: andrew@darknoon.com
+author_name: Andrew Pouliot
+author_url: http://darknoon.com/andrew
+content: "Yeah, you can grab the content within a certain visible frame, but there are a couple gotchas:\r\n\
+  \r\n\
+  1. If you resize the webview to grab more content, it doesn't draw instantly an there is no callback to tell you when it's done drawing\r\n\
+  \r\n\
+  2. Web content in general doesn't play very well with fitting on a page or finding the proper size of a webpage so you can grab all of it.\r\n\
+  \r\n\
+  All of this will be pretty pass\xC3\xA9 once CoreText and NSAttributedString come to iPhone though. They're available on iPad, so I imagine it's only a matter of time. (OS 4.0?)"
+created_at: 2010-03-20 23:51:40 -07:00
+post_url: http://darknoon.com/2008/12/08/deconstructing-classicsapp/
+
+--- !ruby/object:Comment 
+author_email: breeno@gmail.com
+author_name: Steve Breen
+author_url: http://breeno.org/rand
+content: |-
+  Useful deconstruction, thanks for putting this out there.
+  
+  If I understand what you are looking to do with rendering an arbitrary view hierarchy (webview, whatever) there's a pretty simple method I've been using for sometime...
+  
+  Here's a sample app the renders a UIWebView and slaps the result into a a UIImageView.
+  
+  http://github.com/breeno/iPhoneOS-quick-hits
+created_at: 2010-03-12 06:22:53 -08:00
+post_url: http://darknoon.com/2008/12/08/deconstructing-classicsapp/
+
+--- !ruby/object:Comment 
+author_email: lindse4@uwindsor.ca
+author_name: John
+author_url: http://N/A
+content: Just wondering if you could email a zip of all the images. Thanks.....great post!!
+created_at: 2010-02-10 08:29:14 -08:00
+post_url: http://darknoon.com/2008/12/08/deconstructing-classicsapp/
+
+--- !ruby/object:Comment 
+author_email: daniel_salazar@hotmail.com
+author_name: Daniel
+author_url: http://www.gic.com.mx
+content: |-
+  Hi,
+  
+  When you say:
+  
+  "Unlike the HTML/WebKit rendering on the iPhone, there does exist a simple way to get an image from a PDF page."
+  
+  I wonder. How do you do that? I have some experience programming the iphone and I don't know how to do this. Would you mind giving me some pointers?
+  
+  Thanks,
+  Daniel
+created_at: 2010-03-06 00:08:26 -08:00
+post_url: http://darknoon.com/2008/12/08/deconstructing-classicsapp/
+
+--- !ruby/object:Comment 
+author_email: ltgbau@yahoo.com
+author_name: ltgbau
+author_url: http://www.skypaw.com
+content: Thanks for the great work! &gt;:D&lt;
+created_at: 2010-05-29 20:18:15 -07:00
+post_url: http://darknoon.com/2008/12/08/deconstructing-classicsapp/
+
+--- !ruby/object:Comment 
+author_email: longlh@vpoint.com.vn
+author_name: longlh
+author_url: ""
+content: Sr. My mail is longlh@vpoint.com.vn. Thank again !
+created_at: 2010-05-31 20:20:42 -07:00
+post_url: http://darknoon.com/2008/12/08/deconstructing-classicsapp/
+
+--- !ruby/object:Comment 
+author_email: longlh@vpoint.com.vn
+author_name: longlh
+author_url: ""
+content: |-
+  Hi everybody !
+  can you post yr source code? or please send it to my mail. Thanks. I'm newbie. :-)
+created_at: 2010-05-31 20:15:56 -07:00
+post_url: http://darknoon.com/2008/12/08/deconstructing-classicsapp/
+
+--- !ruby/object:Comment 
+author_email: student_renxiaoxu@163.com
+author_name: hello sir
+author_url: ""
+content: |-
+  I want to implements this effect. please help me! 
+  thank you very much!
+created_at: 2010-11-17 00:51:40 -08:00
+post_url: http://darknoon.com/2008/12/08/deconstructing-classicsapp/
+
+--- !ruby/object:Comment 
+author_email: Tng2222@gmail.com
+author_name: Thomas Griffith
+author_url: ""
+content: I have sucessfully added 4 of my own eBooks to Classics.  It's easy.  All you have to do is set the page size in Word to that of the PDFs, and set about half inch margins at the top and bottom so text won't get cut off. Paste in each chapter and export each as the numbered PDFs (Word 2007 has PDF export).  Be sure to make the title pages too!  Finally, since I don't mind playing with vector art, you can easily make a book spine and back shadow in Inkscape, then paste on the book's actual cover.  And for the best part, copy onto you're jailbroke iDevice into the Classics' app sandbox.
+created_at: 2010-05-22 02:29:29 -07:00
+post_url: http://darknoon.com/2008/12/08/deconstructing-classicsapp/
+
+--- !ruby/object:Comment 
+author_email: megaman0001@charter.net
+author_name: iisword
+author_url: ""
+content: anyone know where I can get these images
+created_at: 2010-06-07 19:22:01 -07:00
+post_url: http://darknoon.com/2008/12/08/deconstructing-classicsapp/
+
+--- !ruby/object:Comment 
+author_email: ""
+author_name: pligg.com
+author_url: http://m00.com/story.php?id=198727
+content: "<strong>Darknoon Blog \xC2\xBB Deconstructing Classics.app...</strong>\n\n\
+  Darknoon Blog \xC2\xBB Deconstructing Classics.app..."
+created_at: 2011-03-26 01:59:52 -07:00
+post_url: http://darknoon.com/2008/12/08/deconstructing-classicsapp/
+
+--- !ruby/object:Comment 
+author_email: rahul.vyas@isol.co.in
+author_name: rahulvyas
+author_url: ""
+content: |-
+  @Eric Boehs---
+  can you tell me how do i set this environment variable? or if you can give me your app it will be helpful for me.
+created_at: 2009-10-31 02:51:50 -07:00
+post_url: http://darknoon.com/2009/06/29/core-animation-debug-mode/
+
+--- !ruby/object:Comment 
+author_email: withfoam@gmail.com
+author_name: Jake Behrens
+author_url: http://jakebehrens.com
+content: Killer trick! Thank you much for sharing. I'll definitely be using this over always having to tether a device.
+created_at: 2009-09-18 20:03:55 -07:00
+post_url: http://darknoon.com/2009/06/29/core-animation-debug-mode/
+
+--- !ruby/object:Comment 
+author_email: ericboehs@gmail.com
+author_name: Eric Boehs
+author_url: http://ericboehs.com
+content: |-
+  Yeah this is great.  Made an automator application to run this command and copied and pasted the icon from the iPhone simulator on it.  Now I have a iPhone Debug Mode Simulator application.
+  
+  Thanks man.
+created_at: 2009-09-18 20:35:10 -07:00
+post_url: http://darknoon.com/2009/06/29/core-animation-debug-mode/
+
+--- !ruby/object:Comment 
+author_email: robert.clark@niftybean.com
+author_name: Robert Clark
+author_url: http://www.niftybean.com
+content: |-
+  rahlvyas - you export an environment variable before launching it from the shell or a script.  E.g.:
+  &gt; export CA_COLOR_OPAQUE=1
+  &gt; /Path/To/Simulator &amp;
+  
+  I first heard of this technique Jake Behren's interview at <a href="http://www.mobileorchard.com/supersized-360idev-podcast-feat-chris-heintz-mike-clark-jessica-kahn-jake-behrens-peter-bakhirev/" rel="nofollow">MobileOrchard Episode 360iDev Episode 27</a>, it's great.  Some of the other debug options like "Flash updated regions" are useful when considering how drawrect: could be finetuned too.
+created_at: 2009-11-22 21:15:08 -08:00
+post_url: http://darknoon.com/2009/06/29/core-animation-debug-mode/
+
+--- !ruby/object:Comment 
+author_email: 1ghyjkjunn77@gmail.com
+author_name: prostonik_3
+author_url: http://www.mister-wong.de/user/rezeptkaufenviagra/
+content: Matt Damon on his Iraq war movie
+created_at: 2010-03-04 12:30:49 -08:00
+post_url: http://darknoon.com/2009/06/29/core-animation-debug-mode/
+
+--- !ruby/object:Comment 
+author_email: dzamirro@gmail.com
+author_name: Dzamir
+author_url: http://www.coders4fun.com
+content: |-
+  With this trick, i'm building a really fast table view with grouped style and custom background images.
+  Thanks :-)
+created_at: 2009-07-01 04:22:06 -07:00
+post_url: http://darknoon.com/2009/06/29/core-animation-debug-mode/
+
+--- !ruby/object:Comment 
+author_email: ""
+author_name: "iPhone Dev Tip: Core Animation debug mode &raquo; se\xC3\xB1or taco\xE2\x80\x99s travels"
+author_url: http://danimal.org/SenorTaco/2009/06/29/iphone-dev-tip-core-animation-debug-mode/
+content: "[...] Andrew Pouliot comes a great tip about using the Core Animation debug mode both on a touch device or in the simulator. This really [...] "
+created_at: 2009-06-29 13:32:24 -07:00
+post_url: http://darknoon.com/2009/06/29/core-animation-debug-mode/
+
+--- !ruby/object:Comment 
+author_email: Leffreedo@web.de
+author_name: Leffreedo
+author_url: http://guysblog.universalerotic.net/
+content: Awesome... very fantastic theme. I will blog about it as well!
+created_at: 2009-12-11 12:47:58 -08:00
+post_url: http://darknoon.com/2009/06/29/core-animation-debug-mode/
+
+--- !ruby/object:Comment 
+author_email: igeek1@gmail.com
+author_name: Zev Eisenberg
+author_url: http://www.ZevEisenberg.com
+content: |-
+  Looks like it's happening :)
+  https://twitter.com/#!/lorenb/status/78874781226778626
+created_at: 2011-06-09 10:34:55 -07:00
+post_url: http://darknoon.com/2011/02/07/mac-ui-in-the-age-of-ios/
+
+--- !ruby/object:Comment 
+author_email: blake1206@gmail.com
+author_name: Blake
+author_url: ""
+content: Can you do a tutorial on making the Twitter for Mac  sidebar? I like the black titlebar and the cool glow effect! It would be very appreciated!
+created_at: 2011-05-22 18:03:27 -07:00
+post_url: http://darknoon.com/2011/02/07/mac-ui-in-the-age-of-ios/
+

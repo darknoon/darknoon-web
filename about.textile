@@ -1,0 +1,14 @@
+---
+layout: post
+title: About
+---
+
+Darknoon is:
+
+Andrew Pouliot
+
+Programmer, designer, artist. Head honcho.
+
+Secret agents
+
+If we told you, they wouldn't be secret.
