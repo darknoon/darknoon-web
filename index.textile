@@ -1,0 +1,25 @@
+---
+layout: static
+title: Darknoon
+---
+
+{% for post in site.posts limit:3 %}
+
+h1. {{ post.title }}
+
+p(date). {{ post.date | date: "%B %d %Y"  }}
+
+<div>
+<notextile>
+{{ post.content }}
+</notextile>
+
+{% endfor %}
+
+h2. Older posts
+
+{% for post in site.posts %}
+{% if forloop.index > 3 %}
+* {{ post.title }} "{{ post.title }}"{{ post.url }}
+{% endif %}
+{% endfor %}

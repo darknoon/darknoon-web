@@ -1,14 +1,18 @@
 ---
-layout: post
+layout: static
 title: About
 ---
 
-Darknoon is:
+h1. Andrew Pouliot
 
-Andrew Pouliot
+Programmer, designer, artist.
 
-Programmer, designer, artist. Head honcho.
+I have been building apps for the iPhone since the release of the official SDK in 2008 and apps for iPad since its announcement. I work with filmmakers, tiny startups, airlines, internet companies, international retailers, and my friends to build apps for the iPhones, iPod touches, and iPads.
 
-Secret agents
+I specialize in making smooth, 60-fps, responsive UI.
 
-If we told you, they wouldn't be secret.
+Design isn't skin deep. I work throughout the apps' architectures to achieve responsiveness and timely, beautiful display of graphics and information. Often this requires asynchronous image processing, optimized animations, and performance-tuned c or c++ code. I have a particular interest and expertise in hardware accellerated 2D/3D graphics in OpenGL ES 2.0 and Core Animation. Other topics of interest include efficent networking, geolocation, and web services.
+
+h2. Hire
+
+I am sometimes available for contract development. If you are interested, email <code>andrew</code> at this domain and I'll get back to you.
