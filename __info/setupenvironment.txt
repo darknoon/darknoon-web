@@ -1,3 +1,5 @@
+This is roughly how I set up jekyll on my local system:
+
 sudo gem update --system
 sudo gem install jekyll
 sudo gem install RedCloth
