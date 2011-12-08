@@ -15,7 +15,7 @@ Never fear, grab UIView+ExplicitAnimation from <a href="https://github.com/darkn
 
 
 
-<a href="http://darknoon.com/blog/wp-content/uploads/2011/02/simulator.png"><img src="http://darknoon.com/blog/wp-content/uploads/2011/02/simulator-212x400.png" alt="" title="simulator" width="212" height="400" class="aligncenter size-medium wp-image-128" /></a>
+<a href="/images/old/2011/02/simulator.png"><img src="/images/old/2011/02/simulator-212x400.png" alt="" title="simulator" width="212" height="400" class="aligncenter size-medium wp-image-128" /></a>
 
 
 

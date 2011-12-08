@@ -11,7 +11,7 @@ The good news is that there is a tool for this! You can easily get a visual read
 
 
 
-<a href="http://darknoon.com/blog/wp-content/uploads/2009/06/debugmode-1.png"><img class="alignnone size-medium wp-image-65" title="debugmode-1" src="http://darknoon.com/blog/wp-content/uploads/2009/06/debugmode-1-266x400.png" alt="" width="266" height="400" /></a>
+<a href="/images/old/2009/06/debugmode-1.png"><img class="alignnone size-medium wp-image-65" title="debugmode-1" src="/images/old/2009/06/debugmode-1-266x400.png" alt="" width="266" height="400" /></a>
 
 
 
@@ -27,7 +27,7 @@ Open up the Instruments tool, and select an iPhone or iPod touch as the applicab
 
 
 
-<a href="http://darknoon.com/blog/wp-content/uploads/2009/06/system.png"><img class="alignnone size-medium wp-image-62" title="system" src="http://darknoon.com/blog/wp-content/uploads/2009/06/system.png" alt="" width="263" height="306" /></a>
+<a href="/images/old/2009/06/system.png"><img class="alignnone size-medium wp-image-62" title="system" src="/images/old/2009/06/system.png" alt="" width="263" height="306" /></a>
 
 
 
@@ -35,7 +35,7 @@ You'll then need to show Detail (View > Detail, or the button in the bottom bar)
 
 
 
-<a href="http://darknoon.com/blog/wp-content/uploads/2009/06/instruments-1.png"><img class="alignnone size-medium wp-image-63" title="Color Blended Layers checkbox" src="http://darknoon.com/blog/wp-content/uploads/2009/06/instruments-1.png" alt="" width="363" height="323" /></a>
+<a href="/images/old/2009/06/instruments-1.png"><img class="alignnone size-medium wp-image-63" title="Color Blended Layers checkbox" src="/images/old/2009/06/instruments-1.png" alt="" width="363" height="323" /></a>
 
 
 
@@ -60,7 +60,7 @@ _If you're running this version of Xcode, you can enable these options directly 
 
 
 
-<a href="http://darknoon.com/blog/wp-content/uploads/2009/06/iphone-simulator-1.png"><img class="alignnone size-medium wp-image-66" title="iphone-simulator-1" src="http://darknoon.com/blog/wp-content/uploads/2009/06/iphone-simulator-1-215x399.png" alt="" width="215" height="399" /></a>
+<a href="/images/old/2009/06/iphone-simulator-1.png"><img class="alignnone size-medium wp-image-66" title="iphone-simulator-1" src="/images/old/2009/06/iphone-simulator-1-215x399.png" alt="" width="215" height="399" /></a>
 
 
 

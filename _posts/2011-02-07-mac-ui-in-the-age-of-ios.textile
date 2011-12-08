@@ -3,7 +3,7 @@ layout: post
 title: Mac UI in the Age of iOS
 ---
 
-<img style="display: block; margin-left: auto; margin-right: auto;" title="Compare.png" src="http://darknoon.com/blog/wp-content/uploads/2011/02/Compare.png" border="0" alt="Compare.png" width="278" height="168" />
+<img style="display: block; margin-left: auto; margin-right: auto;" title="Compare.png" src="/images/old/2011/02/Compare.png" border="0" alt="Compare.png" width="278" height="168" />
 
 
 
@@ -25,7 +25,7 @@ Twitter for Mac (aka Tweetie 2) is in many respects, a bridge connecting the inc
 
 
 
-<img title="Twitter.png" src="http://darknoon.com/blog/wp-content/uploads/2011/02/Twitter.png" border="0" alt="Twitter for Mac" width="504" height="403" />
+<img title="Twitter.png" src="/images/old/2011/02/Twitter.png" border="0" alt="Twitter for Mac" width="504" height="403" />
 
 
 
