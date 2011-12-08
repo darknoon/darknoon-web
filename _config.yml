@@ -2,7 +2,7 @@ permalink: pretty
 
 navigation:
 - text: Blog
-  url: /index.html
+  url: /
   layout: post
 - text: About
   url: /about/

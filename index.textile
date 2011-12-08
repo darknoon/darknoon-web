@@ -1,6 +1,7 @@
 ---
 layout: static
 title: Blog
+permalink: /
 ---
 
 {% for post in site.posts limit:3 %}
