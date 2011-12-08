@@ -1,6 +1,8 @@
+permalink: pretty
+
 navigation:
 - text: Blog
   url: /index.html
   layout: post
 - text: About
-  url: /about.html
+  url: /about/
