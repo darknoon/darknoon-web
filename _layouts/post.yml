@@ -14,8 +14,6 @@
 
 <p class="date">{{ page.date | date: "%B %d %Y"  }}</p>
 
-<p>URL is {{ page.url }}</p>
-
 {{ content }}
 
 </div>
