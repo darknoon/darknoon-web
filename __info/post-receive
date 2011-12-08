@@ -5,5 +5,5 @@ GEM_HOME="/home/darknoon/.gems"
 GEM_PATH="/home/darknoon/.gems:/usr/lib/ruby/gems/1.8"
 GIT_WORK_TREE=$JEKTEMP git checkout -f
 pushd $JEKTEMP
-jekyll --pygments ~/staging.darknoon.com
+jekyll --pygments ~/darknoon.com
 popd
