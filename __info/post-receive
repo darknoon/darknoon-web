@@ -1,0 +1,9 @@
+#!/bin/sh
+JEKTEMP="/home/darknoon/jekyll_temp"
+PATH="$PATH:~/.gems/bin:/usr/lib/ruby/gems/1.8/bin/"
+GEM_HOME="/home/darknoon/.gems"
+GEM_PATH="/home/darknoon/.gems:/usr/lib/ruby/gems/1.8"
+GIT_WORK_TREE=$JEKTEMP git checkout -f
+pushd $JEKTEMP
+jekyll --pygments ~/staging.darknoon.com
+popd

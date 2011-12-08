@@ -1,0 +1,13 @@
+Links of note:
+
+http://railstips.org/blog/archives/2008/11/24/rubygems-yours-mine-and-ours/
+http://railstips.org/blog/archives/2008/11/23/gitn-your-shared-host-on/
+http://toroid.org/ams/git-website-howto
+
+gem install jekyll
+gem install RedCloth
+
+<Upload post-recieve and setupjekyll.sh to the webserver>
+run setupjekyll.sh
+
+git remote add webserver ssh://darknoon@darknoon.com/~/DarknoonJekyll.git
