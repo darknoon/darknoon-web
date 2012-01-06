@@ -4,6 +4,7 @@ title: Blog
 permalink: /
 ---
 
+<div>
 {% for post in site.posts limit:3 %}
 
 <div>
@@ -17,6 +18,7 @@ p(date). {{ post.date | date: "%B %d %Y"  }}
 
 </div>
 {% endfor %}
+</div>
 
 h2. Older posts
 
