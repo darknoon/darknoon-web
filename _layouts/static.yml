@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="alternate" type="application/atom+xml" href="/feeds/atom.xml" />
-<link rel="alternate" type="application/rss+xml" href="/feeds/rss.xml" />
+<link rel="alternate" type="application/atom+xml" href="{{ site.url }}/feeds/atom.xml" />
 
 {% include style.html %}
 <title>Darknoon: {{ page.title }}</title>
