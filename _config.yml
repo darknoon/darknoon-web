@@ -1,5 +1,11 @@
 permalink: pretty
 
+url: http://darknoon.com
+
+author: Andrew Pouliot
+
+title: Darknoon
+
 navigation:
 - text: Blog
   url: /
