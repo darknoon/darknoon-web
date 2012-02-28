@@ -1,0 +1,145 @@
+---
+layout: post
+title: Vector Math with C++ and GLKit
+---
+
+If you do a lot of graphics development, you're sure to use lots of vector math.
+
+Say you have a simple numerical solver that keeps track of the position of a ball over time written in C. You might have some code that looks like this:
+
+h3. Scalar math
+
+{% highlight cpp %}
+
+float ball_x, ball_y, ball_z;
+
+...
+
+ball_x = ball_x + change_x * dt;
+ball_y = ball_y + change_y * dt;
+ball_z = ball_z + change_z * dt;
+
+{% endhighlight %}
+
+
+h3. Structs
+
+That's a tad awkward, so defining a struct to contain x,y,z floats together makes a lot of sense:
+
+
+{% highlight cpp %}
+
+typedef struct {
+	float x,y,z;
+} vector3;
+
+vector3 ball;
+
+...
+
+ball.x = ball.x + change.x * dt;
+ball.y = ball.y + change.y * dt;
+ball.z = ball.z + change.z * dt;
+
+{% endhighlight %}
+
+h2. Functions operating on structs
+
+Well that's kind of better, but I want to do the same operation on every coordinate, and I don't want to keep peppering around these identical bits of code everywhere, so I'll define some convenience functions:
+
+{% highlight cpp %}
+
+typedef struct {
+	float x,y,z;
+} vector3;
+
+vector3 ball;
+
+vector3 mulVectorScalar(vector3 a, float k) {
+	vector3 r;
+	r.x = a.x * k;
+	r.y = a.y * k;
+	r.z = a.z * k;
+	return r;
+}
+
+vector3 addVector(vector3 a, vector3 b) {
+	vector3 r;
+	ball.x = ball.x + change.x * dt;
+	ball.y = ball.y + change.y * dt;
+	ball.z = ball.z + change.z * dt;
+	return r;
+}
+
+...
+
+ball = addVector(ball, mulVectorScalar(b, dt))
+
+{% endhighlight %}
+
+We can even do some optimizations for the processor architecture that we're running on. For instance, ARMv7 (available on recent iOS devices) has a set of extensions called "NEON" that allow operations on multiple data simultaniously at a hardware level.
+
+For iOS 5's new GLKit framework, Apple created a set of functions like our @addVector@ that use NEON vector instructions to accelerate operations on vectors and matrices without having to pepper your own code with ifdefs.
+
+From @<GLKit/GLKVector2.h>@:
+
+{% highlight cpp %}
+
+static __inline__ GLKVector2 GLKVector2Add(GLKVector2 vectorLeft, GLKVector2 vectorRight)
+{
+#if defined(__ARM_NEON__)
+    float32x2_t v = vadd_f32(*(float32x2_t *)&vectorLeft,
+                             *(float32x2_t *)&vectorRight);
+    return *(GLKVector2 *)&v;
+#else
+    GLKVector2 v = { vectorLeft.v[0] + vectorRight.v[0],
+                     vectorLeft.v[1] + vectorRight.v[1] };
+    return v;
+#endif
+}
+{% endhighlight %}
+
+
+The problem now is that these function names @addVector@ and @mulVectorScalar@ have taken the place of much more intuitive operators like @+@ and @*@. Also, if we decide that the ball only needs to be a 2-element vector instead of a 3-element vector, we would need to switch all of the places where we update its position to new functions and new structs.
+
+If we switch over to c++ land, we have a tool (operator overloading) that will let us have something both concise and efficient.
+
+{% highlight cpp %}
+
+const GLVector2 ball;
+
+...
+
+ball = ball + change * dt;
+
+{% endhighlight %}
+
+This is implemented in "GLKVector2_cpp.h":https://github.com/darknoon/GLKitMathCPP/blob/master/Source/GLKVector2_cpp.h as follows:
+
+
+{% highlight cpp %}
+
+#import <GLKit/GLKVector2.h>
+
+...
+
+__inline__ GLKVector2 operator + (const GLKVector2& left, const GLKVector2& right) {
+	return GLKVector2Add(left, right);
+}
+
+__inline__ GLKVector2 operator * (const float& left, const GLKVector2& right) {
+	return GLKVector2MultiplyScalar(right, left);
+}
+
+...
+
+{% endhighlight %}
+
+So, if you don't mind switching to c++, you can make your vector math a lot simpler to process. If you notice anything wrong with the file or anything you think should be added, please create an issue or send a pull request "on github":https://github.com/darknoon/GLKitMathCPP
+
+<a href="https://github.com/darknoon/GLKitMathCPP"
+   class="gitforked-button gitforked-forks gitforked-watchers">Fork</a>
+
+{% unless page.feed %}
+<script src="http://gitforked.com/api/1.1/button.js" type="text/javascript"></script>
+{% endunless %}
