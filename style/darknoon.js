@@ -1,5 +1,7 @@
 //darknoon.js
 
+//TODO: Support easy copying
+/*
 $(document).ready(function(){
 	
 	$(".highlight").each(function(){
@@ -13,3 +15,4 @@ $(document).ready(function(){
 		$(this).before(button);
 	});
 });
+*/
