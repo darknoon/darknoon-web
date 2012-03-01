@@ -3,9 +3,9 @@ layout: post
 title: Vector Math with C++ and GLKit
 ---
 
-If you do a lot of graphics development, you're sure to use lots of vector math.
+If you do a lot of graphics development, you're sure to use lots of vector math. A while ago I wrote some C++ extensions to Apple's "GLKit Math utilities":https://github.com/darknoon/GLKitMathCPP, but haven't had a chance to explain why they would be helpful, and how they can improve your graphics code.
 
-Say you have a simple numerical solver that keeps track of the position of a ball over time written in C. You might have some code that looks like this:
+So, say you have a simple numerical solver that keeps track of the position of a ball over time written in straight C or Objective-C. You might have some code that looks like this:
 
 h3. Scalar math
 
@@ -65,9 +65,9 @@ vector3 mulVectorScalar(vector3 a, float k) {
 
 vector3 addVector(vector3 a, vector3 b) {
 	vector3 r;
-	ball.x = ball.x + change.x * dt;
-	ball.y = ball.y + change.y * dt;
-	ball.z = ball.z + change.z * dt;
+	r.x = a.x + b.x;
+	r.y = a.y + b.y;
+	r.z = a.z + b.z;
 	return r;
 }
 
@@ -106,7 +106,9 @@ If we switch over to c++ land, we have a tool (operator overloading) that will l
 
 {% highlight cpp %}
 
-const GLVector2 ball;
+#import "GLKMath_cpp.h"
+
+GLKVector2 ball;
 
 ...
 
@@ -135,7 +137,7 @@ __inline__ GLKVector2 operator * (const float& left, const GLKVector2& right) {
 
 {% endhighlight %}
 
-So, if you don't mind switching to c++, you can make your vector math a lot simpler to process. If you notice anything wrong with the file or anything you think should be added, please create an issue or send a pull request "on github":https://github.com/darknoon/GLKitMathCPP
+So, if you don't mind switching to c++, you can make your vector math a lot clearer to read (and hopefully reduce typos). If you notice anything amiss in with these headers or anything you think should be added, please create an issue or send a pull request "on github":https://github.com/darknoon/GLKitMathCPP
 
 <a href="https://github.com/darknoon/GLKitMathCPP"
    class="gitforked-button gitforked-forks gitforked-watchers">Fork</a>
