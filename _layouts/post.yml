@@ -2,6 +2,7 @@
 <html>
 <head>
 {% include style.html %}
+{% if page.stylesheet != null %}<link rel="stylesheet" href="/style/posts/{{ page.stylesheet }}.css">{% endif %}
 <title>Darknoon: {{ page.title }}</title>
 </head>
 

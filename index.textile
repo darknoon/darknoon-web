@@ -1,8 +1,28 @@
 ---
-layout: static
+layout: bare
 title: Blog
 permalink: /
 ---
+
+<head>
+<link rel="alternate" type="application/atom+xml" href="{{ site.url }}/feeds/atom.xml" />
+
+<notextile>{% include style.html %}</notextile>
+{% comment %} Include all posts' specific stylesheets {% endcomment %}
+{% for post in site.posts limit:3 %}
+{% if post.stylesheet != null %}<link rel="stylesheet" href="/style/posts/{{ post.stylesheet }}.css">{% endif %}
+{% endfor %}
+
+<title>Darknoon: {{ page.title }}</title>
+</head>
+
+<body>
+
+<notextile>
+{% include navigation.textile %}
+</notextile>
+
+<div id="content">
 
 <div>
 {% for post in site.posts limit:3 %}
@@ -22,8 +42,12 @@ p(date). {{ post.date | date: "%B %d %Y"  }}
 
 h2. Older posts
 
-{% for post in site.posts %}
-{% if forloop.index > 3 %}
+{% for post in site.posts offset:3 %}
 * <a href="{{ post.url }}">{{ post.title }}</a>
-{% endif %}
 {% endfor %}
+
+</div>
+
+{% include analytics.html %}
+
+</body>
