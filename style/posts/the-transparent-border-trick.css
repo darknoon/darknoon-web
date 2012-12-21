@@ -24,10 +24,6 @@
 	background: url(/images/transparent-border-trick/3d-with-trick.png);
 }
 
-p.center {
-	text-align: center;	
-}
-
 .content .colorblob {
 	border: 1px solid rgba(0,0,0,0.5);
 	width: 1em;

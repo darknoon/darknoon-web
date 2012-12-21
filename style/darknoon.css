@@ -58,6 +58,10 @@ p code, li code {
 	margin-top: 5px;
 }
 
+p.center {
+	text-align: center;	
+}
+
 a:link {
 	color: #396bcd;
 }
@@ -76,6 +80,22 @@ a:link {
 	margin: auto;
 	height: 64px;
 	padding-left: 197px;
+}
+
+@media only screen and (min--moz-device-pixel-ratio: 2),
+only screen and (-o-min-device-pixel-ratio: 2/1),
+only screen and (-webkit-min-device-pixel-ratio: 2),
+only screen and (min-device-pixel-ratio: 2) {
+	#navigation ul {
+		background: url(logo@2x.png) top left no-repeat;
+		background-size: 200px 56px;
+	}
+
+	#navigation {
+		background: url(top-background@2x.png) no-repeat center top;
+		background-size: 1300px 100px;
+	}
+
 }
 
 #navigation li {
