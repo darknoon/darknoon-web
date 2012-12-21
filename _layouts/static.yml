@@ -2,7 +2,7 @@
 <html>
 <head>
 <link rel="alternate" type="application/atom+xml" href="{{ site.url }}/feeds/atom.xml" />
-
+{% if page.stylesheet != null %}<link rel="stylesheet" href="/style/posts/{{ page.stylesheet }}.css">{% endif %}
 {% include style.html %}
 <title>Darknoon: {{ page.title }}</title>
 </head>

@@ -121,3 +121,7 @@ only screen and (min-device-pixel-ratio: 2) {
 #navigation li a.current {
 	color: #000949;
 }
+
+p.hero img, img.hero {
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.55);
+}

@@ -1,0 +1,12 @@
+/* @override 
+	http://localhost:4000/style/posts/about.css */
+
+.leftside {
+	float: left;
+	padding-top: 10px;
+}
+
+.rightside {
+	margin-left: 340px;
+	padding-top: 1px;
+}
