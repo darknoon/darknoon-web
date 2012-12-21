@@ -7,7 +7,7 @@ I'm pleased to finally talk about my latest project: <a href="http://click.links
 
 So simple it just shoots video with the filter applied and saves it to your camera roll.
 
-p=. !/images/announcing-take/screenshot.png!
+p=(hero). !/images/announcing-take/screenshot.png!
 
 You can read more about it over on the "official site":http://takethevideo.com.
 
