@@ -26,8 +26,12 @@ Often this requires asynchronous image processing, bouncy animations, and perfor
 
 I'm of the opinion that dropping a frame (1/60th of a second of lag) is an inexcusable hiccup for an app.
 
-</div>
 
-h2. Contact
+h2. Social
+
+"(#twitter)twitter":http://twitter.com/andpoul "(#dribbble)dribbble":http://dribbble.com/andpoul "(#github)github":https://github.com/darknoon/
 
 Email <code>andrew</code> at this domain and I'll get back to you.
+
+
+</div>
