@@ -4,11 +4,11 @@ title: A Safer KVC macro
 ---
 
 
-If you're not familiar with the term, this just means instances where you're using strings and a certain convention to identify methods that can be called on a given object. A particularly common instance of this is key-value observing such as @-[NSObject addObserver:forKeyPath:options:context:]@, where you want to pass a keypath that you know is going to be valid and not return a runtime error.
+If you're not familiar with the term, this just means instances where you're using strings and a certain convention to identify methods that can be called on a given object. A particularly common instance of this is key-value observing such as @-[NSObject addObserver:forKeyPath:options:context:]@, where you want to pass a key that you know is going to be valid and not return a runtime error.
 
 "A post":http://orangejuiceliberationfront.com/safe-key-value-coding/ got some attention recently promoting a way to statically-check key-value-coding methods. I've been using something along those lines for a while, but it has some important differences.
 
-The disadvantage to the @NSStringFromSelector()@ approach is that it doesn't work in cases like @hidden@ where the getter is called @isHidden@, since there is no valid selector called @hidden@. It also does not specify on which object the selector must be defined, so you could mentioning a selector that is completely bogus for that object, just happens to be defined somewhere else.
+The disadvantage to the @NSStringFromSelector()@ approach is that it doesn't work in cases like @hidden@ where the getter is called @isHidden@, since there is no valid selector called @hidden@. It also does not specify on which object the selector must be defined, so you could get away with mentioning a selector that is bogus for that object, but happens to be defined somewhere else (triggering a runtime error at some unknown time in the future).
 
 My macro (which does support this usage) is as follows:
 
