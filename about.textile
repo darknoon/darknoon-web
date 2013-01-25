@@ -24,12 +24,9 @@ My work is design, from how the app looks and feels to how the internals are arc
 
 Often this requires asynchronous image processing, bouncy animations, and performance-tuned c or c++ code. I have a particular interest and expertise in hardware accelerated 2D/3D graphics in OpenGL ES 2.0 and Core Animation.
 
-I'm of the opinion that dropping a frame (1/60th of a second of lag) is an inexcusable hiccup for an app.
-
-
 h2. Contact
 
-"(#twitter)twitter":http://twitter.com/andpoul "(#dribbble)dribbble":http://dribbble.com/andpoul "(#github)github":https://github.com/darknoon/
+"(#dribbble)dribbble":http://dribbble.com/andpoul "(#twitter)twitter":http://twitter.com/andpoul "(#github)github":https://github.com/darknoon/ "(#stackoverflow)stack":http://stackoverflow.com/users/113455/andrew-pouliot
 
 Email <code>andrew</code> at this domain and I'll get back to you.
 
