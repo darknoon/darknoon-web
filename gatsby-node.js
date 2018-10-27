@@ -26,6 +26,11 @@ function processMarkdownPage({ node, getNode, actions }) {
   })
   createNodeField({
     node,
+    name: 'year',
+    value: year,
+  })
+  createNodeField({
+    node,
     name: 'date',
     value: date.toLocaleDateString('en-US', {
       year: 'numeric',

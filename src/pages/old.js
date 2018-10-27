@@ -11,6 +11,7 @@ export const query = graphql`
           fields {
             slug
             date
+            year
           }
           frontmatter {
             title
@@ -35,7 +36,9 @@ export default ({ data }) => {
       {data.allMarkdownRemark.edges.map(({ node }, idx) => (
         <div className="post" key={idx}>
           <Link to={node.fields.slug}>
-            <h3 className="post-title">{node.frontmatter.title}</h3>
+            <h3 className="post-title">
+              {node.frontmatter.title} ({node.fields.year})
+            </h3>
           </Link>
           <span className="post-date">{node.frontmatter.date}</span>
           <div dangerouslySetInnerHTML={{ __html: node.excerpt }} />
