@@ -39,7 +39,8 @@ const IndexPage = ({ data }) => (
       <Link to="/projects/">Recent projects</Link>
     </p>
     <p>
-      <Link to="/cv/">Previously, I made a lot of iOS and Mac apps</Link>
+      <Link to="/cv/">Previously, I made a lot of iOS and Mac apps</Link> and{' '}
+      <Link to="/old">blogged about it</Link>.
     </p>
   </Layout>
 )
