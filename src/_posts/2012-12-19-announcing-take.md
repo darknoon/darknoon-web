@@ -3,7 +3,9 @@ layout: post
 title: Announcing Take
 ---
 
-I'm pleased to finally talk about my latest project: <a href="http://click.linksynergy.com/fs-bin/stat?id=ykWMSpjPaaE&offerid=146261&type=3&subid=0&tmpid=1826&RD_PARM1=https%253A%252F%252Fitunes.apple.com%252Fus%252Fapp%252Ftake%252Fid550033730%253Fmt%253D8%2526uo%253D4%2526partnerId%253D30" target="itunes_store">Take</a> (App Store link). It's a video filter app that is really simple.
+_Update: Take is no longer available_
+
+I'm pleased to finally talk about my latest project: Take<. It's a video filter app that is really simple.
 
 So simple it just shoots video with the filter applied and saves it to your camera roll.
 

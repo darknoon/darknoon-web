@@ -143,4 +143,7 @@ This is really awesome, and a lot of thanks go to Loren for working with the twi
 
 Instead of poking around with <code>class-dump</code>, we can look at and use [the code](https://github.com/twitter/twui) directly.
 
+###Update 2018: Marzipan
+Apple ported [UIKit to macOS](https://www.imore.com/mac-app-evolution-bringing-uikit-macos) as "Marzipan" in 10.14 "Mojave", but it's pretty limited and not for truly native macOS apps (yet?).
+
 </div>
