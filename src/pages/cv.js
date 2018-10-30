@@ -1,20 +1,23 @@
 import React from 'react'
 import Layout from '../components/layout'
+import { Link } from 'gatsby'
 
 const CVPage = () => (
   <Layout>
     <h1>CV</h1>
-    <p>I'm currently interested in working on:</p>
+    <h3>Freelance 2018-</h3>
+    <p>I'm currently working on:</p>
     <ul>
       <li>Machine Learning (generative models, images)</li>
       <li>Creative Tools</li>
+      <li>Realtime Graphics (Metal / ARKit)</li>
       <li>Collaborations with Artists</li>
     </ul>
 
-    <h3>Freelance 2018-</h3>
     <p>
-      Recent projects involve the use of GANs for image generation and image
-      processing, with clients in Art and Video production.
+      <Link to="/projects">Recent projects</Link> involve the use of GANs for
+      image generation and image processing, with clients in Art and Video
+      production.
     </p>
 
     <h3>
@@ -39,9 +42,9 @@ const CVPage = () => (
       developer conference.
     </p>
     <p>
-      Control UI complexity, I ported the React-style UI framework powering
-      Newsfeed (<a href="https://componentkit.org">ComponentKit</a>) to Mac
-      &amp; contributed performance enhancements to the library.
+      I ported the React-style UI framework from the facebook iOS app (
+      <a href="https://componentkit.org">ComponentKit</a>) to Mac &amp;
+      contributed performance enhancements to the library.
     </p>
 
     <h3>
