@@ -11,9 +11,8 @@ const BlogPost = props => {
   return (
     <Layout>
       <h1>{title}</h1>
-      <p className="post-date">{date}</p>
-      <p>
-        <Link to={slug}>permalink: {slug}</Link>
+      <p className="post-date">
+        <Link to={slug}>{date}</Link>
       </p>
       <div dangerouslySetInnerHTML={{ __html: html }} />
       <p>
