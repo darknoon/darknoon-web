@@ -49,6 +49,7 @@ module.exports = {
         // icon: 'simages/gatsby-icon.png', // This path is relative to the root of the site.
       },
     },
-    'gatsby-plugin-offline',
+    // Disable this for now, since it was causing the page not to load on my phone
+    // 'gatsby-plugin-offline',
   ],
 }
