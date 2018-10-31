@@ -49,7 +49,7 @@ module.exports = {
         // icon: 'simages/gatsby-icon.png', // This path is relative to the root of the site.
       },
     },
-    // Disable this for now, since it was causing the page not to load on my phone
-    // 'gatsby-plugin-offline',
+    // This has caused issues in Safari, but removing it causes more issues. Filing a bug with gatsby.
+    'gatsby-plugin-offline',
   ],
 }
