@@ -16,4 +16,4 @@ COPY . .
 
 # build and export the app
 RUN yarn build
-#RUN yarn export -o /public
+COPY public /public
