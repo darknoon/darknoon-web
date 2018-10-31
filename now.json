@@ -1,0 +1,8 @@
+{
+  "name": "darknoon-gatsby",
+  "alias": ["darknoon.com"],
+  "static": {
+    "public": "public"
+  },
+  "type": "static"
+}
