@@ -54,8 +54,7 @@ let inProgress = [
 ]
 
 const Video = ({ src }) => {
-  let url = new URL(src)
-  if (url.host === 'www.youtube-nocookie.com') {
+  if (src.indexOf('www.youtube-nocookie.com') !== -1) {
     return (
       <EmbedYoutube
         width={videoSize.width}
@@ -63,7 +62,7 @@ const Video = ({ src }) => {
         src={src}
       />
     )
-  } else if (url.host === 'player.vimeo.com') {
+  } else if (src.indexOf('player.vimeo.com') !== -1) {
     return (
       <EmbedVimeo width={videoSize.width} height={videoSize.height} src={src} />
     )
