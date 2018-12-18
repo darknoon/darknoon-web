@@ -25,6 +25,7 @@
   "license": "MIT",
   "scripts": {
     "build": "gatsby build",
+    "now-build": "npm run build",
     "develop": "gatsby develop",
     "deploy": "gatsby build; cd public; now",
     "format": "prettier --write \"src/**/*.js\"",

@@ -4,6 +4,11 @@ import Img from 'gatsby-image'
 import { graphql } from 'gatsby'
 import { EmbedYoutube, EmbedVimeo } from '../components/responsiveIFrame'
 
+// This is needed until upgrade to node v10+ on AWS Lambda (limitation of Zeit Now platform V2)
+if (typeof URL === 'undefined') {
+  global.URL = require('url').URL
+}
+
 const pompAndClout = {
   name: 'Pomp & Clout',
   href: 'https://pompandclout.com',
