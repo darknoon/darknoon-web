@@ -1,6 +1,10 @@
 const { createFilePath } = require('gatsby-source-filesystem')
 const path = require('path')
 
+if (global.URL === undefined) {
+  global.URL = require('url').URL
+}
+
 function processMarkdownPage({ node, getNode, actions }) {
   const { createNodeField } = actions
   const slug = createFilePath({ node, getNode, basePath: 'posts' })

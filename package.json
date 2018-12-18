@@ -25,15 +25,14 @@
   "license": "MIT",
   "scripts": {
     "build": "gatsby build",
-    "now-build": "gatsby build",
+    "now-build": "npm run build",
     "develop": "gatsby develop",
     "deploy": "gatsby build; cd public; now",
     "format": "prettier --write \"src/**/*.js\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
-    "prettier": "^1.14.2",
-    "url-polyfill": "^1.1.3"
+    "prettier": "^1.14.2"
   },
   "repository": {
     "type": "git",
