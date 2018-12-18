@@ -4,6 +4,11 @@ import Img from 'gatsby-image'
 import { graphql } from 'gatsby'
 import { EmbedYoutube, EmbedVimeo } from '../components/responsiveIFrame'
 
+// This is needed until upgrade to node v10+ on AWS Lambda (limitation of Zeit Now platform V2)
+if (typeof URL === 'undefined') {
+  global.URL = require('url').URL
+}
+
 const pompAndClout = {
   name: 'Pomp & Clout',
   href: 'https://pompandclout.com',
@@ -54,7 +59,8 @@ let inProgress = [
 ]
 
 const Video = ({ src }) => {
-  if (src.indexOf('www.youtube-nocookie.com') !== -1) {
+  let url = new URL(src)
+  if (url.host === 'www.youtube-nocookie.com') {
     return (
       <EmbedYoutube
         width={videoSize.width}
@@ -62,7 +68,7 @@ const Video = ({ src }) => {
         src={src}
       />
     )
-  } else if (src.indexOf('player.vimeo.com') !== -1) {
+  } else if (url.host === 'player.vimeo.com') {
     return (
       <EmbedVimeo width={videoSize.width} height={videoSize.height} src={src} />
     )
