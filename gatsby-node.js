@@ -1,5 +1,6 @@
 const { createFilePath } = require('gatsby-source-filesystem')
 const path = require('path')
+const webpack = require('webpack')
 
 function processMarkdownPage({ node, getNode, actions }) {
   const { createNodeField } = actions
@@ -79,5 +80,21 @@ exports.createPages = async ({ graphql, actions }) => {
         slug: edge.node.fields.slug,
       },
     })
+  })
+}
+
+exports.onCreateWebpackConfig = ({
+  stage,
+  rules,
+  loaders,
+  plugins,
+  actions,
+}) => {
+  actions.setWebpackConfig({
+    plugins: [
+      new webpack.ProvidePlugin({
+        URL: ['url', 'URL'],
+      }),
+    ],
   })
 }
