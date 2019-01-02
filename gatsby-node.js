@@ -93,7 +93,7 @@ exports.onCreateWebpackConfig = ({
   actions.setWebpackConfig({
     plugins: [
       new webpack.ProvidePlugin({
-        URL: ['url', 'URL'],
+        URL: ['url', 'Url'],
       }),
     ],
   })
