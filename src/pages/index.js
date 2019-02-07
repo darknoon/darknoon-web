@@ -43,8 +43,12 @@ const IndexPage = ({ data }) => (
       <Link to="/old">blog</Link>.
     </p>
     <p>
-      <a href="http://twitter.com/andpoul">twitter</a>{' '}
-      <a href="https://github.com/darknoon/">github</a>
+      <a rel="me" href="http://twitter.com/andpoul">
+        twitter
+      </a>{' '}
+      <a rel="me" href="https://github.com/darknoon/">
+        github
+      </a>
     </p>
   </Layout>
 )
