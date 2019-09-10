@@ -27,12 +27,6 @@ export const query = graphql`
 export default ({ data }) => {
   return (
     <Layout>
-      <p>
-        Conversion of old posts based on{' '}
-        <a href="http://unlikenesses.com/2017-11-06-migrating-blog-to-gatsby/">
-          this tutorial
-        </a>
-      </p>
       {data.allMarkdownRemark.edges.map(({ node }, idx) => (
         <div className="post" key={idx}>
           <Link to={node.fields.slug}>
@@ -44,6 +38,12 @@ export default ({ data }) => {
           <div dangerouslySetInnerHTML={{ __html: node.excerpt }} />
         </div>
       ))}
+      <p>
+        Conversion of old Jekyll posts was based on{' '}
+        <a href="hhttp://web.archive.org/web/20171212143144/http://unlikenesses.com/2017-11-06-migrating-blog-to-gatsby/">
+          this tutorial
+        </a>
+      </p>
     </Layout>
   )
 }
