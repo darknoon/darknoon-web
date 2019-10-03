@@ -3,7 +3,7 @@ import Layout from '../components/layout'
 import { Link } from 'gatsby'
 
 const CVPage = () => (
-  <Layout>
+  <Layout title="CV">
     <h1>CV</h1>
     <h3>Freelance 2018-</h3>
     <p>I'm currently working on:</p>

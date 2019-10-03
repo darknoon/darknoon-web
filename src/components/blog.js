@@ -1,5 +1,4 @@
 import React from 'react'
-import Helmet from 'react-helmet'
 import { graphql, Link } from 'gatsby'
 import Layout from '../components/layout'
 
@@ -9,7 +8,7 @@ const BlogPost = props => {
   const { fields, html } = post
   const { title, date, slug } = fields
   return (
-    <Layout>
+    <Layout title={title}>
       <h1>{title}</h1>
       <p className="post-date">
         <Link to={slug}>{date}</Link>

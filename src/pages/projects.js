@@ -127,7 +127,7 @@ export const query = graphql`
 const Projects = ({ data }) => {
   const images = data.images.edges.map(edge => edge.node)
   return (
-    <Layout>
+    <Layout title="Projects">
       <h1>Recent projects</h1>
       {recent.map(p => (
         <Project images={images} project={p} key={p.key} />
