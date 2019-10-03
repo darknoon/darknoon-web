@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="583px" height="421px" viewBox="0 0 583 421" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 58 (84663) - https://sketch.com -->
+    <title>triple-buffered</title>
+    <desc>Created with Sketch.</desc>
+    <g id="triple-buffered" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <rect id="Rectangle" stroke="#979797" fill-rule="nonzero" x="53.5" y="66.5" width="131" height="213" rx="1"></rect>
+        <rect id="Rectangle-Copy" stroke="#979797" fill-rule="nonzero" x="221.5" y="66.5" width="131" height="213" rx="1"></rect>
+        <rect id="Rectangle-Copy-2" stroke="#979797" fill-rule="nonzero" x="389.5" y="66.5" width="131" height="213" rx="1"></rect>
+        <path id="Path" d="M164,255 L171,269 L165,269 L165,323 L89,323 L89,321 L163,321 L163,269 L157,269 L164,255 Z" fill="#24D1C2" fill-rule="nonzero"></path>
+        <path id="Path-Copy" d="M333,255 L340,269 L334,269 L334,323 L258,323 L258,321 L332,321 L332,269 L326,269 L333,255 Z" fill="#FF0BBC" fill-rule="nonzero"></path>
+        <path id="Path-Copy-2" d="M500,255 L507,269 L500.999,269 L501,323 L425,323 L425,321 L499,321 L498.999,269 L493,269 L500,255 Z" fill="#FF0BBC" fill-rule="nonzero"></path>
+        <text id="App-enqueues-GPU-wor" font-family="Monaco" font-size="14" font-weight="normal" letter-spacing="-0.0233333333" fill="#24D1C2">
+            <tspan x="63.4635938" y="348">App enqueues</tspan>
+            <tspan x="96.9757292" y="366">GPU work</tspan>
+        </text>
+        <text id="Render-Server-reads" font-family="Monaco" font-size="14" font-weight="normal" letter-spacing="-0.0233333333" fill="#FF0BBC">
+            <tspan x="224.08556" y="348">Render Server</tspan>
+            <tspan x="291.133164" y="366">reads </tspan>
+        </text>
+        <text id="GPU-writes" font-family="Monaco" font-size="14" font-weight="normal" letter-spacing="-0.0233333333" fill="#FF0BBC">
+            <tspan x="416.219661" y="348">GPU writes</tspan>
+        </text>
+    </g>
+</svg>

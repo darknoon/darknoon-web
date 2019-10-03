@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="686px" height="316px" viewBox="0 0 686 316" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 58 (84663) - https://sketch.com -->
+    <title>awkward-rotation</title>
+    <desc>Created with Sketch.</desc>
+    <g id="awkward-rotation" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group" transform="translate(24.000000, 53.000000)" fill-rule="nonzero">
+            <rect id="Rectangle" fill="#FFE5E5" x="0" y="0" width="132" height="214"></rect>
+            <rect id="Rectangle" fill="#DF9D2B" x="69" y="18" width="52" height="52" rx="1"></rect>
+            <rect id="Rectangle-Copy-3" fill="#24D1C2" x="69" y="76" width="52" height="52" rx="26"></rect>
+            <polygon id="Path-3" fill="#5F52D8" points="14 127.5 40 75.5 66 127.5"></polygon>
+        </g>
+        <g id="Group-2-Copy" transform="translate(446.000000, 94.000000)" fill-rule="nonzero">
+            <rect id="Rectangle" fill="#FFE5E5" x="0" y="0" width="214" height="132"></rect>
+            <g id="Group-3" transform="translate(67.000000, 11.000000)">
+                <rect id="Rectangle" fill="#DF9D2B" x="43" y="0" width="41" height="41" rx="1"></rect>
+                <circle id="Oval" fill="#24D1C2" cx="63.5" cy="65.5" r="20.5"></circle>
+                <polygon id="Path-3" fill="#5F52D8" points="0 86 20.5 45 41 86"></polygon>
+            </g>
+        </g>
+        <g id="Group-2-Copy-2" transform="translate(216.000000, 74.000000)" fill-rule="nonzero">
+            <rect id="Rectangle" fill="#FFE5E5" x="0" y="0" width="172" height="173"></rect>
+            <g id="Group-3" transform="translate(54.000000, 15.000000)">
+                <rect id="Rectangle" fill="#DF9D2B" x="34.8095238" y="0" width="33.1904762" height="53.3953488" rx="1"></rect>
+                <ellipse id="Oval" fill="#24D1C2" cx="51.4047619" cy="85.3023256" rx="16.5952381" ry="26.6976744"></ellipse>
+                <polygon id="Path-3" fill="#5F52D8" points="0 112 16.5952381 58.6046512 33.1904762 112"></polygon>
+            </g>
+        </g>
+        <rect id="Rectangle" stroke="#979797" fill-rule="nonzero" x="24.5" y="53.5" width="131" height="213" rx="1"></rect>
+        <rect id="Rectangle-Copy" stroke="#979797" fill-rule="nonzero" transform="translate(301.500000, 160.500000) rotate(-270.000000) translate(-301.500000, -160.500000) " x="215.5" y="74.5" width="172" height="172" rx="1"></rect>
+        <rect id="Rectangle-Copy-2" stroke="#979797" fill-rule="nonzero" transform="translate(553.000000, 160.000000) rotate(-270.000000) translate(-553.000000, -160.000000) " x="487.5" y="53.5" width="131" height="213" rx="1"></rect>
+        <rect id="Rectangle" fill="#000000" fill-rule="nonzero" x="36" y="253" width="107" height="2" rx="1"></rect>
+        <rect id="Rectangle-Copy-9" fill="#000000" fill-rule="nonzero" x="500" y="210" width="107" height="2" rx="1"></rect>
+        <rect id="Rectangle-Copy-10" fill="#000000" fill-rule="nonzero" x="248" y="231" width="107" height="2" rx="1"></rect>
+    </g>
+</svg>
