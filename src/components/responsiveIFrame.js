@@ -3,7 +3,7 @@ import React from 'react'
 
 const ResponsiveIFrame = ({ width, height, children, src, ...rest }) => (
   <div
-    class="gatsby-resp-iframe-wrapper"
+    className="gatsby-resp-iframe-wrapper"
     style={{
       paddingBottom: `${(height / width) * 100}%`,
       position: 'relative',

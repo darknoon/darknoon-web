@@ -26,7 +26,7 @@ export const query = graphql`
 
 export default ({ data }) => {
   return (
-    <Layout>
+    <Layout title="Blog">
       {data.allMarkdownRemark.edges.map(({ node }, idx) => (
         <div className="post" key={idx}>
           <Link to={node.fields.slug}>

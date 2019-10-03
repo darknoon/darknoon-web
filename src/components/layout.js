@@ -6,21 +6,30 @@ import { StaticQuery, graphql } from 'gatsby'
 import Header from './header'
 import './layout.css'
 
-const Layout = ({ children }) => (
-  <StaticQuery
-    query={graphql`
-      query SiteTitleQuery {
-        site {
-          siteMetadata {
-            title
-          }
-        }
+const query = graphql`
+  query SiteTitleQuery {
+    site {
+      siteMetadata {
+        defaultTitle
+        titleTemplate
       }
-    `}
-    render={data => (
+    }
+  }
+`
+
+const Layout = ({ title, children }) => (
+  <StaticQuery
+    query={query}
+    render={({
+      site: {
+        siteMetadata: { defaultTitle, titleTemplate },
+      },
+    }) => (
       <>
         <Helmet
-          title={data.site.siteMetadata.title}
+          defaultTitle={defaultTitle}
+          titleTemplate={titleTemplate}
+          title={title}
           meta={[
             {
               name: 'description',
@@ -31,7 +40,9 @@ const Layout = ({ children }) => (
               content: 'machine learning, AI, ML, React, node, iOS, UI',
             },
           ]}
-        />
+        >
+          <html lang="en" />
+        </Helmet>
         <div
           style={{
             margin: '0 auto',
@@ -39,7 +50,7 @@ const Layout = ({ children }) => (
             maxWidth: 960,
           }}
         >
-          <Header siteTitle={data.site.siteMetadata.title} />
+          <Header siteTitle={defaultTitle} />
           {children}
         </div>
       </>
@@ -48,6 +59,7 @@ const Layout = ({ children }) => (
 )
 
 Layout.propTypes = {
+  title: PropTypes.string,
   children: PropTypes.node.isRequired,
 }
 

@@ -1,6 +1,7 @@
 module.exports = {
   siteMetadata: {
-    title: 'Andrew Pouliot',
+    defaultTitle: 'Andrew Pouliot',
+    titleTemplate: '%s — Andrew Pouliot',
   },
   plugins: [
     'gatsby-plugin-react-helmet',
