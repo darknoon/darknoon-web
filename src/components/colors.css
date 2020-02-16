@@ -1,0 +1,22 @@
+:root {
+  /* https://drafts.csswg.org/css-color-adjust-1/#color-scheme-prop  */
+  color-scheme: light dark;
+  --headline: black;
+  --text: #666;
+  --background: #e2e9ff;
+  --highlight: #da19c6;
+  --main-text-color: hsla(60, 100%, 50%, 0.5);
+  --accent-1: #3300ff;
+  --accent-2: #cf16d2;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --headline: #9881f5;
+    --text: #715cc2;
+    --background: #090043;
+    --accent-1: #9881f5;
+    --accent-2: #8f3bfa;
+    --highlight: #b3f175;
+  }
+}

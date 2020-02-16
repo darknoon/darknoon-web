@@ -3,6 +3,7 @@ import Layout from '../components/layout'
 import Img from 'gatsby-image'
 import { graphql } from 'gatsby'
 import { EmbedYoutube, EmbedVimeo } from '../components/responsiveIFrame'
+import './projects.css'
 
 // This is needed until upgrade to node v10+ on AWS Lambda (limitation of Zeit Now platform V2)
 if (typeof URL === 'undefined') {
@@ -82,7 +83,7 @@ const videoSize = { width: 560, height: 315 }
 const ProjectImage = ({ images, mediaURL }) => {
   let im = findImage(images, mediaURL)
   if (im != null) {
-    return <Img fluid={im.childImageSharp.fluid} />
+    return <Img className="project-image" fluid={im.childImageSharp.fluid} />
   } else {
     return null
   }

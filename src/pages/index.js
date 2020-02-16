@@ -6,7 +6,7 @@ import Layout from '../components/layout'
 const imsz = 300
 const imrt = 0.6
 
-const highlight = '#fee'
+const highlight = 'var(--highlight)'
 
 const BoxOverImage = ({ image }) => (
   <div style={{ position: 'relative' }}>
