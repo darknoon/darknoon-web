@@ -5,6 +5,8 @@ title: GAN Hacking
 
 I started off in this direction because I was really interested in the abstract yet image-like output of BigGAN[^1]. You can see it in action over on [Artbreeder](https://artbreeder.com/), where it's called the "General" model.
 
+[^1]: 2018 A Brock, J Donahue, K Simonyan BigGAN [arXiv preprint](https://arxiv.org/abs/1809.11096) [Notebook](https://colab.research.google.com/github/tensorflow/hub/blob/master/)
+
 However the small output size prevented it from being that interesting, so I wanted to see what I could do to "hack" it to output larger images (perhaps explaining something about how GANs generators work along the way).
 
 In this post, I'll describe my process for generating weird images like this:
@@ -21,57 +23,96 @@ The first step towards creating a larger image is finding a place within the mod
 
 The general structure of BigGAN is as follows (assume 1 image is being generated):
 
-1. Inputs
+1. **Inputs**
 
 - **Class** [1, 1000][^2] one-hot vector indicating class,
   this vector is first embedded to a 128-dimensional space
 
-  For example, [0, 0, 1, 0, 0, 0, …] would correspond to class of _great white shark_
+For example, [0, 0, 1, 0, 0, 0, …] would correspond to class of _great white shark_
 
-  Nothing forces this vector to actually be one-hot (ie, have only one entry with a 1 and the rest 0), in fact most of the interesting images on Artbreeder are formed by a weird combination of partial classes.
+Nothing forces this vector to actually be one-hot (ie, have only one entry with a 1 and the rest 0), in fact most of the interesting images on Artbreeder are formed by a weird combination of partial classes.
 
-  For example, [this image](https://artbreeder.com/i?k=adf8ce01ceb55400ca688aa0) is 20% greenhouse, 18% web site, 15% band-aid, 11% nipple, 7% cell phone, etc.
-  ![abstract image](images/gan-hacking/adf8ce01ceb55400ca688aa0.jpeg)
+For example, [this image](https://artbreeder.com/i?k=adf8ce01ceb55400ca688aa0) is 20% greenhouse, 18% web site, 15% band-aid, 11% nipple, 7% cell phone, etc.
+![abstract image](images/gan-hacking/adf8ce01ceb55400ca688aa0.jpeg)
 
-  During training, this vector is always one class only, so in-between images can be very glitchy!
+During training, this vector is always one class only, so in-between images can be very glitchy!
+
+[^2]: Note: [a, b, c] denotes the shape of the multi-dimensional array aka "Tensor"
 
 - **Z** [1, 128] noise vector
 
   By varying this vector, you explore all of the different outputs associated with this class (or combination of classes)
 
-2. **Mapping** [1, 256] -> [1, 32768] -reshape-> [1, 4, 4, 128] <br />
-   Convert the condition vector into an image (it will also be fed into the residual blacks)
+2. **Mapping** [1, 256] -> [1, 32768] -reshape-> [1, 4, 4, 2048] <br />
+   Convert the condition vector into an image (it will also be fed into the residual blocks)
 
-   The mapping network takes the 256 vector and outputs a vector of 32768 numbers. Then this is interpreted as a 4x4 image with 128 channels.
+   The mapping network takes the 256 vector and outputs a vector of 32768 numbers. Then this is interpreted as a 4x4 image with 2048 channels.
 
 1. **Residual Blocks** This is where the bulk of the convolution goes in the network. Each block is applied in sequence and has its own learned parameters.
+   Through the course of these residual blocks, the activations gain spatial resolution, ie the size goes up from 4x4 to 8x8, etc all the way up to 512x512.
 
 1. **Non-Local Block** This is an "attention" mechanism to ensure that information propagates across the whole image
 
 1. **More Residual Blocks** Same as above
 
-Here is the PyTorch function for hacking, cribbed from the [`BigGAN.forward(…)`](https://github.com/huggingface/pytorch-pretrained-BigGAN/blob/1e18aed2dff75db51428f13b940c38b923eb4a3d/pytorch_pretrained_biggan/model.py#L289) and [`Generator.forward(...)`](https://github.com/huggingface/pytorch-pretrained-BigGAN/blob/1e18aed2dff75db51428f13b940c38b923eb4a3d/pytorch_pretrained_biggan/model.py#L228) ) where you can see everything at a high level.
+1. **Output** A final convolution and activation is applied, resulting in a 3-channel image (Red, Green, Blue)
 
-```py
+In code form (inside of blocks elided for clarity):
+
+```
+BigGAN(
+  (embeddings): Linear(in_features=1000, out_features=128, bias=False)
+  (generator): Generator(
+    (gen_z): Linear(in_features=256, out_features=32768, bias=True)
+    (layers): ModuleList(
+      (0): GenBlock(…)
+      (1): GenBlock(…)
+      (2): GenBlock(…)
+      (3): GenBlock(…)
+      (4): GenBlock(…)
+      (5): GenBlock(…)
+      (6): GenBlock(…)
+      (7): GenBlock(…)
+      (8): SelfAttn(…)
+      (9): GenBlock(…)
+      (10): GenBlock(…)
+      (11): GenBlock(…)
+      (12): GenBlock(…)
+      (13): GenBlock(…)
+      (14): GenBlock(…)
+    )
+    (bn): BigGANBatchNorm()
+    (relu): ReLU()
+    (conv_to_rgb): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (tanh): Tanh()
+  )
+)
+```
+
+Here a PyTorch function for generating an image, cribbed from the [`BigGAN.forward(…)`](https://github.com/huggingface/pytorch-pretrained-BigGAN/blob/1e18aed2dff75db51428f13b940c38b923eb4a3d/pytorch_pretrained_biggan/model.py#L289) and [`Generator.forward(...)`](https://github.com/huggingface/pytorch-pretrained-BigGAN/blob/1e18aed2dff75db51428f13b940c38b923eb4a3d/pytorch_pretrained_biggan/model.py#L228) ) where you can see everything at a high level.
+
+```python
 model = BigGAN.from_pretrained('biggan-deep-512')
+gen = model.generator
 
 def gen(noise_vector, class_vector, truncation):
   embed = model.embeddings(class_vector)
   cond_vector = torch.cat((noise_vector, embed), dim=1)
 
-  gen = model.generator
-
+  # Mapping
   z = gen.gen_z(cond_vector)
-
+  # Treat vector as an image
+  z = z.view(-1, 4, 4, 16 * gen.config.channel_width)
   # Not shown: conversion to account for using Tensorflow weights instead of PyTorch weights
 
+  # Iterate over the layers, assigning the output of the previous layer to "z"
   for i, layer in enumerate(gen.layers):
     if isinstance(layer, GenBlock):
       # Residual block
       z = layer(z, cond_vector, truncation)
     else:
-        # This is the self-attention layer
-        z = layer(z)
+      # This is the self-attention layer
+      z = layer(z)
 
   # Batch norm layer
   z = gen.bn(z, truncation)
@@ -86,10 +127,67 @@ def gen(noise_vector, class_vector, truncation):
   return z
 ```
 
-Instead of calling the normal forward
+We can now call this function to generate an image, though that's not interesting in itself.
 
-[^1]: 2018 A Brock, J Donahue, K Simonyan BigGAN [arXiv preprint](https://arxiv.org/abs/1809.11096) [Notebook](https://colab.research.google.com/github/tensorflow/hub/blob/master/
+![initial valley image](images/gan-hacking/valley-seed13-trunc0_5/start.png)
 
-examples/colab/biggan_generation_with_tf_hub.ipynb)
+What we really want to do is inject some code after one of the residual blocks, where we can apply our own up-scaling / manipulation / etc.
 
-[^2]: Note: [a, b, c] denotes the shape of the multi-dimensional array aka "Tensor"
+```python
+…
+  for i, layer in enumerate(gen.layers):
+    if isinstance(layer, GenBlock):
+      # Residual block
+      z = layer(z, cond_vector, truncation)
+      if i == layer_to_hack:
+        z = hack_layer(z)
+    else:
+      # This is the self-attention layer
+      z = layer(z)
+…
+
+def hack_layer(z):
+  return z.repeat(1, 1, 2, 2)
+
+```
+
+<section id="results-1">
+
+### Results
+
+
+<MultiImage>
+
+  before
+  ![](images/gan-hacking/valley-seed13-trunc0_5/before-2x2.png)
+ 
+  after layer 0
+  ![](images/gan-hacking/valley-seed13-trunc0_5/layer00-2x2.png)
+
+  after layer 1
+  ![](images/gan-hacking/valley-seed13-trunc0_5/layer01-2x2.png)
+
+  after layer 3
+  ![](images/gan-hacking/valley-seed13-trunc0_5/layer03-2x2.png)
+
+  after layer 4
+  ![](images/gan-hacking/valley-seed13-trunc0_5/layer04-2x2.png)
+
+  after layer 5
+  ![](images/gan-hacking/valley-seed13-trunc0_5/layer05-2x2.png)
+
+  after layer 9
+  ![](images/gan-hacking/valley-seed13-trunc0_5/layer09-2x2.png)
+
+  after layer 11
+  ![](images/gan-hacking/valley-seed13-trunc0_5/layer11-2x2.png)
+
+  after layer 12
+  ![](images/gan-hacking/valley-seed13-trunc0_5/layer12-2x2.png)
+
+
+
+</MultiImage>
+
+
+</section>

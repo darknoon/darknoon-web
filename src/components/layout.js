@@ -2,8 +2,12 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Helmet from 'react-helmet'
 import { StaticQuery, graphql } from 'gatsby'
+import { MDXProvider } from '@mdx-js/react'
 
 import Header from './header'
+import MultiImage from './multiImage'
+import Image from './image'
+
 import './colors.css'
 import './theme.css'
 import './layout.css'
@@ -53,7 +57,14 @@ const Layout = ({ title, children }) => (
           }}
         >
           <Header siteTitle={defaultTitle} />
-          {children}
+          <MDXProvider
+            components={{
+              MultiImage,
+              // Image,
+            }}
+          >
+            {children}
+          </MDXProvider>
         </div>
       </>
     )}

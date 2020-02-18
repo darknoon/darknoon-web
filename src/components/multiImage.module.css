@@ -1,0 +1,28 @@
+.multiImage {
+  position: relative;
+}
+
+a.hoverIndex {
+  min-width: 3rem;
+  display: inline-block;
+  color: var(--accent-1);
+  background-color: var(--background);
+}
+
+a.hoverIndex:hover {
+  color: var(--text);
+  background-color: var(--accent-1);
+}
+
+.multiImageChild {
+  top: 0;
+  left: 0;
+}
+
+.multiImageChild.hide {
+  display: none;
+}
+
+.multiImageChild.show {
+  display: block;
+}
