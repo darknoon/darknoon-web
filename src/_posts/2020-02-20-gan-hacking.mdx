@@ -197,6 +197,8 @@ def hack_layer(z):
 
 <section id="results-upscale">
 
+### Upscaling the image x2
+
 <MultiImage>
 
   Original output upscaled
@@ -235,7 +237,10 @@ def hack_layer(z):
 
 
 <section id="results-interp-reflect-mix">
-Now let's look at a mix of tiled and interpolation
+
+### Tile + upscale
+
+A mix of tiled and interpolation can help us fix the downsides of either
 
 ```python
 def mixed(z):
@@ -289,7 +294,10 @@ def mixed(z):
 
 
 <section id="results-interp-reflect-mix">
-How about adding noise?
+
+### Noise
+
+What happens if we add noise to one of the activation images?
 
 ```python
 def noise(z):
@@ -344,7 +352,7 @@ def noise(z):
 
 
 <section id="results-noise-hard">
-4x as much noise?
+what about 4x as much noise?
 
 ```python
 def noise(z):
