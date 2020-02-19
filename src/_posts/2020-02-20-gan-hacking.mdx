@@ -262,12 +262,12 @@ def mixed(z):
   ![](images/gan-hacking/valley-seed04-trunc0_5/layer05-interp-reflect-mix.png)
 
   after layer 7
-  ![](images/gan-hacking/valley-seed04-trunc0_5/layer05-interp-reflect-mix.png)
+  ![](images/gan-hacking/valley-seed04-trunc0_5/layer07-interp-reflect-mix.png)
 
   after layer 9
   ![](images/gan-hacking/valley-seed04-trunc0_5/layer09-interp-reflect-mix.png)
 
-  after layer 9
+  after layer 10
   ![](images/gan-hacking/valley-seed04-trunc0_5/layer10-interp-reflect-mix.png)
 
   after layer 11
@@ -293,6 +293,9 @@ def noise(z):
 
 <MultiImage>
 
+  original
+  ![](images/gan-hacking/valley-seed04-trunc0_5/start.png)
+
   before layer 0
   ![](images/gan-hacking/valley-seed04-trunc0_5/layer-1-noise.png)
 
@@ -312,12 +315,12 @@ def noise(z):
   ![](images/gan-hacking/valley-seed04-trunc0_5/layer05-noise.png)
 
   after layer 7
-  ![](images/gan-hacking/valley-seed04-trunc0_5/layer05-noise.png)
+  ![](images/gan-hacking/valley-seed04-trunc0_5/layer07-noise.png)
 
   after layer 9
   ![](images/gan-hacking/valley-seed04-trunc0_5/layer09-noise.png)
 
-  after layer 9
+  after layer 10
   ![](images/gan-hacking/valley-seed04-trunc0_5/layer10-noise.png)
 
   after layer 11
@@ -328,6 +331,61 @@ def noise(z):
 
   after layer 13
   ![](images/gan-hacking/valley-seed04-trunc0_5/layer13-noise.png)
+
+</MultiImage>
+
+</section>
+
+
+<section id="results-noise-hard">
+4x as much noise?
+
+```python
+def noise(z):
+  amplitudes = 2.0 * z.std(dim=1)
+  return z + amplitudes * torch.randn_like(z)
+```
+
+<MultiImage>
+
+  original
+  ![](images/gan-hacking/valley-seed04-trunc0_5/start.png)
+
+  before layer 0
+  ![](images/gan-hacking/valley-seed04-trunc0_5/layer-1-noise-hard.png)
+
+  after layer 0
+  ![](images/gan-hacking/valley-seed04-trunc0_5/layer00-noise-hard.png)
+
+  after layer 1
+  ![](images/gan-hacking/valley-seed04-trunc0_5/layer01-noise-hard.png)
+
+  after layer 3
+  ![](images/gan-hacking/valley-seed04-trunc0_5/layer03-noise-hard.png)
+
+  after layer 4
+  ![](images/gan-hacking/valley-seed04-trunc0_5/layer04-noise-hard.png)
+
+  after layer 5
+  ![](images/gan-hacking/valley-seed04-trunc0_5/layer05-noise-hard.png)
+
+  after layer 7
+  ![](images/gan-hacking/valley-seed04-trunc0_5/layer07-noise-hard.png)
+
+  after layer 9
+  ![](images/gan-hacking/valley-seed04-trunc0_5/layer09-noise-hard.png)
+
+  after layer 10
+  ![](images/gan-hacking/valley-seed04-trunc0_5/layer10-noise-hard.png)
+
+  after layer 11
+  ![](images/gan-hacking/valley-seed04-trunc0_5/layer11-noise-hard.png)
+
+  after layer 12
+  ![](images/gan-hacking/valley-seed04-trunc0_5/layer12-noise-hard.png)
+
+  after layer 13
+  ![](images/gan-hacking/valley-seed04-trunc0_5/layer13-noise-hard.png)
 
 </MultiImage>
 
