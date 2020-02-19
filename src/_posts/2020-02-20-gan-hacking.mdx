@@ -129,7 +129,7 @@ def gen(noise_vector, class_vector, truncation):
 
 We can now call this function to generate an image, though that's not interesting in itself.
 
-![initial valley image](images/gan-hacking/valley-seed13-trunc0_5/start.png)
+![initial valley image](images/gan-hacking/valley-seed04-trunc0_5/start.png)
 
 What we really want to do is inject some code after one of the residual blocks, where we can apply our own up-scaling / manipulation / etc.
 
@@ -159,31 +159,31 @@ def hack_layer(z):
 <MultiImage>
 
   before
-  ![](images/gan-hacking/valley-seed13-trunc0_5/before-2x2.png)
+  ![](images/gan-hacking/valley-seed04-trunc0_5/before-2x2.png)
  
   after layer 0
-  ![](images/gan-hacking/valley-seed13-trunc0_5/layer00-2x2.png)
+  ![](images/gan-hacking/valley-seed04-trunc0_5/layer00-2x2.png)
 
   after layer 1
-  ![](images/gan-hacking/valley-seed13-trunc0_5/layer01-2x2.png)
+  ![](images/gan-hacking/valley-seed04-trunc0_5/layer01-2x2.png)
 
   after layer 3
-  ![](images/gan-hacking/valley-seed13-trunc0_5/layer03-2x2.png)
+  ![](images/gan-hacking/valley-seed04-trunc0_5/layer03-2x2.png)
 
   after layer 4
-  ![](images/gan-hacking/valley-seed13-trunc0_5/layer04-2x2.png)
+  ![](images/gan-hacking/valley-seed04-trunc0_5/layer04-2x2.png)
 
   after layer 5
-  ![](images/gan-hacking/valley-seed13-trunc0_5/layer05-2x2.png)
+  ![](images/gan-hacking/valley-seed04-trunc0_5/layer05-2x2.png)
 
   after layer 9
-  ![](images/gan-hacking/valley-seed13-trunc0_5/layer09-2x2.png)
+  ![](images/gan-hacking/valley-seed04-trunc0_5/layer09-2x2.png)
 
   after layer 11
-  ![](images/gan-hacking/valley-seed13-trunc0_5/layer11-2x2.png)
+  ![](images/gan-hacking/valley-seed04-trunc0_5/layer11-2x2.png)
 
   after layer 12
-  ![](images/gan-hacking/valley-seed13-trunc0_5/layer12-2x2.png)
+  ![](images/gan-hacking/valley-seed04-trunc0_5/layer12-2x2.png)
 
 </MultiImage>
 
@@ -194,35 +194,141 @@ def hack_layer(z):
 <MultiImage>
 
   Original output upscaled
-  ![](images/gan-hacking/valley-seed13-trunc0_5/start-upx2.png)
+  ![](images/gan-hacking/valley-seed04-trunc0_5/start-upx2.png)
 
   before layer 0
-  ![](images/gan-hacking/valley-seed13-trunc0_5/layer-1-upx2.png)
+  ![](images/gan-hacking/valley-seed04-trunc0_5/layer-1-upx2.png)
 
   after layer 0
-  ![](images/gan-hacking/valley-seed13-trunc0_5/layer00-upx2.png)
+  ![](images/gan-hacking/valley-seed04-trunc0_5/layer00-upx2.png)
 
   after layer 1
-  ![](images/gan-hacking/valley-seed13-trunc0_5/layer01-upx2.png)
+  ![](images/gan-hacking/valley-seed04-trunc0_5/layer01-upx2.png)
 
   after layer 3
-  ![](images/gan-hacking/valley-seed13-trunc0_5/layer03-upx2.png)
+  ![](images/gan-hacking/valley-seed04-trunc0_5/layer03-upx2.png)
 
   after layer 4
-  ![](images/gan-hacking/valley-seed13-trunc0_5/layer04-upx2.png)
+  ![](images/gan-hacking/valley-seed04-trunc0_5/layer04-upx2.png)
 
   after layer 5
-  ![](images/gan-hacking/valley-seed13-trunc0_5/layer05-upx2.png)
+  ![](images/gan-hacking/valley-seed04-trunc0_5/layer05-upx2.png)
 
   after layer 9
-  ![](images/gan-hacking/valley-seed13-trunc0_5/layer09-upx2.png)
+  ![](images/gan-hacking/valley-seed04-trunc0_5/layer09-upx2.png)
 
   after layer 11
-  ![](images/gan-hacking/valley-seed13-trunc0_5/layer11-upx2.png)
+  ![](images/gan-hacking/valley-seed04-trunc0_5/layer11-upx2.png)
 
   after layer 12
-  ![](images/gan-hacking/valley-seed13-trunc0_5/layer12-upx2.png)
+  ![](images/gan-hacking/valley-seed04-trunc0_5/layer12-upx2.png)
 
 </MultiImage>
 
-  </section>
+</section>
+
+
+<section id="results-interp-reflect-mix">
+Now let's look at a mix of tiled and interpolation
+
+```python
+def mixed(z):
+  n, c, h, w = z.shape
+  w_multiple = 2
+  ww = w * w_multiple
+  a = z.repeat(1, 1, 1, w_multiple)
+  b = F.interpolate(z, size=(h, ww), mode='bilinear')
+  return torch.min(a, b)
+```
+
+<MultiImage>
+
+  before layer 0
+  ![](images/gan-hacking/valley-seed04-trunc0_5/layer-1-interp-reflect-mix.png)
+
+  after layer 0
+  ![](images/gan-hacking/valley-seed04-trunc0_5/layer00-interp-reflect-mix.png)
+
+  after layer 1
+  ![](images/gan-hacking/valley-seed04-trunc0_5/layer01-interp-reflect-mix.png)
+
+  after layer 3
+  ![](images/gan-hacking/valley-seed04-trunc0_5/layer03-interp-reflect-mix.png)
+
+  after layer 4
+  ![](images/gan-hacking/valley-seed04-trunc0_5/layer04-interp-reflect-mix.png)
+
+  after layer 5
+  ![](images/gan-hacking/valley-seed04-trunc0_5/layer05-interp-reflect-mix.png)
+
+  after layer 7
+  ![](images/gan-hacking/valley-seed04-trunc0_5/layer05-interp-reflect-mix.png)
+
+  after layer 9
+  ![](images/gan-hacking/valley-seed04-trunc0_5/layer09-interp-reflect-mix.png)
+
+  after layer 9
+  ![](images/gan-hacking/valley-seed04-trunc0_5/layer10-interp-reflect-mix.png)
+
+  after layer 11
+  ![](images/gan-hacking/valley-seed04-trunc0_5/layer11-interp-reflect-mix.png)
+
+  after layer 12
+  ![](images/gan-hacking/valley-seed04-trunc0_5/layer12-interp-reflect-mix.png)
+
+</MultiImage>
+
+</section>
+
+
+
+<section id="results-interp-reflect-mix">
+How about adding noise?
+
+```python
+def noise(z):
+  amplitudes = 0.25 * z.std(dim=1)
+  return z + amplitudes * torch.randn_like(z)
+```
+
+<MultiImage>
+
+  before layer 0
+  ![](images/gan-hacking/valley-seed04-trunc0_5/layer-1-noise.png)
+
+  after layer 0
+  ![](images/gan-hacking/valley-seed04-trunc0_5/layer00-noise.png)
+
+  after layer 1
+  ![](images/gan-hacking/valley-seed04-trunc0_5/layer01-noise.png)
+
+  after layer 3
+  ![](images/gan-hacking/valley-seed04-trunc0_5/layer03-noise.png)
+
+  after layer 4
+  ![](images/gan-hacking/valley-seed04-trunc0_5/layer04-noise.png)
+
+  after layer 5
+  ![](images/gan-hacking/valley-seed04-trunc0_5/layer05-noise.png)
+
+  after layer 7
+  ![](images/gan-hacking/valley-seed04-trunc0_5/layer05-noise.png)
+
+  after layer 9
+  ![](images/gan-hacking/valley-seed04-trunc0_5/layer09-noise.png)
+
+  after layer 9
+  ![](images/gan-hacking/valley-seed04-trunc0_5/layer10-noise.png)
+
+  after layer 11
+  ![](images/gan-hacking/valley-seed04-trunc0_5/layer11-noise.png)
+
+  after layer 12
+  ![](images/gan-hacking/valley-seed04-trunc0_5/layer12-noise.png)
+
+  after layer 13
+  ![](images/gan-hacking/valley-seed04-trunc0_5/layer13-noise.png)
+
+</MultiImage>
+
+</section>
