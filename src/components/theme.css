@@ -16,8 +16,7 @@ a:hover {
 
 body {
   color: var(--text);
-  font-family: 'Roboto Mono', 'Droid Sans Mono', 'Liberation Mono', Menlo,
-    Courier, monospace;
+  font-family: var(--text-font);
   font-weight: normal;
   word-wrap: break-word;
   font-kerning: normal;

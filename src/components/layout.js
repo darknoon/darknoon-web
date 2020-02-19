@@ -9,6 +9,7 @@ import MultiImage from './multiImage'
 import Image from './image'
 
 import './colors.css'
+import './fonts.css'
 import './theme.css'
 import './layout.css'
 

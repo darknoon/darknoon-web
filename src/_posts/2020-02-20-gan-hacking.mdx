@@ -7,7 +7,13 @@ I started off in this direction because I was really interested in the abstract 
 
 [^1]: 2018 A Brock, J Donahue, K Simonyan BigGAN [arXiv preprint](https://arxiv.org/abs/1809.11096) [Notebook](https://colab.research.google.com/github/tensorflow/hub/blob/master/)
 
-However the small output size prevented it from being that interesting, so I wanted to see what I could do to "hack" it to output larger images (perhaps explaining something about how GANs generators work along the way).
+The limited, square output resolution of 512x512 felt pretty limiting, so I tried collaging the images together:
+
+![a collage of gan images](images/gan-hacking/ganshups/ganshup2.jpg)
+
+This made some progress, but the individual tiles are very apparent and it's hard to make a nice larger composition.
+
+ wanted to see what I could do to "hack" BigGAN to output larger images directly. Perhaps this will explaini something about how GANs' generators work along the way.
 
 In this post, I'll describe my process for generating weird images like this:
 
@@ -139,11 +145,11 @@ What we really want to do is inject some code after one of the residual blocks, 
     if isinstance(layer, GenBlock):
       # Residual block
       z = layer(z, cond_vector, truncation)
-      if i == layer_to_hack:
-        z = hack_layer(z)
     else:
       # This is the self-attention layer
       z = layer(z)
+    if i == layer_to_hack:
+      z = hack_layer(z)
 …
 
 def hack_layer(z):
