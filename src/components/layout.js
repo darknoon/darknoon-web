@@ -60,7 +60,6 @@ const Layout = ({ title, children }) => (
           <MDXProvider
             components={{
               MultiImage,
-              // Image,
             }}
           >
             {children}
