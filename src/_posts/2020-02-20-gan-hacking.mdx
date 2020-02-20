@@ -3,7 +3,7 @@ layout: post
 title: GAN Bending
 ---
 
-I started off in this direction because I was really interested in the abstract yet image-like output of BigGAN[^1]. You can see it in action over on [Artbreeder](https://artbreeder.com/), where it's called the "General" model.
+I started off in this direction because I was really interested in the abstract yet image-like output of BigGAN[^1]. You can see it in action over on [Artbreeder](https://artbreeder.com/), where it's called the "General" model. The model I'm going to use in this post is a closely-related variant called BigGAN-deep.
 
 [^1]: 2018 A Brock, J Donahue, K Simonyan BigGAN [arXiv preprint](https://arxiv.org/abs/1809.11096) [Notebook](https://colab.research.google.com/github/tensorflow/hub/blob/master/)
 
@@ -79,25 +79,25 @@ BigGAN(
   (generator): Generator(
     (gen_z): Linear(in_features=256, out_features=32768, bias=True)
     (layers): ModuleList(
-      (0): GenBlock(…)
-      (1): GenBlock(…)
-      (2): GenBlock(…)
-      (3): GenBlock(…)
-      (4): GenBlock(…)
-      (5): GenBlock(…)
-      (6): GenBlock(…)
-      (7): GenBlock(…)
-      (8): SelfAttn(…)
-      (9): GenBlock(…)
-      (10): GenBlock(…)
-      (11): GenBlock(…)
-      (12): GenBlock(…)
-      (13): GenBlock(…)
-      (14): GenBlock(…)
+      (0): GenBlock(…) -> [1, 2048, 4, 4]
+      (1): GenBlock(…) -> [1, 2048, 8, 8]
+      (2): GenBlock(…) -> [1, 2048, 8, 8]
+      (3): GenBlock(…) -> [1, 1024, 16, 16]
+      (4): GenBlock(…) -> [1, 1024, 16, 16]
+      (5): GenBlock(…) -> [1, 1024, 32, 32]
+      (6): GenBlock(…) -> [1, 1024, 32, 32]
+      (7): GenBlock(…) -> [1, 512, 64, 64]
+      (8): SelfAttn(…) -> [1, 512, 64, 64]
+      (9): GenBlock(…) -> [1, 512, 64, 64]
+      (10): GenBlock(…) -> [1, 256, 128, 128]
+      (11): GenBlock(…) -> [1, 256, 128, 128]
+      (12): GenBlock(…) -> [1, 128, 256, 256]
+      (13): GenBlock(…) -> [1, 128, 256, 256]
+      (14): GenBlock(…) -> [1, 128, 512, 512]
     )
     (bn): BigGANBatchNorm()
     (relu): ReLU()
-    (conv_to_rgb): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (conv_to_rgb): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1)) -> [1, 3, 512, 512]
     (tanh): Tanh()
   )
 )
@@ -117,7 +117,7 @@ def gen(noise_vector, class_vector, truncation):
   z = gen.gen_z(cond_vector)
   # Treat vector as an image
   z = z.view(-1, 4, 4, 16 * gen.config.channel_width)
-  # Not shown: conversion to account for using Tensorflow weights instead of PyTorch weights
+  # Not shown: conversion to account for using TensorFlow weights instead of PyTorch weights
 
   # Iterate over the layers, assigning the output of the previous layer to "z"
   for i, layer in enumerate(gen.layers):
@@ -490,7 +490,7 @@ We need to modify the gen function as follows to feed in the right conditional v
 | frog     | stone wall | cliff dwelling |
 |          |            |                |
 
-<MultiImage>
+<MultiImage select={3}>
 
   original
   ![](images/gan-hacking/vacation-grid/start.png)
@@ -544,7 +544,7 @@ Combining the images after layer 0 or 1 are really quite convincing!
 Keep in mind after the combination, the image is processed as if the whole thing is a seashore. If we switch the middle left label to valley, the whole image changes:
 
 
-<MultiImage>
+<MultiImage select={3}>
 
   original
   ![](images/gan-hacking/vacation-valley-grid/start.png)
@@ -595,3 +595,6 @@ Keep in mind after the combination, the image is processed as if the whole thing
 
 </section>
 
+# Colab Notebook
+
+If you'd like to create your own GAN collages, check out this [colab notebook](https://colab.research.google.com/drive/1C3OyNmkG76MagYt0N0KhR5VMi1xKyfre) with everything you need to get started!

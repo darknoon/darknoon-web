@@ -8,8 +8,8 @@ const Scrubber = ({ children }) => {
   return <p className="scrubber">{children}</p>
 }
 
-const MultiImage = ({ children, ...props }) => {
-  const [selectedIndex, selectIndex] = useState(0)
+const MultiImage = ({ children, select = 0, ...props }) => {
+  const [selectedIndex, selectIndex] = useState(select)
   const [hoveredIndex, setHoveredIndex] = useState(undefined)
 
   const index = hoveredIndex !== undefined ? hoveredIndex : selectedIndex
