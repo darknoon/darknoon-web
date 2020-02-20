@@ -1,11 +1,13 @@
 ---
 layout: post
-title: GAN Hacking
+title: GAN Bending
 ---
 
 I started off in this direction because I was really interested in the abstract yet image-like output of BigGAN[^1]. You can see it in action over on [Artbreeder](https://artbreeder.com/), where it's called the "General" model.
 
 [^1]: 2018 A Brock, J Donahue, K Simonyan BigGAN [arXiv preprint](https://arxiv.org/abs/1809.11096) [Notebook](https://colab.research.google.com/github/tensorflow/hub/blob/master/)
+
+![a simualated vacation image produced by a GAN](images/gan-hacking/ganbent/fake_vacation.png)
 
 The limited, square output resolution of 512x512 felt pretty limiting, so I tried collaging the images together:
 
@@ -43,9 +45,15 @@ For example, [this image](https://artbreeder.com/i?k=adf8ce01ceb55400ca688aa0) i
 
 During training, this vector is always one class only, so in-between images can be very glitchy!
 
-[^2]: Note: [a, b, c] denotes the shape of the multi-dimensional array aka "Tensor"
+Shape: The notation [a, b, c] denotes the the sizes of each dimension in a multi-dimensional array / "Tensor"
+For example, images are typcally stored in [N,C, H, W] format in PyTorch:
 
-- **Z** [1, 128] noise vector
+- **N** number of images being fed in at once (Batch Size)
+- **C** number of channels in the current image (the final image is RGB = 3, but intermediary activation images have up to 2048)
+- **H** height of image, starts at 4 builds up to 512 as the image moves through the network
+- **W** width of image, ditto
+
+1. **Z** [1, 128] noise vector
 
   By varying this vector, you explore all of the different outputs associated with this class (or combination of classes)
 
@@ -404,3 +412,186 @@ def noise(z):
 </MultiImage>
 
 </section>
+
+
+<section id="results-image-of-images">
+
+## Image-of-Images
+
+Ok, so we can eek out a little more interesting results from our original images, but we're still compositionally limited by the fact that most images can't be repeated and still make sense! The mountains are quite mononous unless we introduce our hacking and then it tens do decohere
+
+How do we fix this?
+
+Instead of repeating the same intermediary image 4x, let's stick four **different** images together:
+
+- Start with 4 noise vectors instead of one
+- Run them through the network until we hit our layer
+- Combine the images
+- For any subsequent GenBlock, feed just one of the `cond_vector`s instead of all of them [^3]
+
+[^3] since we now only have batch size = 1. I picked the 1st one to start with though it's actually pretty important to have control over which one you use.
+
+
+
+This time we need to generate a batch of chop * chop images
+
+```python
+
+seed =  12
+labels = "balloon,balloon,balloon,seashore,seashore,valley,frog,stone wall,cliff dwelling"
+labels = labels.split(',')
+
+class_vector = one_hot_from_names(labels, batch_size=chop * chop)
+noise_vector = truncated_noise_sample(truncation=truncation, batch_size=chop * chop)
+func = lambda z: pack_image_grid_mixed(z, chop, seed=15)
+
+def pack_image_grid_mixed(z, chop=2, seed=25):
+  n, c, h, w = z.shape
+  # Take the first image in the second row, scale it up
+  # use that as the main basis for our image
+  big_idx = chop
+  big_im = F.interpolate(z[big_idx:big_idx+1], size=(h * chop, w * chop), mode='bilinear')
+  grid = pack_image_grid(z, chop)
+  # Mix the big image randomly with the small images
+  torch.random.manual_seed(seed)
+  k = torch.rand_like(grid)
+  return k * grid + (1-k) * big_im
+
+```
+
+We need to modify the gen function as follows to feed in the right conditional vector  (a future direction would be to make this input independent of the "image" vectors Z):
+
+```python
+…
+    for i, layer in enumerate(gen.layers):
+      if isinstance(layer, GenBlock):
+        # Some of our hacks reduce the batch size, combining images
+        n = z.shape[0]
+        excess_cond = cond_vector.shape[0] // n
+        if excess_cond > 1:
+          # use the index 3 because it's in a good position around the middle left the image
+          use_index = 3
+          cond_input = cond_vector[use_index:use_index+1]
+        else:
+          cond_input = cond_vector
+        z = layer(z, cond_input, truncation)
+      else:
+          # This is the self-attention layer
+          z = layer(z)
+      if i == layer_to_hack:
+        z = hack_layer(z)
+```
+
+
+| left     | middle     | right          |
+|----------|------------|----------------|
+| balloon  | balloon    | balloon        |
+| seashore | seashore   | valley         |
+| frog     | stone wall | cliff dwelling |
+|          |            |                |
+
+<MultiImage>
+
+  original
+  ![](images/gan-hacking/vacation-grid/start.png)
+
+  before layer 0
+  ![](images/gan-hacking/vacation-grid/layer-1-pack-grid-mix.png)
+
+  after layer 0
+  ![](images/gan-hacking/vacation-grid/layer00-pack-grid-mix.png)
+
+  after layer 1
+  ![](images/gan-hacking/vacation-grid/layer01-pack-grid-mix.png)
+
+  after layer 2
+  ![](images/gan-hacking/vacation-grid/layer02-pack-grid-mix.png)
+
+  after layer 3
+  ![](images/gan-hacking/vacation-grid/layer03-pack-grid-mix.png)
+
+  after layer 4
+  ![](images/gan-hacking/vacation-grid/layer04-pack-grid-mix.png)
+
+  after layer 5
+  ![](images/gan-hacking/vacation-grid/layer05-pack-grid-mix.png)
+
+  after layer 7
+  ![](images/gan-hacking/vacation-grid/layer07-pack-grid-mix.png)
+
+  after layer 8
+  ![](images/gan-hacking/vacation-grid/layer08-pack-grid-mix.png)
+
+  after layer 9
+  ![](images/gan-hacking/vacation-grid/layer09-pack-grid-mix.png)
+
+  after layer 10
+  ![](images/gan-hacking/vacation-grid/layer10-pack-grid-mix.png)
+
+  after layer 11
+  ![](images/gan-hacking/vacation-grid/layer11-pack-grid-mix.png)
+
+  after layer 12
+  ![](images/gan-hacking/vacation-grid/layer12-pack-grid-mix.png)
+
+  after layer 13
+  ![](images/gan-hacking/vacation-grid/layer13-pack-grid-mix.png)
+
+</MultiImage>
+
+Combining the images after layer 0 or 1 are really quite convincing!
+
+Keep in mind after the combination, the image is processed as if the whole thing is a seashore. If we switch the middle left label to valley, the whole image changes:
+
+
+<MultiImage>
+
+  original
+  ![](images/gan-hacking/vacation-valley-grid/start.png)
+
+  before layer 0
+  ![](images/gan-hacking/vacation-valley-grid/layer-1-pack-grid-mix.png)
+
+  after layer 0
+  ![](images/gan-hacking/vacation-valley-grid/layer00-pack-grid-mix.png)
+
+  after layer 1
+  ![](images/gan-hacking/vacation-valley-grid/layer01-pack-grid-mix.png)
+
+  after layer 2
+  ![](images/gan-hacking/vacation-valley-grid/layer02-pack-grid-mix.png)
+
+  after layer 3
+  ![](images/gan-hacking/vacation-valley-grid/layer03-pack-grid-mix.png)
+
+  after layer 4
+  ![](images/gan-hacking/vacation-valley-grid/layer04-pack-grid-mix.png)
+
+  after layer 5
+  ![](images/gan-hacking/vacation-valley-grid/layer05-pack-grid-mix.png)
+
+  after layer 7
+  ![](images/gan-hacking/vacation-valley-grid/layer07-pack-grid-mix.png)
+
+  after layer 8
+  ![](images/gan-hacking/vacation-valley-grid/layer08-pack-grid-mix.png)
+
+  after layer 9
+  ![](images/gan-hacking/vacation-valley-grid/layer09-pack-grid-mix.png)
+
+  after layer 10
+  ![](images/gan-hacking/vacation-valley-grid/layer10-pack-grid-mix.png)
+
+  after layer 11
+  ![](images/gan-hacking/vacation-valley-grid/layer11-pack-grid-mix.png)
+
+  after layer 12
+  ![](images/gan-hacking/vacation-valley-grid/layer12-pack-grid-mix.png)
+
+  after layer 13
+  ![](images/gan-hacking/vacation-valley-grid/layer13-pack-grid-mix.png)
+
+</MultiImage>
+
+</section>
+
