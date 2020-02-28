@@ -12,6 +12,13 @@ const pompAndClout = {
 
 let recent = [
   {
+    key: 'gan-hacks',
+    link: '/2020/02/20/gan-hacking/',
+    title: 'Fake Vacation',
+    what: 'BigGAN Hacks',
+    mediaURL: 'projects/gan-hacking/fake_vacation_2.png',
+  },
+  {
     key: 'xcx-1999',
     title: 'Charli XCX & Troye Sivan - 1999',
     what: 'Face swap for post-production',
@@ -91,7 +98,9 @@ const findImage = (images, relativePath) => {
 
 const Project = ({ images, project: p }) => (
   <section key={p.key}>
-    <h3>{p.title}</h3>
+    <a href={p.link}>
+      <h3>{p.title}</h3>
+    </a>
     <p>{p.what}</p>
     {p.with ? (
       <p>
