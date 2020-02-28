@@ -17,7 +17,7 @@ The limited, square output resolution of 512x512 felt pretty limiting, so I trie
 
 This made some progress, but the individual tiles are very apparent and it's hard to make a nice larger composition.
 
- wanted to see what I could do to "hack" BigGAN to output larger images directly. Perhaps this will explaini something about how GANs' generators work along the way.
+I wanted to see what I could do to "hack" BigGAN to output larger images directly. Perhaps this will explain something about how GANs' generators work along the way.
 
 In this post, I'll describe my process for generating weird images like this:
 
@@ -413,7 +413,7 @@ def noise(z):
 
 ## Image-of-Images
 
-Ok, so we can eek out a little more interesting results from our original images, but we're still compositionally limited by the fact that most images can't be repeated and still make sense! The mountains are quite mononous unless we introduce our hacking and then it tens do decohere
+Ok, so we can eek out a little more interesting results from our original images, but we're still compositionally limited by the fact that most images can't be repeated and still make sense! The mountains are quite mononous unless we introduce our hacking and then it tends to decohere if it's combined in slightly the wrong way.
 
 How do we fix this?
 
