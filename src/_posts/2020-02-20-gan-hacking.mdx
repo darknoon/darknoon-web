@@ -11,7 +11,7 @@ I started off in this direction because I was really interested in the abstract 
 
 The limited, square output resolution of 512x512 felt pretty limiting, so I tried collaging the images together with some clone tool and editing in Photoshop[^2]:
 
-[^2] This image was made with the 256x256 model that was originally on Ganbreeder, which later became Artbreeder.
+[^2]: This image was made with the 256x256 model that was originally on Ganbreeder, which later became Artbreeder.
 
 ![a collage of gan images](images/gan-hacking/ganshups/ganshup2.jpg)
 
@@ -35,7 +35,7 @@ The general structure of BigGAN is as follows (assume 1 image is being generated
 
 1. **Inputs**
 
-- **Class** [1, 1000][^2] one-hot vector indicating class,
+- **Class** [1, 1000] one-hot vector indicating class,
   this vector is first embedded to a 128-dimensional space
 
 For example, [0, 0, 1, 0, 0, 0, …] would correspond to class of _great white shark_
@@ -424,7 +424,7 @@ Instead of repeating the same intermediary image 4x, let's stick four **differen
 - Combine the images
 - For any subsequent GenBlock, feed just one of the `cond_vector`s instead of all of them [^3]
 
-[^3] since we now only have batch size = 1. I picked the 1st one to start with though it's actually pretty important to have control over which one you use.
+[^3]: since we now only have batch size = 1. I picked the 1st one to start with though it's actually pretty important to have control over which one you use.
 
 
 
@@ -483,7 +483,6 @@ We need to modify the gen function as follows to feed in the right conditional v
 | balloon  | balloon    | balloon        |
 | seashore | seashore   | valley         |
 | frog     | stone wall | cliff dwelling |
-|          |            |                |
 
 <MultiImage select={3}>
 
@@ -608,7 +607,7 @@ During training, this vector is always one class only, so in-between images can 
 
 Let's explore importing images from Artbreeder so we can have more control over the output by picking exactly each image.
 
-We're going to use [Andy Brock's PyTorch port of BigGAN](https://github.com/ajbrock/BigGAN-PyTorch), which contains code to convert the original weights from TFHub (google's storage) into the right format for PyTorch.
+We're going to use [Andy Brock's PyTorch port of BigGAN](https://github.com/ajbrock/BigGAN-PyTorch), which contains code to convert the original weights from TFHub (google's storage) into the right format for PyTorch. (the Huggingface repo does not support original BigGAN-512). The downside of this repo is that it doesn't support the truncation trick properly (ie, truncation always = 1.0), so we need to make sure to "breed" our images with truncation = 1.0 (Chaos = 0.9999 on Artbreeder).
 
 I used a cell in a colab notebook to download the code, save the weights, and generate some test images:
 
@@ -748,13 +747,11 @@ def image_from_dat(d):
 image_from_dat(dat_from_url('https://artbreeder.com/i?k=83b5f5830c1ad242c50d'))
 ```
 
-Comparing [original](https://artbreeder.com/i?k=83b5f5830c1ad242c50d):
+Comparing [original](https://artbreeder.com/i?k=83b5f5830c1ad242c50d) to PyTorch version:
 
-![Original abstract artbreeder image](images/gan-hacking/artbreeder/83b5f5830c1ad242c50d.jpg)
-
-To PyTorch version:
-
-![Original abstract artbreeder image](images/gan-hacking/artbreeder/83b5f5830c1ad242c50d-pytorch.jpg)
+| original | pytorch |
+|----------|------------|
+| ![](images/gan-hacking/artbreeder/83b5f5830c1ad242c50d.jpg) | ![](images/gan-hacking/artbreeder/83b5f5830c1ad242c50d-pytorch.jpg) |
 
 Looks close enough!
 
@@ -826,11 +823,24 @@ image_from_dat_urls([
 ], layer_to_hack=0, hack_layer=lambda z: pack_image_grid_mixed(z, chop=(4,2), big_idx=0), use_index=0)
 ```
 
-![Image of images with artbreeder](images/gan-hacking/artbreeder/image-of-images-ce835203d6b54e8f2d82.jpg)
+![](images/gan-hacking/artbreeder/image-of-images-ce835203d6b54e8f2d82.jpg)
+
+```python
+image_from_dat_urls([
+  "https://artbreeder.com/i?k=0a986add86310f945820",
+  "https://artbreeder.com/i?k=50ecbd799a636f6b0bb49463",
+  "https://artbreeder.com/i?k=6d19a974e76636221a158d79",
+  "https://artbreeder.com/i?k=06ed330e235d28a2250d78d5",
+], layer_to_hack=0, hack_layer=lambda z: pack_image_grid_mixed(z * 2.0), use_index=0)
+```
+
+![](images/gan-hacking/artbreeder/embroidery.jpg)
+
 
 Throwing an upscale in there as well (different source image):
 
 ![](images/gan-hacking/artbreeder/smear.jpg)
+
 
 
 ## Conclusion
