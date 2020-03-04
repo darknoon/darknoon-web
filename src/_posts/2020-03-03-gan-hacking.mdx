@@ -9,6 +9,7 @@ I started off in this direction because I was really interested in the abstract 
 
 ![a simualated vacation image produced by a GAN](images/gan-hacking/ganbent/fake_vacation.png)
 
+
 The limited, square output resolution of 512x512 felt pretty limiting, so I tried collaging the images together with some clone tool and editing in Photoshop[^2]:
 
 [^2]: This image was made with the 256x256 model that was originally on Ganbreeder, which later became Artbreeder.
@@ -19,9 +20,29 @@ This made some progress, but the individual tiles are very apparent and it's har
 
 I wanted to see what I could do to "hack" BigGAN to output larger images directly. Perhaps this will explain something about how GANs' generators work along the way.
 
-In this post, I'll describe my process for generating weird images like this:
+In this post, I'll describe my process for generating weird images like this (these examples are all sequare, though it doesn't need to be):
 
-![a dreamy landscape produced by a gan](images/gan-hacking/image-of-images.png)
+<MultiImage>
+
+  ![a dreamy landscape produced by a gan](images/gan-hacking/image-of-images.png)
+
+  ![a weird creature looks out over the sea](images/gan-hacking/ganbent/what_creature.png)
+
+  ![](images/gan-hacking/ganbent/fake_snorkel.png)
+
+  ![](images/gan-hacking/ganbent/fake_snorkel_2.png)
+
+  ![](images/gan-hacking/ganbent/mosque.png)
+
+  ![](images/gan-hacking/ganbent/blurry_valley.png)
+
+  ![](images/gan-hacking/ganbent/tablet.png)
+
+  ![](images/gan-hacking/ganbent/dotcom.png)
+
+  ![](images/gan-hacking/ganbent/noise.png)
+
+</MultiImage>
 
 Since BigGAN already doesn't output realistic images, I was more concerned with making interesting images than improving image quality.
 
@@ -30,6 +51,15 @@ We're going to take the pretrained model (specifically the Generator, discarding
 To more easily facilitate modification of the model, we're going to use the [PyTorch version provided by Huggingface](https://github.com/huggingface/pytorch-pretrained-BigGAN).
 
 The first step towards creating a larger image is finding a place within the model where we can replace a lower-resolution feature map with a higher-res map (hopefully subsequent layers will perform roughly the same function as before).
+
+A quick note about "Shape": The notation [a, b, c] denotes the the sizes of each dimension in a multi-dimensional array / "Tensor"
+For example, images are typcally stored in [N,C, H, W] format in PyTorch:
+
+- **N** number of images being fed in at once (Batch Size)
+- **C** number of channels in the current image (the final image is RGB = 3, but intermediary activation images have up to 2048)
+- **H** height of image, starts at 4 builds up to 512 as the image moves through the network
+- **W** width of image, ditto
+
 
 The general structure of BigGAN is as follows (assume 1 image is being generated):
 
@@ -40,15 +70,7 @@ The general structure of BigGAN is as follows (assume 1 image is being generated
 
 For example, [0, 0, 1, 0, 0, 0, …] would correspond to class of _great white shark_
 
-Shape: The notation [a, b, c] denotes the the sizes of each dimension in a multi-dimensional array / "Tensor"
-For example, images are typcally stored in [N,C, H, W] format in PyTorch:
-
-- **N** number of images being fed in at once (Batch Size)
-- **C** number of channels in the current image (the final image is RGB = 3, but intermediary activation images have up to 2048)
-- **H** height of image, starts at 4 builds up to 512 as the image moves through the network
-- **W** width of image, ditto
-
-1. **Z** [1, 128] noise vector
+- **Z** [1, 128] noise vector
 
   By varying this vector, you explore all of the different outputs associated with this class (or combination of classes)
 
