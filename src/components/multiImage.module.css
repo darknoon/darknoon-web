@@ -2,16 +2,31 @@
   position: relative;
 }
 
-a.hoverIndex {
-  min-width: 3rem;
-  display: inline-block;
-  color: var(--accent-1);
-  background-color: var(--background);
+.scrubber {
+  display: flex;
+  flex-direction: row;
 }
 
-a.hoverIndex:hover {
-  color: var(--text);
-  background-color: var(--accent-1);
+a.preview {
+  display: inline-block;
+  padding: 1px;
+  margin: 0;
+}
+
+a.preview.selected {
+}
+
+a.preview > img {
+  margin: 0;
+}
+
+a.preview.selected > img {
+  margin: 0;
+  outline: 2px solid var(--headline);
+}
+
+a.preview:hover > img {
+  outline: 2px solid var(--headline);
 }
 
 .multiImageChild {

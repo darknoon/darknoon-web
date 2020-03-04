@@ -5,7 +5,26 @@ import styles from './multiImage.module.css'
 // import { Link } from 'gatsby'
 
 const Scrubber = ({ children }) => {
-  return <p className="scrubber">{children}</p>
+  return <div className={styles.scrubber}>{children}</div>
+}
+
+// Find the description and a srcSet we can use for the preview. Extreme hack, ew!
+const findSrcSet = elem => {
+  if (elem === undefined || elem === null || typeof elem === 'string') {
+    return undefined
+  }
+  const { props } = elem
+  const { srcSet, children = [] } = props
+  if (Array.isArray(srcSet)) {
+    return srcSet
+  }
+  for (let child of children) {
+    const found = findSrcSet(child)
+    if (found) {
+      return found
+    }
+  }
+  return undefined
 }
 
 const MultiImage = ({ children, select = 0, ...props }) => {
@@ -14,17 +33,20 @@ const MultiImage = ({ children, select = 0, ...props }) => {
 
   const index = hoveredIndex !== undefined ? hoveredIndex : selectedIndex
   return (
-    <div className={styles.multiImage}>
-      <p>Hover over the numbers to view each image:</p>
+    <figure className={styles.multiImage}>
+      <p>Click or hover to change the image</p>
       <Scrubber>
         {React.Children.map(children, (child, i) => (
           <a
-            className={styles.hoverIndex}
+            className={[
+              styles.preview,
+              selectedIndex == i ? styles.selected : '',
+            ].join(' ')}
             onClick={() => selectIndex(i)}
             onMouseOver={() => setHoveredIndex(i)}
             onMouseOut={() => setHoveredIndex(undefined)}
           >
-            {i}
+            {<img srcSet={findSrcSet(child)} />}
           </a>
         ))}
       </Scrubber>
@@ -38,7 +60,7 @@ const MultiImage = ({ children, select = 0, ...props }) => {
           {child}
         </div>
       ))}
-    </div>
+    </figure>
   )
 }
 

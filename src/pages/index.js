@@ -20,7 +20,6 @@ const BoxOverImage = ({ image }) => (
         width: imsz * imrt,
         height: imsz * imrt,
         border: `3px solid ${highlight}`,
-        backdropFilter: 'invert(100%)',
       }}
     >
       <span style={{ color: highlight }}>Face 95%</span>

@@ -13,7 +13,7 @@ const pompAndClout = {
 let recent = [
   {
     key: 'gan-hacks',
-    link: '/2020/02/20/gan-hacking/',
+    link: '/2020/03/03/gan-hacking/',
     title: 'Fake Vacation',
     what: 'BigGAN Hacks',
     mediaURL: 'projects/gan-hacking/fake_vacation_2.png',
