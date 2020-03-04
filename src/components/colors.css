@@ -2,7 +2,7 @@
   /* https://drafts.csswg.org/css-color-adjust-1/#color-scheme-prop  */
   color-scheme: light dark;
   --headline: black;
-  --text: #eee;
+  --text: #333;
   --background: #e5e5e5;
   --highlight: #da19c6;
   --accent-1: #3300ff;
