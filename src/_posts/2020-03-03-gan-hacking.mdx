@@ -114,7 +114,7 @@ BigGAN(
     )
     (bn): BigGANBatchNorm()
     (relu): ReLU()
-    (conv_to_rgb): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1)) -> [1, 3, 512, 512]
+    (conv_to_rgb): Conv2d(…) -> [1, 3, 512, 512]
     (tanh): Tanh()
   )
 )
@@ -871,7 +871,11 @@ Throwing an upscale in there as well (different source image):
 
 ## Future directions
 
-Currently, the size of the output is limited by the amount of RAM on the GPU that I'm using. On colab, you will be randomly assigned GPUs with 8 or 12 GB, which allow maybe ~12 images to be combined (though sometimes they )
+Currently, the size of the output is limited by the amount of RAM on the GPU that I'm using. On colab, you will be randomly assigned GPUs with 8 or 12 GB, which allow maybe ~12 images to be combined (though sometimes it will leak memory and you have to restart python).
+
+The best way to scale this up to much larger sizes would be to use a tiling scheme where one image provides the `cond_vector` and then the different areas of the image are built separately and combined. Care needs to be taken that you provide enough of the neighboring images to still be correct, so it was outside the scope of what I could accomplish while messing around.
+
+I think this scheme would also apply to GANs like StyleGAN / StyleGAN2—you could take a model trained on faces and make weird face-scapes. Ok, maybe [Mario Klingemann](http://quasimondo.com) has done that one enough, but you get the idea. 
 
 ## Conclusion
 
