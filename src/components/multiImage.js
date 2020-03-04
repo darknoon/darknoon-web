@@ -34,7 +34,9 @@ const MultiImage = ({ children, select = 0, ...props }) => {
   const index = hoveredIndex !== undefined ? hoveredIndex : selectedIndex
   return (
     <figure className={styles.multiImage}>
-      <p>Click or hover to change the image</p>
+      <p>
+        <em>Click or hover to change the image</em>
+      </p>
       <Scrubber>
         {React.Children.map(children, (child, i) => (
           <a

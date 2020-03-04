@@ -2,7 +2,7 @@
   /* https://drafts.csswg.org/css-color-adjust-1/#color-scheme-prop  */
   color-scheme: light dark;
   --headline: black;
-  --text: #666;
+  --text: #eee;
   --background: #e5e5e5;
   --highlight: #da19c6;
   --accent-1: #3300ff;
@@ -12,7 +12,7 @@
 @media (prefers-color-scheme: dark) {
   :root {
     --headline: #9881f5;
-    --text: #715cc2;
+    --text: #999;
     --background: #090043;
     --accent-1: #9881f5;
     --accent-2: #8f3bfa;
