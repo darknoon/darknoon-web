@@ -82,10 +82,13 @@ const Video = ({ src }) => {
 
 const videoSize = { width: 560, height: 315 }
 
-const ProjectImage = ({ images, mediaURL }) => {
+const ProjectImage = ({ images, mediaURL, link }) => {
   let im = findImage(images, mediaURL)
   if (im != null) {
-    return <Img className="project-image" fluid={im.childImageSharp.fluid} />
+    const elem = (
+      <Img className="project-image" fluid={im.childImageSharp.fluid} />
+    )
+    return typeof link === 'string' ? <a href={link}>{elem}</a> : elem
   } else {
     return null
   }
@@ -107,7 +110,7 @@ const Project = ({ images, project: p }) => (
         with <a href={p.with.href}>{p.with.name}</a>
       </p>
     ) : null}
-    {<ProjectImage images={images} mediaURL={p.mediaURL} />}
+    {<ProjectImage images={images} mediaURL={p.mediaURL} link={p.link} />}
     {p.videoURL ? <Video src={p.videoURL} /> : null}
   </section>
 )
