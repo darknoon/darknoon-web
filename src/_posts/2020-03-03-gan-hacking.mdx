@@ -53,12 +53,12 @@ To more easily facilitate modification of the model, we're going to use the [PyT
 The first step towards creating a larger image is finding a place within the model where we can replace a lower-resolution feature map with a higher-res map (hopefully subsequent layers will perform roughly the same function as before).
 
 A quick note about "Shape": The notation [a, b, c] denotes the the sizes of each dimension in a multi-dimensional array / "Tensor"
-For example, images are typcally stored in [N,C, H, W] format in PyTorch:
+For example, a images are typically stored in a four-dimensional array of shape [N, C, H, W] format in PyTorch:
 
 - **N** number of images being fed in at once (Batch Size)
 - **C** number of channels in the current image (the final image is RGB = 3, but intermediary activation images have up to 2048)
-- **H** height of image, starts at 4 builds up to 512 as the image moves through the network
-- **W** width of image, ditto
+- **H** height of image—in the case of BigGAN it starts at 4 and builds up to 512 as the image moves through the network
+- **W** width of image (similar to height)
 
 
 The general structure of BigGAN is as follows (assume 1 image is being generated):
