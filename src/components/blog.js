@@ -1,11 +1,12 @@
 import React from 'react'
 import { graphql, Link } from 'gatsby'
 import Layout from '../components/layout'
+import { MDXRenderer } from 'gatsby-plugin-mdx'
 
 const BlogPost = props => {
   const { data } = props
   const { post } = data
-  const { fields, html } = post
+  const { fields, body } = post
   const { title, date, slug } = fields
   return (
     <Layout title={title}>
@@ -13,7 +14,7 @@ const BlogPost = props => {
       <p className="post-date">
         <Link to={slug}>{date}</Link>
       </p>
-      <div dangerouslySetInnerHTML={{ __html: html }} />
+      <MDXRenderer>{body}</MDXRenderer>
       <p>
         <Link to="/old">More old posts</Link>
       </p>
@@ -23,8 +24,8 @@ const BlogPost = props => {
 
 export const query = graphql`
   query BlogPostQuery($slug: String!) {
-    post: markdownRemark(fields: { slug: { eq: $slug } }) {
-      html
+    post: mdx(fields: { slug: { eq: $slug } }) {
+      body
       fields {
         title
         date

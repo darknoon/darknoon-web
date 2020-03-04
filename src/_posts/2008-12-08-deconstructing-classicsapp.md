@@ -57,4 +57,4 @@ Yup, those are PDFs. So that explains how they got the image to do the animation
 
 The Info.plist file just encodes information like the title and the names of the chapters in the book. Well, that's about all that's interesting in the App bundle.
 
-<p id="renderingWebKitToImage">(1) Okay, so I did find a way to do it, but it's not pretty. You can poke around in the sublayers of a UIWebKitView and find some that have useful CGImages as contents, but it makes a lot of assumptions about the internals of the frameworks and thus could break in the future.
+<p id="renderingWebKitToImage">(1) Okay, so I did find a way to do it, but it's not pretty. You can poke around in the sublayers of a UIWebKitView and find some that have useful CGImages as contents, but it makes a lot of assumptions about the internals of the frameworks and thus could break in the future.</p>

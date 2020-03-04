@@ -41,7 +41,7 @@ function processMarkdownPage({ node, getNode, actions }) {
 }
 
 exports.onCreateNode = ({ node, getNode, actions }) => {
-  if (node.internal.type === 'MarkdownRemark') {
+  if (node.internal.type === 'Mdx') {
     processMarkdownPage({ node, getNode, actions })
   }
 }
@@ -52,7 +52,7 @@ exports.createPages = async ({ graphql, actions }) => {
   // Query for markdown nodes to use in creating pages.
   const result = await graphql(`
     {
-      allMarkdownRemark(sort: { fields: [fileAbsolutePath], order: DESC }) {
+      allMdx(sort: { fields: [fileAbsolutePath], order: DESC }) {
         edges {
           node {
             fields {
@@ -70,7 +70,7 @@ exports.createPages = async ({ graphql, actions }) => {
   }
 
   // Create blog post pages.
-  result.data.allMarkdownRemark.edges.forEach(edge => {
+  result.data.allMdx.edges.forEach(edge => {
     createPage({
       path: `${edge.node.fields.slug}`, // required
       component: blogPostTemplate,

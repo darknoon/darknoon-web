@@ -5,17 +5,19 @@ import { graphql } from 'gatsby'
 import { EmbedYoutube, EmbedVimeo } from '../components/responsiveIFrame'
 import './projects.css'
 
-// This is needed until upgrade to node v10+ on AWS Lambda (limitation of Zeit Now platform V2)
-if (typeof URL === 'undefined') {
-  global.URL = require('url').URL
-}
-
 const pompAndClout = {
   name: 'Pomp & Clout',
   href: 'https://pompandclout.com',
 }
 
 let recent = [
+  {
+    key: 'gan-hacks',
+    link: '/2020/03/03/gan-hacking/',
+    title: 'Fake Vacation',
+    what: 'BigGAN Hacks',
+    mediaURL: 'projects/gan-hacking/fake_vacation_2.png',
+  },
   {
     key: 'xcx-1999',
     title: 'Charli XCX & Troye Sivan - 1999',
@@ -96,7 +98,9 @@ const findImage = (images, relativePath) => {
 
 const Project = ({ images, project: p }) => (
   <section key={p.key}>
-    <h3>{p.title}</h3>
+    <a href={p.link}>
+      <h3>{p.title}</h3>
+    </a>
     <p>{p.what}</p>
     {p.with ? (
       <p>
