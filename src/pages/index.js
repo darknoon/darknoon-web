@@ -1,29 +1,14 @@
-import React from 'react'
-import { Link, graphql } from 'gatsby'
+import { graphql, Link } from 'gatsby'
 import Img from 'gatsby-image'
+import React from 'react'
 import Layout from '../components/layout'
 
 const imsz = 300
 const imrt = 0.6
 
-const highlight = 'var(--highlight)'
-
 const BoxOverImage = ({ image }) => (
   <div style={{ position: 'relative' }}>
     <Img fixed={image.fixed} style={{ width: imsz }} />
-    <div
-      style={{
-        position: 'absolute',
-        top: 0.3 * imsz,
-        left: 0.28 * imsz,
-        padding: '3px',
-        width: imsz * imrt,
-        height: imsz * imrt,
-        border: `3px solid ${highlight}`,
-      }}
-    >
-      <span style={{ color: highlight }}>Face 95%</span>
-    </div>
   </div>
 )
 
