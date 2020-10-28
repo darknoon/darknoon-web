@@ -1,8 +1,8 @@
+import { graphql } from 'gatsby'
+import Img from 'gatsby-image'
 import React from 'react'
 import Layout from '../components/layout'
-import Img from 'gatsby-image'
-import { graphql } from 'gatsby'
-import { EmbedYoutube, EmbedVimeo } from '../components/responsiveIFrame'
+import { EmbedVimeo, EmbedYoutube } from '../components/responsiveIFrame'
 import './projects.css'
 
 const pompAndClout = {
@@ -17,6 +17,17 @@ let recent = [
     title: 'Fake Vacation',
     what: 'BigGAN Hacks',
     mediaURL: 'projects/gan-hacking/fake_vacation_2.png',
+  },
+  {
+    key: 'ar-project',
+    title: 'Statue of Liberty official app',
+    with: {
+      name: 'Yap Studios',
+      href: 'https://yapstudios.com',
+    },
+    link: 'https://apps.apple.com/us/story/id1464767766',
+    what: 'Realtime shader effects, asset workflow, and AR optimization',
+    mediaURL: 'projects/liberty/screenshot.png',
   },
   {
     key: 'xcx-1999',
@@ -48,11 +59,6 @@ let recent = [
 ]
 
 let inProgress = [
-  {
-    key: 'ar-project',
-    title: 'ARKit project',
-    what: 'ARKit + physically-based lighting',
-  },
   {
     key: 'potion',
     title: 'Potion App',
