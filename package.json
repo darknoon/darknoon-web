@@ -1,36 +1,21 @@
 {
-  "name": "darknoon-gatsbyq",
+  "name": "darknoon-next-js",
   "description": "Andrew Pouliot Website",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "author": "Andrew Pouliot <andrew@darknoon.com>",
   "dependencies": {
-    "@mdx-js/mdx": "^1.5.5",
-    "@mdx-js/react": "^1.5.5",
-    "gatsby": "^2.0.19",
-    "gatsby-image": "^2.0.15",
-    "gatsby-plugin-manifest": "^2.0.5",
-    "gatsby-plugin-mdx": "^1.0.73",
-    "gatsby-plugin-offline": "^2.0.5",
-    "gatsby-plugin-react-helmet": "^3.0.0",
-    "gatsby-plugin-sharp": "^2.0.7",
-    "gatsby-remark-copy-linked-files": "^2.0.5",
-    "gatsby-remark-images": "^2.0.4",
-    "gatsby-source-filesystem": "^2.0.5",
-    "gatsby-transformer-remark": "^2.1.9",
-    "gatsby-transformer-sharp": "^2.1.4",
-    "react": "^16.5.1",
-    "react-dom": "^16.5.1",
-    "react-helmet": "^5.2.0"
+    "next": "^10.0.0",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1"
   },
   "keywords": [
     "gatsby"
   ],
   "license": "MIT",
   "scripts": {
-    "build": "gatsby build",
-    "now-build": "npm run build",
-    "develop": "gatsby develop",
-    "deploy": "gatsby build; cd public; now",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
     "format": "prettier --write \"src/**/*.js\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
