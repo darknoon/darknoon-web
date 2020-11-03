@@ -1,13 +1,10 @@
+import Link from 'next/link'
 import React from 'react'
-import { Link } from 'gatsby'
 
 const Header = ({ siteTitle }) => (
   <div>
     <Link
-      to="/"
-      style={{
-        textDecoration: 'none',
-      }}
+      href="/"
     >
       <h3>{siteTitle}</h3>
     </Link>

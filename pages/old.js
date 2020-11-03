@@ -1,7 +1,6 @@
-import React from 'react'
 import { graphql, Link } from 'gatsby'
+import React from 'react'
 import Layout from '../components/layout'
-import { MDXRenderer } from 'gatsby-plugin-mdx'
 
 export const query = graphql`
   query IndexQuery {
@@ -30,7 +29,7 @@ export default ({ data }) => {
     <Layout title="Blog">
       {data.allMdx.edges.map(({ node }, idx) => (
         <div className="post" key={idx}>
-          <Link to={node.fields.slug}>
+          <Link href={node.fields.slug}>
             <h3 className="post-title">
               {node.frontmatter.title} ({node.fields.year})
             </h3>

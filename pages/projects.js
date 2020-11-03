@@ -1,9 +1,8 @@
-import { graphql } from 'gatsby'
-import Img from 'gatsby-image'
+import Img from 'next/image'
 import React from 'react'
 import Layout from '../components/layout'
 import { EmbedVimeo, EmbedYoutube } from '../components/responsiveIFrame'
-import './projects.css'
+import './projects.module.css'
 
 const pompAndClout = {
   name: 'Pomp & Clout',
@@ -88,16 +87,9 @@ const Video = ({ src }) => {
 
 const videoSize = { width: 560, height: 315 }
 
-const ProjectImage = ({ images, mediaURL, link }) => {
-  let im = findImage(images, mediaURL)
-  if (im != null) {
-    const elem = (
-      <Img className="project-image" fluid={im.childImageSharp.fluid} />
-    )
-    return typeof link === 'string' ? <a href={link}>{elem}</a> : elem
-  } else {
-    return null
-  }
+const ProjectImage = ({ mediaURL, link }) => {
+  const elem = <Img src={mediaURL} className="project-image" />
+  return typeof link === 'string' ? <a href={link}>{elem}</a> : elem
 }
 
 const findImage = (images, relativePath) => {
@@ -105,8 +97,8 @@ const findImage = (images, relativePath) => {
   return images.find(image => image.relativePath === relativePath)
 }
 
-const Project = ({ images, project: p }) => (
-  <section key={p.key}>
+const Project = ({ project: p }) => (
+  <section key={p.key} className="project">
     <a href={p.link}>
       <h3>{p.title}</h3>
     </a>
@@ -116,40 +108,22 @@ const Project = ({ images, project: p }) => (
         with <a href={p.with.href}>{p.with.name}</a>
       </p>
     ) : null}
-    {<ProjectImage images={images} mediaURL={p.mediaURL} link={p.link} />}
+    {<ProjectImage mediaURL={p.mediaURL} link={p.link} />}
     {p.videoURL ? <Video src={p.videoURL} /> : null}
   </section>
 )
 
-export const query = graphql`
-  query ProjectImages {
-    images: allFile(filter: { relativePath: { glob: "projects/**/*.png" } }) {
-      edges {
-        node {
-          relativePath
-          childImageSharp {
-            fluid {
-              ...GatsbyImageSharpFluid
-            }
-          }
-        }
-      }
-    }
-  }
-`
-
 const Projects = ({ data }) => {
-  const images = data.images.edges.map(edge => edge.node)
   return (
     <Layout title="Projects">
       <h1>Recent projects</h1>
       {recent.map(p => (
-        <Project images={images} project={p} key={p.key} />
+        <Project project={p} key={p.key} />
       ))}
       <p />
       <h1>In progress</h1>
       {inProgress.map(p => (
-        <Project images={images} project={p} key={p.key} />
+        <Project project={p} key={p.key} />
       ))}
     </Layout>
   )

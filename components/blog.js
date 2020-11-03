@@ -1,7 +1,8 @@
-import React from 'react'
-import { graphql, Link } from 'gatsby'
-import Layout from '../components/layout'
+// import { graphql, Link } from 'gatsby'
 import { MDXRenderer } from 'gatsby-plugin-mdx'
+import Link from 'next/link'
+import React from 'react'
+import Layout from '../components/layout'
 
 const BlogPost = props => {
   const { data } = props
@@ -12,11 +13,11 @@ const BlogPost = props => {
     <Layout title={title}>
       <h1>{title}</h1>
       <p className="post-date">
-        <Link to={slug}>{date}</Link>
+        <Link href={slug}>{date}</Link>
       </p>
       <MDXRenderer>{body}</MDXRenderer>
       <p>
-        <Link to="/old">More old posts</Link>
+        <Link href="/old">More old posts</Link>
       </p>
     </Layout>
   )

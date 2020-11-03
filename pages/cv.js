@@ -1,6 +1,6 @@
+import Link from 'next/link'
 import React from 'react'
 import Layout from '../components/layout'
-import { Link } from 'gatsby'
 
 const CVPage = () => (
   <Layout title="CV">
@@ -15,7 +15,7 @@ const CVPage = () => (
     </ul>
 
     <p>
-      <Link to="/projects">Recent projects</Link> involve the use of GANs for
+      <Link href="/projects">Recent projects</Link> involve the use of GANs for
       image generation and image processing, with clients in Art and Video
       production.
     </p>
