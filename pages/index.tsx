@@ -5,7 +5,6 @@ import Layout from '../components/layout'
 
 const imsz = 300
 const imageDimensions = {width: 1000, height: 1331}
-const imrt = 0.6
 
 const IndexPage = () => (
   <Layout>
@@ -15,7 +14,6 @@ const IndexPage = () => (
       height={imsz * imageDimensions.height / imageDimensions.width}
       loading="eager"
       quality={90}
-      layout='fixed'
     />
     <p>
       I am working on machine learning and realtime graphics for creative
