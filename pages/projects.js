@@ -1,4 +1,4 @@
-import Img from 'next/image'
+import Image from 'next/image'
 import React from 'react'
 import Layout from '../components/layout'
 import { EmbedVimeo, EmbedYoutube } from '../components/responsiveIFrame'
@@ -15,7 +15,7 @@ let recent = [
     link: '/2020/03/03/gan-hacking/',
     title: 'Fake Vacation',
     what: 'BigGAN Hacks',
-    mediaURL: 'projects/gan-hacking/fake_vacation_2.png',
+    mediaURL: '/projects/gan-hacking/fake_vacation_2.png',
   },
   {
     key: 'ar-project',
@@ -26,14 +26,14 @@ let recent = [
     },
     link: 'https://apps.apple.com/us/story/id1464767766',
     what: 'Realtime shader effects, asset workflow, and AR optimization',
-    mediaURL: 'projects/liberty/screenshot.png',
+    mediaURL: '/projects/liberty/screenshot.png',
   },
   {
     key: 'xcx-1999',
     title: 'Charli XCX & Troye Sivan - 1999',
     what: 'Face swap for post-production',
     with: pompAndClout,
-    mediaURL: 'projects/xcx-1999/faceswap.png',
+    mediaURL: '/projects/xcx-1999/faceswap.png',
     videoURL: 'https://www.youtube-nocookie.com/embed/6-v1b9waHWY',
   },
   {
@@ -52,7 +52,7 @@ let recent = [
       href: 'http://www.sarahmeyohas.com',
     },
     mediaURL:
-      'projects/meyohas-petals/200-resumed-ok-network-snapshot-resume-003600-000096.png',
+      '/projects/meyohas-petals/200-resumed-ok-network-snapshot-resume-003600-000096.png',
     videoURL: 'https://www.youtube-nocookie.com/embed/lqh7K2Uga3g',
   },
 ]
@@ -61,7 +61,7 @@ let inProgress = [
   {
     key: 'potion',
     title: 'Potion App',
-    mediaURL: 'projects/colorburst/screenshot.png',
+    mediaURL: '/projects/colorburst/screenshot.png',
     what: 'DPPN-based image generation',
   },
 ]
@@ -88,13 +88,16 @@ const Video = ({ src }) => {
 const videoSize = { width: 560, height: 315 }
 
 const ProjectImage = ({ mediaURL, link }) => {
-  const elem = <Img src={mediaURL} className="project-image" />
+  const elem = (
+    <Image
+      src={mediaURL}
+      width={videoSize.width}
+      height={videoSize.height}
+      layout="responsive"
+      className="project-image"
+    />
+  )
   return typeof link === 'string' ? <a href={link}>{elem}</a> : elem
-}
-
-const findImage = (images, relativePath) => {
-  if (!Array.isArray(images)) return null
-  return images.find(image => image.relativePath === relativePath)
 }
 
 const Project = ({ project: p }) => (
@@ -108,11 +111,10 @@ const Project = ({ project: p }) => (
         with <a href={p.with.href}>{p.with.name}</a>
       </p>
     ) : null}
-    {<ProjectImage mediaURL={p.mediaURL} link={p.link} />}
+    {p.mediaURL ? <ProjectImage mediaURL={p.mediaURL} link={p.link} /> : null}
     {p.videoURL ? <Video src={p.videoURL} /> : null}
   </section>
 )
-
 const Projects = ({ data }) => {
   return (
     <Layout title="Projects">
