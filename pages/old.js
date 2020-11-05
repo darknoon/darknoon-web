@@ -6,27 +6,6 @@ import html from 'remark-html'
 import Layout from '../components/layout'
 import { getAllPosts } from '../helpers/posts'
 
-// export const query = graphql`
-//   query IndexQuery {
-//     allMdx(sort: { fields: [fileAbsolutePath], order: DESC }) {
-//       totalCount
-//       edges {
-//         node {
-//           fields {
-//             slug
-//             date
-//             year
-//           }
-//           frontmatter {
-//             title
-//             date(formatString: "DD MMMM, YYYY")
-//           }
-//           excerpt
-//         }
-//       }
-//     }
-//   }
-// `
 export function getStaticProps() {
   const posts = getAllPosts(fs)
   const processed = Promise.all(

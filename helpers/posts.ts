@@ -15,6 +15,10 @@ export interface Post {
   content: string
 }
 
+interface ProcessedPost extends Post {
+  contentHTML: string
+}
+
 export function getAllPosts(_fs: typeof fs): Post[] {
   const slugs = _fs.readdirSync(postsDirectory, 'utf8')
   const posts = slugs.map(slug => getPostBySlug(_fs, slug)).filter(isDefined)
