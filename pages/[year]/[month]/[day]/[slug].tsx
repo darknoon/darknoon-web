@@ -2,11 +2,15 @@
 import fs from 'fs'
 import remark from 'remark'
 import html from 'remark-html'
-import { getAllPosts, getPostBySlug, Post } from '../../../../helpers/posts'
+import {
+  fileNameFor,
+  getAllPosts,
+  getPostByFileName,
+  Post,
+} from '../../../../helpers/posts'
 
 export async function getStaticPaths() {
-  const posts = getAllPosts(fs)
-
+  const posts = await getAllPosts(fs)
   return {
     paths: posts.map(post => {
       return {
@@ -26,13 +30,10 @@ interface Props {
   slug: string
 }
 
-const pad2 = (n: number) =>
-  Intl.NumberFormat(undefined, { minimumIntegerDigits: 2 }).format(n)
-
 export async function getStaticProps({ params }: { params: Props }) {
   const { year, month, day } = params
-  const slug = `${year}-${pad2(month)}-${pad2(day)}-${params.slug}`
-  const post = getPostBySlug(fs, slug)
+  const filename = fileNameFor(year, month, day, params.slug)
+  const post = getPostByFileName(fs, filename)
   if (post === undefined) throw Error('Could not find post')
   const markdown = await remark()
     .use(html)

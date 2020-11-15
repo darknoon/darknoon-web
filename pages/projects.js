@@ -1,5 +1,7 @@
 import Image from 'next/image'
+import path from 'path'
 import React from 'react'
+import sharp from 'sharp'
 import Layout from '../components/layout'
 import { EmbedVimeo, EmbedYoutube } from '../components/responsiveIFrame'
 import './projects.module.css'
@@ -87,12 +89,12 @@ const Video = ({ src }) => {
 
 const videoSize = { width: 560, height: 315 }
 
-const ProjectImage = ({ mediaURL, link }) => {
+const ProjectImage = ({ mediaURL, width, height, link }) => {
   const elem = (
     <Image
       src={mediaURL}
-      width={videoSize.width}
-      height={videoSize.height}
+      width={width}
+      height={height}
       layout="responsive"
       className="project-image"
     />
@@ -111,11 +113,18 @@ const Project = ({ project: p }) => (
         with <a href={p.with.href}>{p.with.name}</a>
       </p>
     ) : null}
-    {p.mediaURL ? <ProjectImage mediaURL={p.mediaURL} link={p.link} /> : null}
+    {p.mediaURL ? (
+      <ProjectImage
+        mediaURL={p.mediaURL}
+        width={p.width}
+        height={p.height}
+        link={p.link}
+      />
+    ) : null}
     {p.videoURL ? <Video src={p.videoURL} /> : null}
   </section>
 )
-const Projects = ({ data }) => {
+const Projects = ({ data, recent, inProgress }) => {
   return (
     <Layout title="Projects">
       <h1>Recent projects</h1>
@@ -129,6 +138,26 @@ const Projects = ({ data }) => {
       ))}
     </Layout>
   )
+}
+
+// Adds image size to a post
+// Only works server-size so we don't cause a content shift on the client
+const withImageSize = async post => {
+  const { mediaURL, ...rest } = post
+  if (mediaURL === undefined) return post
+  try {
+    const imagePath = path.join(process.cwd(), 'public', mediaURL)
+    const metadata = await sharp(imagePath).metadata()
+    const { width, height } = metadata
+    return { mediaURL, width, height, ...rest }
+  } catch (e) {
+    return post
+  }
+}
+export async function getStaticProps({ params }) {
+  const recentWithSizes = await Promise.all(recent.map(withImageSize))
+  const inProgressWithSizes = await Promise.all(inProgress.map(withImageSize))
+  return { props: { recent: recentWithSizes, inProgress: inProgressWithSizes } }
 }
 
 export default Projects
