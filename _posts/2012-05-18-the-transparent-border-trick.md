@@ -4,7 +4,7 @@ title: The Transparent Border trick
 stylesheet: the-transparent-border-trick
 ---
 
-![alt text](images/transparent-border-trick/zoomed.png)
+![alt text](/images/transparent-border-trick/zoomed.png)
 
 CoreAnimation is fast. Everything in a UIView is rendered to the screen via CALayers. Most of the time, you use it to composite rectangular images to the screen aligned to pixel boundaries and it's fast and looks great.
 
@@ -18,7 +18,7 @@ Hover to see with or without a transparent border hack:
 
 By adding a transparent border around the content of your CALayers, you can use the built-in bilinear filtering of CoreAnimation to reduce the jaggies.
 
-![alt text](images/transparent-border-trick/content.png)
+![alt text](/images/transparent-border-trick/content.png)
 
 To understand how this works, let's contrast how CoreGraphics renders with CoreAnimation. CoreGraphics, as a CPU-based API, has a lot of flexibility in how it renders. By default, it's shooting for quality over speed so it picks a pretty anti-aliasing algorithm to make the edges of shapes smooth. This can be disabled with the `CGContextSetShouldAntialias()` function, but if you're using CoreGraphics it's usually for quality or complexity over speed anyway.
 

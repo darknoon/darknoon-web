@@ -3,7 +3,7 @@ layout: post
 title: Mac UI in the Age of iOS
 ---
 
-<img style="display: block; margin-left: auto; margin-right: auto;" title="Compare.png" src="images/old/2011/02/Compare.png" border="0" alt="Compare.png" width="278" height="168" />
+<!-- <img style="display: block; margin-left: auto; margin-right: auto;" title="Compare.png" src="/images/old/2011/02/Compare.png" border="0" alt="Compare.png" width="278" height="168" /> -->
 
 In the era of iOS, how will Mac applications adapt to changing expectations about UI design? The launch of the Mac App Store might be the turning point in what we expect Mac apps to do and look like. Is AppKit still up to the task?
 
@@ -15,7 +15,7 @@ The App Store on iOS is well known for its selection of highly-animated, beautif
 
 Twitter for Mac (aka Tweetie 2) is in many respects, a bridge connecting the incredible and rapid progress made designing and developing for iOS during the last two years and the somewhat sleepier kingdom of the Mac. It features a fully animated, custom, slick UI.
 
-<img title="Twitter.png" src="images/old/2011/02/Twitter.png" border="0" alt="Twitter for Mac" width="504" height="403" />
+<img title="Twitter.png" src="/images/old/2011/02/Twitter.png" border="0" alt="Twitter for Mac" width="504" height="403" />
 
 In what ways does it bridge the gap? Take a look:
 

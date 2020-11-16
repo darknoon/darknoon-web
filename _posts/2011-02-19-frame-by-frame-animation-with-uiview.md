@@ -9,7 +9,7 @@ You want to animate a bouncy ball with (somewhat) realistic physics, or just nee
 
 Never fear, grab UIView+ExplicitAnimation from <a href="https://github.com/darknoon/UIView-Explicit-Animation">the repo on github</a>.
 
-<a href="images/old/2011/02/simulator.png"><img src="images/old/2011/02/simulator-212x400.png" alt="" title="simulator" width="212" height="400" class="aligncenter size-medium wp-image-128" /></a>
+<a href="/images/old/2011/02/simulator.png"><img src="/images/old/2011/02/simulator-212x400.png" alt="" title="simulator" width="212" height="400" class="aligncenter size-medium wp-image-128" /></a>
 
 Here's the relevant code for the demo:
 

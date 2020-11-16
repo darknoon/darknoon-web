@@ -1,11 +1,16 @@
 // Install gray-matter and date-fns
-import fs from 'fs'
+import fs from 'fs/promises'
+import hydrate from 'next-mdx-remote/hydrate'
+import Link from 'next/link'
+import base from '../../../../components/base'
 import Layout from '../../../../components/layout'
+import MULI from '../../../../components/multiImage'
 import {
-  fileNameFor,
+  fileNamesFor,
   getAllPosts,
   getPostByFileName,
   pad2,
+  Post,
   ProcessedPost,
   processPost,
 } from '../../../../helpers/posts'
@@ -24,7 +29,6 @@ export async function getStaticPaths() {
       },
     }
   })
-  console.log('asked for paths: ', paths)
 
   return {
     paths,
@@ -40,7 +44,38 @@ interface Params {
 }
 
 interface StaticProps {
+  filename: string
   post: ProcessedPost
+}
+
+// function firstResolved<T>(
+//   values: Iterable<T>
+// ): Promise<T extends PromiseLike<infer U> ? U : T> {
+//   return new Promise((resolve, reject) => {
+//     let done = false
+//     let pending = Array.from(values)
+//     for (let p of pending) {
+//       // @ts-ignore
+//       p.then((r: U) => {
+//         if (!done) {
+//           resolve(r)
+//         }
+//       }).catch(e => {
+//         pending = pending.filter(x => p !== x)
+//       })
+//     }
+//   })
+// }
+
+async function firstResolved<U>(values: PromiseLike<U>[]): Promise<U> {
+  for (let p of Array.from(values)) {
+    try {
+      return await p
+    } catch (e) {
+      continue
+    }
+  }
+  throw new Error('nope')
 }
 
 export async function getStaticProps({
@@ -49,13 +84,28 @@ export async function getStaticProps({
   params: Params
 }): Promise<{ props: StaticProps }> {
   const { year, month, day } = params
-  const filename = fileNameFor(year, month, day, params.slug)
-  const post = getPostByFileName(fs, filename)
-  if (post === undefined) throw Error('Could not find post')
+  const filenames = fileNamesFor(year, month, day, params.slug)
+
+  const file = await firstResolved(
+    filenames.map(
+      async (filename: string): Promise<[string, Post]> => {
+        const post = await getPostByFileName(fs, filename)
+        return [filename, post] as [string, Post]
+      }
+    )
+  )
+  if (file === undefined) {
+    throw Error("Can't find: " + filenames.join(', '))
+  }
+  const [filename, post] = file
+  if (post === undefined) {
+    throw Error("Can't find: " + filenames.join(', '))
+  }
   const processed = await processPost(post)
 
   return {
     props: {
+      filename,
       post: processed,
     },
   }
@@ -85,12 +135,25 @@ const BlogPost = (data: StaticProps) => {
   const { frontmatter, fields, body } = post
   const { title, date } = frontmatter
   const { slug } = fields
+  const MultiImage = MULI
+  if (typeof window !== 'undefined') {
+    // @ts-ignore
+    window['MultiImage'] = MULI
+  }
+  const components = { ...base, MultiImage }
 
+  const content = hydrate(data.post.body.contentHTML, components)
   return (
     <Layout>
       <h1>{post.frontmatter.title}</h1>
-      <div dangerouslySetInnerHTML={{ __html: post.body.contentHTML }}></div>
+      <p className="post-date">
+        <Link href={post.fields.link}>
+          <a>{date}</a>
+        </Link>
+      </p>
+      {content}
     </Layout>
   )
 }
+
 export default BlogPost

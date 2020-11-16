@@ -1,7 +1,6 @@
+import Image from 'next/image'
 import React, { useState } from 'react'
-
 import styles from './multiImage.module.css'
-
 // import { Link } from 'gatsby'
 
 const Scrubber = ({ children }) => {
@@ -20,6 +19,24 @@ const findSrcSet = elem => {
   }
   for (let child of children) {
     const found = findSrcSet(child)
+    if (found) {
+      return found
+    }
+  }
+  return undefined
+}
+
+const findSrc = elem => {
+  if (elem === undefined || elem === null || typeof elem === 'string') {
+    return undefined
+  }
+  const { props } = elem
+  const { src, children = [] } = props
+  if (typeof src === 'string') {
+    return src
+  }
+  for (let child of children) {
+    const found = findSrc(child)
     if (found) {
       return found
     }
@@ -48,7 +65,8 @@ const MultiImage = ({ children, select = 0, ...props }) => {
             onMouseOver={() => setHoveredIndex(i)}
             onMouseOut={() => setHoveredIndex(undefined)}
           >
-            {<img srcSet={findSrcSet(child)} />}
+            <Image width={300} height={300} src={findSrc(child)} />
+            {/* {<img srcSet={findSrcSet(child)} />} */}
           </a>
         ))}
       </Scrubber>

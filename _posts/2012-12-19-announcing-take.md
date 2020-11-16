@@ -9,7 +9,7 @@ I'm pleased to finally talk about my latest project: Take<. It's a video filter 
 
 So simple it just shoots video with the filter applied and saves it to your camera roll.
 
-![alt text](images/announcing-take/screenshot.png)
+![alt text](/images/announcing-take/screenshot.png)
 
 You can read more about it over on the [official site](http://takethevideo.com).
 

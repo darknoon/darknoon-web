@@ -1,17 +1,16 @@
 // import { graphql, Link } from 'gatsby'
-import fs from 'fs'
+import fs from 'fs/promises'
 import Link from 'next/link'
 import React from 'react'
 import Layout from '../components/layout'
-import { getAllPosts, ProcessedPost } from '../helpers/posts'
+import { getAllPosts, Post } from '../helpers/posts'
 
 export async function getStaticProps() {
   const posts = await getAllPosts(fs)
-  // console.log('posts: ', posts[0])
   return { props: { posts } }
 }
 
-const OldPosts = ({ posts }: { posts: ProcessedPost[] }) => {
+const OldPosts = ({ posts }: { posts: Post[] }) => {
   return (
     <Layout title="Blog">
       {posts.map((node, idx) => (
@@ -24,8 +23,6 @@ const OldPosts = ({ posts }: { posts: ProcessedPost[] }) => {
             </a>
           </Link>
           <span className="post-date">{node.frontmatter.date}</span>
-          {/* For some reason, the excerpt is not HTML with mdx. Oh well. */}
-          <p dangerouslySetInnerHTML={{ __html: node.excerptHTML }}></p>
         </div>
       ))}
       <p>
