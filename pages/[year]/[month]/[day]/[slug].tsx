@@ -1,58 +1,96 @@
 // Install gray-matter and date-fns
 import fs from 'fs'
-import remark from 'remark'
-import html from 'remark-html'
+import Layout from '../../../../components/layout'
 import {
   fileNameFor,
   getAllPosts,
   getPostByFileName,
-  Post,
+  pad2,
+  ProcessedPost,
+  processPost,
 } from '../../../../helpers/posts'
 
 export async function getStaticPaths() {
   const posts = await getAllPosts(fs)
+
+  const paths = posts.map(post => {
+    const { year, month, day, slug } = post.fields.slugComponents
+    return {
+      params: {
+        year: String(year),
+        month: pad2(month),
+        day: pad2(day),
+        slug,
+      },
+    }
+  })
+  console.log('asked for paths: ', paths)
+
   return {
-    paths: posts.map(post => {
-      return {
-        params: {
-          slug: post.slug,
-        },
-      }
-    }),
+    paths,
     fallback: false,
   }
 }
 
-interface Props {
+interface Params {
   year: number
   month: number
   day: number
   slug: string
 }
 
-export async function getStaticProps({ params }: { params: Props }) {
+interface StaticProps {
+  post: ProcessedPost
+}
+
+export async function getStaticProps({
+  params,
+}: {
+  params: Params
+}): Promise<{ props: StaticProps }> {
   const { year, month, day } = params
   const filename = fileNameFor(year, month, day, params.slug)
   const post = getPostByFileName(fs, filename)
   if (post === undefined) throw Error('Could not find post')
-  const markdown = await remark()
-    .use(html)
-    .process(post.content || '')
-  const content = markdown.toString()
+  const processed = await processPost(post)
 
   return {
     props: {
-      ...post,
-      content,
+      post: processed,
     },
   }
 }
 
-const BlogPost = ({ props }: { props: Post }) => (
-  <p>
-    test
-    {JSON.stringify(props)}
-  </p>
-)
+// const BlogPost = props => {
+//   const { data } = props
+//   const { post } = data
+//   const { fields, body } = post
+//   const { title, date, slug } = fields
+//   return (
+//     <Layout title={title}>
+//       <h1>{title}</h1>
+//       <p className="post-date">
+//         <Link href={slug}>{date}</Link>
+//       </p>
+//       <MDXRenderer>{body}</MDXRenderer>
+//       <p>
+//         <Link href="/old">More old posts</Link>
+//       </p>
+//     </Layout>
+//   )
+// }
 
+const BlogPost = (data: StaticProps) => {
+  const { post } = data
+  const { frontmatter, fields, body } = post
+  const { title, date } = frontmatter
+  const { slug } = fields
+
+  return (
+    <Layout>
+      <h1>{post.frontmatter.title}</h1>
+      <div dangerouslySetInnerHTML={{ __html: post.body.contentHTML }}></div>
+    </Layout>
+  )
+}
 export default BlogPost

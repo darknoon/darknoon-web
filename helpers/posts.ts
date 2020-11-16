@@ -13,9 +13,8 @@ export function isDefined<T>(a: T | undefined): a is T {
 const postsDirectory = join(process.cwd(), '_posts')
 
 export interface Post {
-  slug: string
   frontmatter: { title: string; date: string }
-  fields: { year: number }
+  fields: { link: string; slug: string; slugComponents: SlugComponents }
   content: string
 }
 
@@ -27,8 +26,10 @@ interface SlugComponents {
 }
 
 export interface ProcessedPost extends Post {
-  contentHTML: string
-  excerptHTML: string
+  body: {
+    contentHTML: string
+    excerptHTML: string
+  }
 }
 
 // 2020-01-02-test.md -> {year: 2020, month: 1, day: 2, slug: "test"}
@@ -48,24 +49,26 @@ function componentsFromFileName(fileName: string): SlugComponents | undefined {
   return { year, month, day, slug }
 }
 
+export async function processPost(post: Post): Promise<ProcessedPost> {
+  const markdown = await remark()
+    .use(html)
+    .use(excerpt)
+    .process(post.content || '')
+  return {
+    ...post,
+    body: {
+      contentHTML: markdown.contents,
+      excerptHTML: markdown.contents,
+    },
+  } as ProcessedPost
+}
+
 export async function getAllPosts(_fs: typeof fs): Promise<ProcessedPost[]> {
   const fileNames = _fs.readdirSync(postsDirectory, 'utf8')
   const posts = fileNames
     .map(fileName => getPostByFileName(_fs, fileName))
     .filter(isDefined)
-  const processed = await Promise.all(
-    posts.map(async post => {
-      const markdown = await remark()
-        .use(html)
-        .use(excerpt)
-        .process(post.content || '')
-      return {
-        ...post,
-        contentHTML: markdown.contents,
-        excerptHTML: markdown.contents,
-      } as ProcessedPost
-    })
-  )
+  const processed = await Promise.all(posts.map(processPost))
 
   return processed
 }
@@ -80,6 +83,10 @@ export function fileNameFor(
   slug: string
 ) {
   return `${year}-${pad2(month)}-${pad2(day)}-${slug}.md`
+}
+
+export function urlPathFor({ year, month, day, slug }: SlugComponents) {
+  return `/${year}/${pad2(month)}/${pad2(day)}/${slug}/`
 }
 
 export function getPostByFileName(
@@ -106,9 +113,9 @@ export function getPostByFileName(
 
   const dateStr = format(date, 'MMMM dd, yyyy')
 
+  const link = urlPathFor(c)
   return {
-    slug,
-    fields: { year },
+    fields: { link, slug, slugComponents: c },
     frontmatter: { ...data, title, date: dateStr },
     content,
   }
