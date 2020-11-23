@@ -4,13 +4,12 @@ import hydrate from 'next-mdx-remote/hydrate'
 import Link from 'next/link'
 import base from '../../../../components/base'
 import Layout from '../../../../components/layout'
-import MULI from '../../../../components/multiImage'
+import MultiImage from '../../../../components/multiImage'
 import {
   fileNamesFor,
   getAllPosts,
-  getPostByFileName,
+  getPostByFileNames,
   pad2,
-  Post,
   ProcessedPost,
   processPost,
 } from '../../../../helpers/posts'
@@ -48,36 +47,6 @@ interface StaticProps {
   post: ProcessedPost
 }
 
-// function firstResolved<T>(
-//   values: Iterable<T>
-// ): Promise<T extends PromiseLike<infer U> ? U : T> {
-//   return new Promise((resolve, reject) => {
-//     let done = false
-//     let pending = Array.from(values)
-//     for (let p of pending) {
-//       // @ts-ignore
-//       p.then((r: U) => {
-//         if (!done) {
-//           resolve(r)
-//         }
-//       }).catch(e => {
-//         pending = pending.filter(x => p !== x)
-//       })
-//     }
-//   })
-// }
-
-async function firstResolved<U>(values: PromiseLike<U>[]): Promise<U> {
-  for (let p of Array.from(values)) {
-    try {
-      return await p
-    } catch (e) {
-      continue
-    }
-  }
-  throw new Error('nope')
-}
-
 export async function getStaticProps({
   params,
 }: {
@@ -85,15 +54,7 @@ export async function getStaticProps({
 }): Promise<{ props: StaticProps }> {
   const { year, month, day } = params
   const filenames = fileNamesFor(year, month, day, params.slug)
-
-  const file = await firstResolved(
-    filenames.map(
-      async (filename: string): Promise<[string, Post]> => {
-        const post = await getPostByFileName(fs, filename)
-        return [filename, post] as [string, Post]
-      }
-    )
-  )
+  const file = await getPostByFileNames(fs, filenames)
   if (file === undefined) {
     throw Error("Can't find: " + filenames.join(', '))
   }
@@ -111,43 +72,19 @@ export async function getStaticProps({
   }
 }
 
-// const BlogPost = props => {
-//   const { data } = props
-//   const { post } = data
-//   const { fields, body } = post
-//   const { title, date, slug } = fields
-//   return (
-//     <Layout title={title}>
-//       <h1>{title}</h1>
-//       <p className="post-date">
-//         <Link href={slug}>{date}</Link>
-//       </p>
-//       <MDXRenderer>{body}</MDXRenderer>
-//       <p>
-//         <Link href="/old">More old posts</Link>
-//       </p>
-//     </Layout>
-//   )
-// }
-
 const BlogPost = (data: StaticProps) => {
   const { post } = data
   const { frontmatter, fields, body } = post
+  const { link } = fields
+  const { contentHTML } = body
   const { title, date } = frontmatter
-  const { slug } = fields
-  const MultiImage = MULI
-  if (typeof window !== 'undefined') {
-    // @ts-ignore
-    window['MultiImage'] = MULI
-  }
   const components = { ...base, MultiImage }
-
-  const content = hydrate(data.post.body.contentHTML, components)
+  const content = hydrate(contentHTML, { components })
   return (
     <Layout>
-      <h1>{post.frontmatter.title}</h1>
+      <h1>{title}</h1>
       <p className="post-date">
-        <Link href={post.fields.link}>
+        <Link href={link}>
           <a>{date}</a>
         </Link>
       </p>

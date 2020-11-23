@@ -1,16 +1,15 @@
 import { format, parseISO } from 'date-fns'
 import fs from 'fs/promises'
 import matter from 'gray-matter'
-import renderToString from 'next-mdx-remote/render-to-string'
+import renderToString, {
+  Source as MDXSource,
+} from 'next-mdx-remote/render-to-string'
 import { join } from 'path'
 import base from '../components/base'
 import MultiImage from '../components/multiImage'
+import isDefined from './isDefined'
+import oneSuccess from './oneSuccess'
 
-///
-
-export function isDefined<T>(a: T | undefined): a is T {
-  return typeof a !== 'undefined'
-}
 // Add markdown files in `/_posts`
 const postsDirectory = join(process.cwd(), '_posts')
 
@@ -30,7 +29,7 @@ interface SlugComponents {
 
 export interface ProcessedPost extends Post {
   body: {
-    contentHTML: string
+    contentHTML: MDXSource
   }
 }
 
@@ -98,7 +97,7 @@ export function fileNamesFor(
   month: number,
   day: number,
   slug: string
-) {
+): string[] {
   return ['md', 'mdx'].map(
     ext => `${year}-${pad2(month)}-${pad2(day)}-${slug}.${ext}`
   )
@@ -106,6 +105,20 @@ export function fileNamesFor(
 
 export function urlPathFor({ year, month, day, slug }: SlugComponents) {
   return `/${year}/${pad2(month)}/${pad2(day)}/${slug}/`
+}
+
+export async function getPostByFileNames(
+  _fs: typeof fs,
+  filenames: string[]
+): Promise<[string, Post]> {
+  return await oneSuccess(
+    filenames.map(
+      async (filename: string): Promise<[string, Post]> => {
+        const post = await getPostByFileName(_fs, filename)
+        return [filename, post] as [string, Post]
+      }
+    )
+  )
 }
 
 export async function getPostByFileName(
@@ -119,7 +132,6 @@ export async function getPostByFileName(
   const { year, month, day, slug } = c
   const fullPath = join(postsDirectory, fileName)
   const fileContents = await _fs.readFile(fullPath, 'utf8')
-  console.log('read', fileName)
   let { data, content } = matter(fileContents)
 
   const { date: overrideDate, title = slug } = data

@@ -16,16 +16,16 @@ a.preview {
 a.preview.selected {
 }
 
-a.preview > img {
+a.preview img {
   margin: 0;
 }
 
-a.preview.selected > img {
+a.preview.selected {
   margin: 0;
   outline: 2px solid var(--headline);
 }
 
-a.preview:hover > img {
+a.preview:hover {
   outline: 2px solid var(--headline);
 }
 
