@@ -1,0 +1,41 @@
+.multiImage {
+  position: relative;
+}
+
+.scrubber {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+}
+
+a.preview {
+  display: inline-block;
+  padding: 1px;
+  margin: 0;
+}
+
+a.preview img {
+  margin: 0;
+}
+
+a.preview.selected {
+  margin: 0;
+  outline: 2px solid var(--headline);
+}
+
+a.preview:hover {
+  outline: 2px solid var(--headline);
+}
+
+.multiImageChild {
+  top: 0;
+  left: 0;
+}
+
+.multiImageChild.hide {
+  display: none;
+}
+
+.multiImageChild.show {
+  display: block;
+}

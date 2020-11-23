@@ -1,7 +1,7 @@
 ## darknoon.com source
 
-- Based on the Gatsby default starter
-- Uses sharp to resize images to `srcSets` for optimized loading on devices with various resoulutions
+Migrated from Jekyll to Gatsby to Next.js
+
 - Uses `yarn` for package management
 - Deploys with `now` (automatic on github, but you can try in locally with `$ now`)
 
@@ -13,16 +13,12 @@
 
     ```sh
     cd darknoon.github.io/
-    yarn develop
+    yarn dev
     ```
 
 2.  **Open the source code and start editing!**
 
-    this site is now running at `http://localhost:8000`!
-
-    \_Note: You'll also see a second link: `http://localhost:8000/___graphql`. This is a tool you can use to experiment with querying your data. Learn more about using this tool in the [Gatsby tutorial](https://www.gatsbyjs.org/tutorial/part-five/#introducing-graphiql).\_
-
-    Open this directory in your code editor of choice and edit `src/pages/index.js`. Save your changes and the browser will update in real time!
+    this site is now running at `http://localhost:3000`!
 
 ## 💫 Deploy
 
