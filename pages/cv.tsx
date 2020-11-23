@@ -58,7 +58,7 @@ const CVPage = () => (
     </p>
     <p>
       My job was to make the animations smoother. I worked on improving{' '}
-      <del>AsyncViewNode</del> -> <del>AsyncDisplayKit</del> ->{' '}
+      <del>AsyncViewNode</del> {'->'} <del>AsyncDisplayKit</del> {'-> '}
       <a href="https://texturegroup.org">Texture</a>, an asynchronous UI
       framework designed by{' '}
       <a href="https://twitter.com/scottgoodson">Scott Goodson</a>. To address
