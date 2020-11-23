@@ -1,6 +1,5 @@
+type Components = { [key: string]: JSXElementConstructor<any> }
 declare module 'next-mdx-remote/render-to-string' {
-  type Components = { [key: string]: JSXElementConstructor<any> }
-
   interface Scope {
     [key: string]: unknown
   }
@@ -25,7 +24,9 @@ declare module 'next-mdx-remote/render-to-string' {
 }
 
 declare module 'next-mdx-remote/hydrate' {
-  type HydrateOptions = { components: JSX.Element }
+  type HydrateOptions = {
+    components: Components
+  }
 
   export interface Source {
     compiledSource: string

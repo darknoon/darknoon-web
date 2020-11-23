@@ -1,3 +1,4 @@
+import '../styles/code.css'
 import '../styles/colors.css'
 import '../styles/fonts.css'
 import '../styles/global.css'

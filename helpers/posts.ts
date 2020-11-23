@@ -1,3 +1,4 @@
+import rehypePrism from '@mapbox/rehype-prism'
 import { format, parseISO } from 'date-fns'
 import fs from 'fs/promises'
 import matter from 'gray-matter'
@@ -53,10 +54,15 @@ function componentsFromFileName(fileName: string): SlugComponents | undefined {
 export async function processPost(post: Post): Promise<ProcessedPost> {
   const { content, data } = matter(post.content)
   const components = { ...base, MultiImage }
-  // console.log(`rendering ${post.filename}`, content.length)
-  const mdxSource = await renderToString(content, { components, scope: data })
-  // console.log(`rendered ${post.filename}`, mdxSource.length)
 
+  const rehypePlugins = [rehypePrism]
+
+  console.log(`rendering ${post.filename}`, content.length)
+  const mdxSource = await renderToString(content, {
+    components,
+    mdxOptions: { rehypePlugins },
+    scope: data,
+  })
   return {
     ...post,
     body: {

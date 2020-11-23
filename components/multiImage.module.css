@@ -5,15 +5,13 @@
 .scrubber {
   display: flex;
   flex-direction: row;
+  align-items: flex-start;
 }
 
 a.preview {
   display: inline-block;
   padding: 1px;
   margin: 0;
-}
-
-a.preview.selected {
 }
 
 a.preview img {

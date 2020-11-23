@@ -78,7 +78,10 @@ const BlogPost = (data: StaticProps) => {
   const { link } = fields
   const { contentHTML } = body
   const { title, date } = frontmatter
-  const components = { ...base, MultiImage }
+  const components = {
+    ...base,
+    MultiImage,
+  }
   const content = hydrate(contentHTML, { components })
   return (
     <Layout>

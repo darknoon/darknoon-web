@@ -39,9 +39,9 @@ const MultiImage: FunctionComponent<MultiImageProps> = ({
   const index = hoveredIndex !== undefined ? hoveredIndex : selectedIndex
   return (
     <figure className={styles.multiImage}>
-      <p>
+      <small>
         <em>Click or hover to change the image</em>
-      </p>
+      </small>
       <Scrubber>
         {React.Children.map(children, (child, i) => {
           const src = findSrc(child)

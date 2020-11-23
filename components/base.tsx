@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import React from 'react'
 
-function a({
+function wrapAWithNextLink({
   href,
   children,
   ...rest
@@ -21,7 +21,7 @@ function a({
 }
 
 const components = {
-  a,
+  a: wrapAWithNextLink,
   img: 'img',
   // img: props => {
   //   console.log('img props:', props)
