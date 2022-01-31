@@ -1,12 +1,7 @@
 {
   "name": "darknoon-gatsby",
   "version": 2,
-  "alias": ["darknoon.com"],
-  "builds": [
-    {
-      "src": "package.json",
-      "use": "@now/static-build",
-      "config": { "distDir": "public" }
-    }
+  "alias": [
+    "darknoon.com"
   ]
 }
