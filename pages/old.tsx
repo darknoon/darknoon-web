@@ -1,9 +1,9 @@
 // import { graphql, Link } from 'gatsby'
-import fs from 'fs/promises'
+import { promises as fs } from 'fs'
 import Link from 'next/link'
 import React from 'react'
 import Layout from '../components/layout'
-import { getAllPosts, Post } from '../helpers/posts'
+import { getAllPosts, type Post } from '../helpers/posts'
 
 export async function getStaticProps() {
   const posts = await getAllPosts(fs)

@@ -1,6 +1,6 @@
 import rehypePrism from '@mapbox/rehype-prism'
 import { format, parseISO } from 'date-fns'
-import fs from 'fs/promises'
+import {promises as fs} from 'fs'
 import matter from 'gray-matter'
 import { serialize } from 'next-mdx-remote/serialize'
 import { MDXRemoteSerializeResult } from 'next-mdx-remote'

@@ -1,5 +1,5 @@
 // Install gray-matter and date-fns
-import fs from 'fs/promises'
+import { promises as fs } from 'fs'
 import { MDXRemote } from 'next-mdx-remote'
 import hydrate from 'next-mdx-remote/hydrate'
 import Link from 'next/link'
