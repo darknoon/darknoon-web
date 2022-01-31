@@ -2,12 +2,10 @@ import rehypePrism from '@mapbox/rehype-prism'
 import { format, parseISO } from 'date-fns'
 import fs from 'fs/promises'
 import matter from 'gray-matter'
-import renderToString, {
-  Source as MDXSource,
-} from 'next-mdx-remote/render-to-string'
+import { serialize } from 'next-mdx-remote/serialize'
+import { MDXRemoteSerializeResult } from 'next-mdx-remote'
+
 import { join } from 'path'
-import base from '../components/base'
-import MultiImage from '../components/multiImage'
 import isDefined from './isDefined'
 import oneSuccess from './oneSuccess'
 
@@ -30,7 +28,7 @@ interface SlugComponents {
 
 export interface ProcessedPost extends Post {
   body: {
-    contentHTML: MDXSource
+    contentMDX: MDXRemoteSerializeResult
   }
 }
 
@@ -53,20 +51,18 @@ function componentsFromFileName(fileName: string): SlugComponents | undefined {
 
 export async function processPost(post: Post): Promise<ProcessedPost> {
   const { content, data } = matter(post.content)
-  const components = { ...base, MultiImage }
 
   const rehypePlugins = [rehypePrism]
 
   console.log(`rendering ${post.filename}`, content.length)
-  const mdxSource = await renderToString(content, {
-    components,
+  const mdxSource = await serialize(content, {
     mdxOptions: { rehypePlugins },
     scope: data,
   })
   return {
     ...post,
     body: {
-      contentHTML: mdxSource,
+      contentMDX: mdxSource,
     },
   } as ProcessedPost
 }

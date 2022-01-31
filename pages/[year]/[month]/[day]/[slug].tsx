@@ -1,5 +1,6 @@
 // Install gray-matter and date-fns
 import fs from 'fs/promises'
+import { MDXRemote } from 'next-mdx-remote'
 import hydrate from 'next-mdx-remote/hydrate'
 import Link from 'next/link'
 import base from '../../../../components/base'
@@ -17,7 +18,7 @@ import {
 export async function getStaticPaths() {
   const posts = await getAllPosts(fs)
 
-  const paths = posts.map(post => {
+  const paths = posts.map((post) => {
     const { year, month, day, slug } = post.fields.slugComponents
     return {
       params: {
@@ -76,13 +77,12 @@ const BlogPost = (data: StaticProps) => {
   const { post } = data
   const { frontmatter, fields, body } = post
   const { link } = fields
-  const { contentHTML } = body
+  const { contentMDX } = body
   const { title, date } = frontmatter
   const components = {
     ...base,
     MultiImage,
   }
-  const content = hydrate(contentHTML, { components })
   return (
     <Layout>
       <h1>{title}</h1>
@@ -91,7 +91,7 @@ const BlogPost = (data: StaticProps) => {
           <a>{date}</a>
         </Link>
       </p>
-      {content}
+      <MDXRemote {...contentMDX} components={components} />
     </Layout>
   )
 }
