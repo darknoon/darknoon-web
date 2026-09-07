@@ -2,7 +2,7 @@
 title: Deconstructing Classics.app
 ---
 
-Last week, in <a href="http://darknoon.com/blog/2008/11/26/peeking-into-iphone-apps/">Peeking Into iPhone Apps</a>, I talked about the process by which the contents of an App bundle can be read and deciphered. In this post, I'm going to take a look at one application in particular: <a href="http://www.classicsapp.com/">Classics</a>.
+Last week, in <a href="/2008/11/26/peeking-into-iphone-apps/">Peeking Into iPhone Apps</a>, I talked about the process by which the contents of an App bundle can be read and deciphered. In this post, I'm going to take a look at one application in particular: <a href="http://www.classicsapp.com/">Classics</a>.
 
 While there have been blog posts about <a href="http://blog.cocoia.com/2008/10/23/designing-classics/">designing Classics</a>, I wanted to know about its implementation, so I did a little research.
 

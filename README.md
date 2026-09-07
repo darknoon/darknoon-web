@@ -38,8 +38,9 @@ serve `/sw.js` with `Cache-Control: no-cache` during the transition from Gatsby.
   `/YYYY/MM/DD/slug/` URLs. Frontmatter supplies the title and optional date.
 - `src/_posts/images/`: original article images; relative Markdown images are
   optimized during builds.
-- `public/images/`: copies of the originals referenced by legacy raw HTML tags
-  and image links. These keep their public paths and are served unchanged.
+- `public/images/`: original images referenced by legacy raw HTML tags
+  and image links. These keep their public paths and are served unchanged; they
+  are not duplicated under `src/_posts/images/`.
 - `src/data/projects.js`: existing project entries.
 - `src/pages/`: Astro pages; `src/layouts/Layout.astro` and `src/styles/` preserve
   the Gatsby site's layout and colors.
@@ -80,4 +81,5 @@ access. Rebuild Astro after edits to update the static preview.
 Validation: static build (20 pages), Astro diagnostics (0 errors/warnings/hints),
 npm audit (0 vulnerabilities), local generated links/assets, and desktop/mobile/
 dark-mode browser comparisons. All eight GAN selectors initialized; mouse-event
-and keyboard selection were exercised. Production has not been changed.
+and keyboard selection were exercised. The Astro migration is deployed to https://www.darknoon.com; the apex domain
+redirects there. Canonical URLs use the same www host.
