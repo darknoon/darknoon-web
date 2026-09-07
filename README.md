@@ -81,5 +81,5 @@ access. Rebuild Astro after edits to update the static preview.
 Validation: static build (20 pages), Astro diagnostics (0 errors/warnings/hints),
 npm audit (0 vulnerabilities), local generated links/assets, and desktop/mobile/
 dark-mode browser comparisons. All eight GAN selectors initialized; mouse-event
-and keyboard selection were exercised. The Astro migration is deployed to https://www.darknoon.com; the apex domain
-redirects there. Canonical URLs use the same www host.
+and keyboard selection were exercised. The Astro migration is deployed to https://darknoon.com; the www domain
+redirects there. Canonical URLs use the same apex host.

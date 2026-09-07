@@ -4,7 +4,7 @@ import mdx from '@astrojs/mdx';
 import excerpt from './scripts/remark-excerpt.mjs';
 
 export default defineConfig({
-  site: 'https://www.darknoon.com',
+  site: 'https://darknoon.com',
   output: 'static',
   trailingSlash: 'always',
   image: { layout: 'constrained', breakpoints: [100, 240, 480, 960, 1920] },
