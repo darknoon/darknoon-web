@@ -2,12 +2,53 @@
 import Layout from '../layouts/Layout.astro';
 import { Image } from 'astro:assets';
 import portrait from '../assets/resources/wubba-lubba-dub-dub.jpg';
+
+// Selected work, rather than a complete archive.
+const selectedWork = [
+  { year: 2020, items: [
+    { name: 'Fake Vacation', href: '/2020/03/03/gan-hacking/' },
+  ] },
+  { year: 2016, items: [
+    { name: 'Origami Studio', href: 'https://origami.design' },
+  ] },
+  { year: 2014, items: [
+    { name: 'Facebook Paper', href: 'https://www.youtube.com/watch?v=Zq6-b9_V9lA' },
+  ] },
+  { year: 2012, items: [
+    { name: 'Take', href: '/2012/12/19/announcing-take/' },
+    { name: 'Nice Rounded Corners', href: '/2012/05/29/nice-rounded-corners/' },
+  ] },
+];
 ---
 <Layout>
   <div class="portrait"><Image src={portrait} alt="Andrew Pouliot" width={300} widths={[300, 600]} sizes="300px" loading="eager" quality={90} /></div>
-  <p>I am working on machine learning and realtime graphics for creative applications.</p>
-  <p><a href="/projects/">Recent projects</a></p>
-  <p>Old <a href="/cv/">iOS and Mac projects</a> and <a href="/old/">blog</a>.</p>
-  <p><a href="http://twitter.com/andpoul">twitter</a> <a href="http://github.com/darknoon">github</a></p>
+  <div class="home-copy">
+    <p>I am working on machine learning and realtime graphics for creative applications.</p>
+    <nav class="selected-work" aria-label="Selected work by year">
+      {selectedWork.map(({ year, items }) => (
+        <section aria-labelledby={`year-${year}`}>
+          <h2 id={`year-${year}`}>{year}</h2>
+          <ul>
+            {items.map(({ name, href }) => <li><a href={href}>{name}</a></li>)}
+          </ul>
+        </section>
+      ))}
+      <a class="more" href="/old/">More</a>
+    </nav>
+  </div>
 </Layout>
-<style>.portrait { position: relative; } .portrait img { margin: 0; width: 300px; height: auto; }</style>
+<style>
+  .portrait { position: relative; }
+  .portrait img { margin: 0; width: 300px; height: auto; }
+  .home-copy { font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  .home-copy > p { margin-top: 1rem; max-width: 44rem; }
+  .selected-work { margin-top: 2rem; padding-bottom: 2rem; }
+  .selected-work section { margin-bottom: 1.5rem; }
+  .selected-work h2 { font-family: inherit; font-size: 0.8rem; font-weight: 500; margin: 0 0 0.4rem; opacity: 0.65; }
+  .selected-work ul { list-style: none; margin: 0; padding: 0; }
+  .selected-work li { margin: 0; }
+  .selected-work a { display: inline-block; padding: 0.2rem 0; text-decoration: none; }
+  .selected-work a:hover { text-decoration: underline; }
+  .selected-work a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
+  .more { margin-top: 0.25rem; }
+</style>
