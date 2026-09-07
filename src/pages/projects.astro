@@ -1,0 +1,13 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Project from '../components/Project.astro';
+import { recent, inProgress } from '../data/projects';
+import '../styles/projects.css';
+---
+<Layout title="Projects">
+  <h1>Recent projects</h1>
+  {recent.map(project => <Project project={project} />)}
+  <p></p>
+  <h1>In progress</h1>
+  {inProgress.map(project => <Project project={project} />)}
+</Layout>

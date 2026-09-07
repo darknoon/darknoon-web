@@ -1,0 +1,18 @@
+---
+import { getCollection, render } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+import MultiImage from '../components/MultiImage.astro';
+import { postDetails } from '../data/posts';
+export async function getStaticPaths() {
+  return (await getCollection('posts')).map(post => ({ params: { slug: postDetails(post).path }, props: { post } }));
+}
+const { post } = Astro.props;
+const { Content } = await render(post);
+const details = postDetails(post);
+---
+<Layout title={post.data.title}>
+  <h1>{post.data.title}</h1>
+  <p class="post-date"><a href={details.url}>{details.date}</a></p>
+  <div class="post-content"><Content components={{ MultiImage }} /></div>
+  <p><a href="/old/">More old posts</a></p>
+</Layout>

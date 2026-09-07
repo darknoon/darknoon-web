@@ -1,9 +1,8 @@
 ---
-layout: post
 title: Mac UI in the Age of iOS
 ---
 
-<img style="display: block; margin-left: auto; margin-right: auto;" title="Compare.png" src="images/old/2011/02/Compare.png" border="0" alt="Compare.png" width="278" height="168" />
+<img style="display: block; margin-left: auto; margin-right: auto;" title="Compare.png" src="/images/old/2011/02/Compare.png" border="0" alt="Compare.png" width="278" height="168" />
 
 In the era of iOS, how will Mac applications adapt to changing expectations about UI design? The launch of the Mac App Store might be the turning point in what we expect Mac apps to do and look like. Is AppKit still up to the task?
 
@@ -15,7 +14,7 @@ The App Store on iOS is well known for its selection of highly-animated, beautif
 
 Twitter for Mac (aka Tweetie 2) is in many respects, a bridge connecting the incredible and rapid progress made designing and developing for iOS during the last two years and the somewhat sleepier kingdom of the Mac. It features a fully animated, custom, slick UI.
 
-<img title="Twitter.png" src="images/old/2011/02/Twitter.png" border="0" alt="Twitter for Mac" width="504" height="403" />
+<img title="Twitter.png" src="/images/old/2011/02/Twitter.png" border="0" alt="Twitter for Mac" width="504" height="403" />
 
 In what ways does it bridge the gap? Take a look:
 
@@ -118,7 +117,7 @@ I made a little example app to show off the framework. It downloads tweets match
 
 This work is still just _messing-around quality_. Basically, it would require a huge amount of work to make this into a framework that could actually be used to build shippable Mac apps. This could happen, but phew, the more I try to make this work, the more I have a huge respect for Loren's work here. I'll call this "Option 1."
 
-The source and my simple example app are <a href="github.com/darknoon/UIKit">on github</a>.
+The source and my simple example app are <a href="https://github.com/darknoon/UIKit">on github</a>.
 
 <strike>
 <h3>Option 2: Petition twitter to release ABUIKit</h3>

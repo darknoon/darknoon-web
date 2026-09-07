@@ -1,5 +1,4 @@
 ---
-layout: post
 title: Adding Feeds with Jekyll
 ---
 

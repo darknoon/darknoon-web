@@ -1,5 +1,4 @@
 ---
-layout: post
 title: Vector Math with C++ and GLKit
 ---
 
