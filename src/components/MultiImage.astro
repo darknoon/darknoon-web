@@ -1,0 +1,65 @@
+---
+interface Props { select?: number }
+const { select = 0 } = Astro.props;
+---
+<multi-image data-select={select}>
+  <figure>
+    <p class="instructions" hidden><em>Click or hover to change the image</em></p>
+    <div class="scrubber" role="group" aria-label="Choose image"></div>
+    <div class="frames"><slot /></div>
+  </figure>
+</multi-image>
+<script>
+  class MultiImage extends HTMLElement {
+    connectedCallback() {
+      if (this.dataset.ready) return;
+      const frames = [...this.querySelector('.frames')!.children].filter(frame => frame.querySelector('img')) as HTMLElement[];
+      if (!frames.length) return;
+      let selected = Math.max(0, Math.min(Number(this.dataset.select) || 0, frames.length - 1));
+      const scrubber = this.querySelector('.scrubber')!;
+      const buttons = frames.map((frame, index) => {
+        const image = frame.querySelector('img')!;
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.setAttribute('aria-label', frame.textContent?.trim() || image.alt || `Image ${index + 1}`);
+        const thumb = image.cloneNode() as HTMLImageElement;
+        thumb.alt = '';
+        thumb.sizes = '100px';
+        thumb.loading = 'lazy';
+        button.append(thumb);
+        button.addEventListener('click', () => { selected = index; show(index); });
+        button.addEventListener('mouseenter', () => show(index));
+        button.addEventListener('mouseleave', () => show(selected));
+        button.addEventListener('focus', () => show(index));
+        button.addEventListener('blur', () => show(selected));
+        scrubber.append(button);
+        return button;
+      });
+      const show = (index: number) => {
+        frames.forEach((frame, i) => { frame.hidden = i !== index; });
+        buttons.forEach((button, i) => button.setAttribute('aria-pressed', String(i === selected)));
+      };
+      this.querySelector<HTMLElement>('.instructions')!.hidden = false;
+      this.dataset.ready = 'true';
+      show(selected);
+    }
+  }
+  customElements.define('multi-image', MultiImage);
+
+  // Retain Gatsby's click-through image viewing without any image server.
+  document.querySelectorAll<HTMLImageElement>('.post-content img[data-astro-image]').forEach(image => {
+    if (image.closest('a, button')) return;
+    const link = document.createElement('a');
+    link.href = image.src;
+    link.className = 'article-image-link';
+    image.before(link);
+    link.append(image);
+  });
+</script>
+<style is:global>
+  multi-image { display: block; }
+  multi-image .scrubber { display: flex; align-items: flex-start; }
+  multi-image .scrubber button { flex: 1; min-width: 0; background: none; border: 0; padding: 1px; cursor: pointer; }
+  multi-image .scrubber img { display: block; width: 100%; height: auto; margin: 0; }
+  multi-image button[aria-pressed="true"] img, multi-image button:hover img, multi-image button:focus-visible img { outline: 2px solid var(--headline); outline-offset: -2px; }
+</style>

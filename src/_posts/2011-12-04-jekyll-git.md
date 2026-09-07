@@ -1,5 +1,4 @@
 ---
-layout: post
 title: Now Blogging with Jekyll
 ---
 

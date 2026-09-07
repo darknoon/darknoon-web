@@ -1,5 +1,4 @@
 ---
-layout: post
 title: Wrapping C++ Final Edition
 date: 2012-5-29T14:30:00-09:00
 link: http://robnapier.net/blog/wrapping-cppfinal-edition-759

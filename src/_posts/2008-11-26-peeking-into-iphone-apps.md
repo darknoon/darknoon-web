@@ -1,5 +1,4 @@
 ---
-layout: post
 title: Peeking into iPhone Apps
 ---
 

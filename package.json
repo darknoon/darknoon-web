@@ -1,44 +1,27 @@
 {
-  "name": "darknoon-gatsbyq",
-  "description": "Andrew Pouliot Website",
-  "version": "1.0.0",
-  "author": "Andrew Pouliot <andrew@darknoon.com>",
-  "dependencies": {
-    "@mdx-js/mdx": "^1.5.5",
-    "@mdx-js/react": "^1.5.5",
-    "gatsby": "^2.0.19",
-    "gatsby-image": "^2.0.15",
-    "gatsby-plugin-manifest": "^2.0.5",
-    "gatsby-plugin-mdx": "^1.0.73",
-    "gatsby-plugin-offline": "^2.0.5",
-    "gatsby-plugin-react-helmet": "^3.0.0",
-    "gatsby-plugin-sharp": "^2.0.7",
-    "gatsby-remark-copy-linked-files": "^2.0.5",
-    "gatsby-remark-images": "^2.0.4",
-    "gatsby-source-filesystem": "^2.0.5",
-    "gatsby-transformer-remark": "^2.1.9",
-    "gatsby-transformer-sharp": "^2.1.4",
-    "react": "^16.5.1",
-    "react-dom": "^16.5.1",
-    "react-helmet": "^5.2.0"
+  "name": "darknoon-web",
+  "version": "2.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Andrew Pouliot's static personal website",
+  "engines": {
+    "node": ">=22.12.0"
   },
-  "keywords": [
-    "gatsby"
-  ],
-  "license": "MIT",
   "scripts": {
-    "build": "gatsby build",
-    "now-build": "npm run build",
-    "develop": "gatsby develop",
-    "deploy": "gatsby build; cd public; now",
-    "format": "prettier --write \"src/**/*.js\"",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "compare:live": "node scripts/live-proxy.mjs"
+  },
+  "dependencies": {
+    "@astrojs/markdown-remark": "^7.3.0",
+    "@astrojs/mdx": "8.0.0",
+    "astro": "7.3.1",
+    "sharp": "^0.35.4"
   },
   "devDependencies": {
-    "prettier": "^1.14.2"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/darknoon/darknoon.github.io"
+    "@astrojs/check": "^0.9.9",
+    "typescript": "^5.9.3"
   }
 }
