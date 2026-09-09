@@ -3,6 +3,7 @@
   color-scheme: light dark;
   --headline: black;
   --text: #333;
+  --text-muted: #707a80;
   --background: #f1f5f7;
   --highlight: #da19c6;
   --accent-1: #3300ff;
@@ -13,6 +14,7 @@
   :root {
     --headline: #9881f5;
     --text: #a0a8ad;
+    --text-muted: #7e888f;
     --background: #191d20;
     --accent-1: #9881f5;
     --accent-2: #8f3bfa;
