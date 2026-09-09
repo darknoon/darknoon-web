@@ -1,4 +1,4 @@
 :root {
-  --text-font: Times, serif;
-  --code-font: 'Roboto Mono', monospace;
+  --text-font: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --code-font: var(--text-font);
 }

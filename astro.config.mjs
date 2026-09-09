@@ -13,5 +13,6 @@ export default defineConfig({
     processor: unified({ remarkPlugins: [excerpt], smartypants: false }),
     syntaxHighlight: false,
   },
+  vite: { server: { allowedHosts: ['prefix-mini.tail06618c.ts.net'] } },
   devToolbar: { enabled: false },
 });

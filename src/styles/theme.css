@@ -28,6 +28,13 @@ body {
 
 body h1 {
   font-size: 1.5rem;
-  color: var(--headline);
+  color: var(--text);
   margin: 0.67em 0;
+}
+
+/* Heading links retain the same neutral color in every interaction state. */
+h1, h2, h3, h4, h5, h6,
+:is(h1, h2, h3, h4, h5, h6) a,
+a:has(> :is(h1, h2, h3, h4, h5, h6)) {
+  color: var(--text);
 }

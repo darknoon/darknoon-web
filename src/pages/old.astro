@@ -1,20 +1,29 @@
 ---
-import { getCollection, render } from 'astro:content';
+import { getCollection } from 'astro:content';
 import Layout from '../layouts/Layout.astro';
 import { postDetails } from '../data/posts';
-const posts = await Promise.all((await getCollection('posts')).sort((a, b) => b.id.localeCompare(a.id)).map(async post => {
-  const { remarkPluginFrontmatter } = await render(post);
-  return { ...post, excerpt: remarkPluginFrontmatter.excerpt };
-}));
+const posts = (await getCollection('posts')).sort((a, b) => b.id.localeCompare(a.id));
 ---
 <Layout title="Blog">
-  {posts.map(post => {
-    const details = postDetails(post);
-    return <div class="post">
-      <a href={details.url}><h3 class="post-title">{post.data.title} ({details.year})</h3></a>
-      {post.data.date && <span class="post-date">{post.data.date.toLocaleDateString('en-GB', { timeZone: 'UTC', day: '2-digit', month: 'long', year: 'numeric' }).replace(/ (\d{4})$/, ', $1')}</span>}
-      <p>{post.excerpt}</p>
-    </div>;
-  })}
-  <p>Conversion of old Jekyll posts was based on <a href="https://web.archive.org/web/20171212143144/http://unlikenesses.com/2017-11-06-migrating-blog-to-gatsby/">this tutorial</a></p>
+  <nav class="archive" aria-label="Blog posts">
+    <ul>
+      {posts.map(post => {
+        const details = postDetails(post);
+        return <li><a href={details.url}><span class="year">{details.year}</span><span class="link-name">{post.data.title}</span></a></li>;
+      })}
+    </ul>
+  </nav>
 </Layout>
+<style>
+  .archive { margin-top: 2rem; padding-bottom: 2rem; }
+  ul { list-style: none; margin: 0; padding: 0; }
+  li { margin: 0; }
+  a { position: relative; color: inherit; display: inline-flex; align-items: baseline; padding: 0.2rem 0; text-decoration: none; }
+  a:hover .link-name { text-decoration: underline; }
+  a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
+  .year { flex: 0 0 3rem; margin-left: -4rem; margin-right: 1rem; text-align: right; font-size: 0.8rem; font-variant-numeric: tabular-nums; opacity: 0; pointer-events: none; }
+  a:hover .year, a:focus-visible .year { opacity: 0.5; }
+  @media (max-width: 1100px) {
+    .archive { padding-left: 3.5rem; }
+  }
+</style>

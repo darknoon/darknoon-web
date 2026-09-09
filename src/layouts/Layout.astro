@@ -20,7 +20,7 @@ const pageTitle = title ? `${title} — Andrew Pouliot` : 'Andrew Pouliot';
   </head>
   <body>
     <main style="margin: 0 auto; padding: 1rem; max-width: 960px;">
-      <header><a href="/" style="text-decoration: none;"><h3>Andrew Pouliot</h3></a></header>
+      <header><h3>{Astro.url.pathname === "/" ? "Andrew Pouliot" : <a class="home-link" href="/">Andrew Pouliot</a>}</h3></header>
       <slot />
     </main>
   </body>
@@ -30,4 +30,10 @@ const pageTitle = title ? `${title} — Andrew Pouliot` : 'Andrew Pouliot';
   .post-content img { height: auto; }
   .post-content p > img, .post-content .article-image-link img { display: block; margin: 0 auto; }
   .post-content pre { max-width: 100%; }
+</style>
+
+<style>
+  header h3 { font: inherit; }
+  .home-link { color: inherit; text-decoration: none; }
+  .home-link:hover { color: inherit; text-decoration: underline; }
 </style>

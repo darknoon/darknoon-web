@@ -2,8 +2,6 @@
 title: Announcing Take
 ---
 
-_Update: Take is no longer available_
-
 I'm pleased to finally talk about my latest project: Take<. It's a video filter app that is really simple.
 
 So simple it just shoots video with the filter applied and saves it to your camera roll.

@@ -1,14 +1,14 @@
 ---
 import { Image } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
-interface Props { project: { title: string; what: string; link?: string; mediaURL?: string; videoURL?: string; with?: { name: string; href: string } } }
+interface Props { project: { key: string; title: string; what: string; link?: string; mediaURL?: string; videoURL?: string; with?: { name: string; href: string } } }
 const { project: p } = Astro.props;
 const images = import.meta.glob<{ default: ImageMetadata }>('../assets/projects/**/*.png', { eager: true });
 const image = p.mediaURL ? images[`../assets/${p.mediaURL}`]?.default : undefined;
 if (p.mediaURL && !image) throw new Error(`Missing project image: ${p.mediaURL}`);
 const video = p.videoURL?.includes('vimeo.com') ? `${p.videoURL}?color=fff&title=0&byline=0&portrait=0` : p.videoURL;
 ---
-<section>
+<section id={p.key}>
   <a href={p.link}><h3>{p.title}</h3></a>
   <p>{p.what}</p>
   {p.with && <p>with <a href={p.with.href}>{p.with.name}</a></p>}
