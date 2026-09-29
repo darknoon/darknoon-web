@@ -7,6 +7,7 @@
   "verticalFov": 55.91034007712964,
   "focusDistance": 0.41502994298934937,
   "defaultAngle": 6,
+  "neutralYaw": -4,
   "splatCount": 397568,
   "nativeSplatCount": 1179648,
   "bytes": 5621695,

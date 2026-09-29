@@ -116,6 +116,21 @@ unchanged.
 
 ## Open questions and residual test gaps
 
+### Resting-pose correction after user feedback
+
+Andrew identified that the default view looked slightly turned away. The
+previous neutral camera exactly matched the source camera; its photo already
+has a slightly turned head. Added a -4° neutral yaw, visually checked against
+the former resting view in `.comparison/rest-pose/before-after.png` (932×500,
+equal-scale portrait crops; before on the left). The new view looks more
+face-on without changing the splat geometry, appearance, typography, or layout.
+The first rendered frame, completed introduction, and reset all use the new
+neutral camera. Movement interpolates from that rest point to the existing
+absolute ±6° limits rather than extending the reconstruction's viewing envelope.
+The static poster was re-exported at the corrected angle. Desktop/mobile,
+touch/hold/tap, Recenter, reduced-motion, failed-load, and narrow-layout checks
+were rerun using `scripts/review-native-portrait.mjs`.
+
 - Physical iPhone Safari performance has not been measured; touch tests use
   Chromium emulation. Full Safari/VoiceOver and browser zoom testing remain
   device-level follow-up checks, not claimed results.

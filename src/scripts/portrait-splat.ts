@@ -10,6 +10,7 @@ interface PortraitCamera {
   cameraPosition?: [number, number, number];
   target?: [number, number, number];
   defaultAngle?: number;
+  neutralYaw?: number;
   representation?: 'depth' | 'splats';
   texture?: string;
   bridgeDepthEdges?: boolean;
@@ -33,6 +34,7 @@ export async function mountPortrait(host: HTMLElement, signal: AbortSignal): Pro
   let visible = true;
   let moving = false;
   let travel = 0.025;
+  let neutralTravel = 0;
   let focusDistance = 0;
   let view: PortraitOptions['view'] = 'splat';
   let introStart: number | undefined;
@@ -69,12 +71,22 @@ export async function mountPortrait(host: HTMLElement, signal: AbortSignal): Pro
     current.lerp(target, 1 - Math.exp(-delta * 12));
     moving = current.distanceToSquared(target) > 0.000001;
     if (!moving) current.copy(target);
-    // Translate the camera on the plane of the photograph. A fixed gaze point
-    // keeps the face framed while the background and facial features parallax.
-    camera.position.set(cameraOrigin.x + current.x * travel, cameraOrigin.y + current.y * travel * 0.7, cameraOrigin.z);
-    camera.lookAt(lookAt);
+    updateCamera();
     renderer.render(scene, camera);
     if (moving || introStart !== undefined) requestFrame();
+  }
+
+  function updateCamera() {
+    // The source photograph can already have a turned head. Rest at its
+    // calibrated face-on view, but keep both endpoints inside the original
+    // reconstruction's safe envelope instead of adding yaw to that envelope.
+    const neutral = THREE.MathUtils.clamp(neutralTravel, -travel, travel);
+    const x = current.x < 0
+      ? THREE.MathUtils.lerp(neutral, -travel, -current.x)
+      : THREE.MathUtils.lerp(neutral, travel, current.x);
+    // Translate in the image plane; a fixed gaze keeps the face framed.
+    camera.position.set(cameraOrigin.x + x, cameraOrigin.y + current.y * travel * 0.7, cameraOrigin.z);
+    camera.lookAt(lookAt);
   }
 
   function stopIntro() {
@@ -226,10 +238,13 @@ export async function mountPortrait(host: HTMLElement, signal: AbortSignal): Pro
     camera.position.copy(cameraOrigin);
     lookAt.fromArray(metadata.target ?? [0, 0, -focusDistance]);
     if (metadata.defaultAngle !== undefined) travel = focusDistance * Math.tan(THREE.MathUtils.degToRad(metadata.defaultAngle));
+    if (metadata.neutralYaw !== undefined && Number.isFinite(metadata.neutralYaw)) {
+      neutralTravel = focusDistance * Math.tan(THREE.MathUtils.degToRad(THREE.MathUtils.clamp(metadata.neutralYaw, -45, 45)));
+    }
     resize();
     await splats?.initialized;
     if (signal.aborted) { cleanup(); return cleanup; }
-    camera.lookAt(lookAt);
+    updateCamera();
     // Await the initial sorting pass before replacing the photograph.
     await spark.update({ scene, camera });
     if (signal.aborted) { cleanup(); return cleanup; }

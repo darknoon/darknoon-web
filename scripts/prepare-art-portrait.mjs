@@ -111,7 +111,7 @@ const spz=await writer.finalize();
 const camera={
   model:'SHARP', representation:'splats', width,height,focalLength,
   verticalFov:2*Math.atan(height/(2*focalLength))*180/Math.PI,
-  focusDistance,defaultAngle:6,splatCount:selected.length,nativeSplatCount:vertices.count,bytes:spz.length,
+  focusDistance,defaultAngle:6,neutralYaw:mode==='portrait'?-4:0,splatCount:selected.length,nativeSplatCount:vertices.count,bytes:spz.length,
   source:'https://github.com/apple-aiml-research/ml-sharp',sourceRevision:'aed6527499ef91cba3b54c18d49a870f25947190',
   sourceImage:basename(source),sourceImageSha256:createHash('sha256').update(sourceBytes).digest('hex'),
   inputSha256:createHash('sha256').update(bytes).digest('hex'),

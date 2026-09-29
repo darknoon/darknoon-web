@@ -73,8 +73,11 @@ are recorded in `public/splats/color-sharp/portrait-camera.json`.
 
 The presentation uses warm paper, a floating portrait, quiet site typography,
 a one-time three-second camera introduction, and bounded ±6° pointer/touch
-movement. User input interrupts the introduction. Drag holds, tap or Recenter
-returns; reduced motion and failures show a high-resolution rendering of the
+movement. The resting view is shifted 4° left from the source camera to make
+the source photograph's turned head more face-on. Pointer and drag movement
+still use the original absolute ±6° envelope; the correction does not expand it.
+User input interrupts the introduction. Drag holds, tap or Recenter
+returns to that corrected view; reduced motion and failures show a high-resolution rendering of the
 same splat instead. No model selector or reconstruction controls remain here.
 
 ```sh
