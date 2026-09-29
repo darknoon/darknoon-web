@@ -1,0 +1,80 @@
+---
+import SplatPortrait from '../../components/SplatPortrait.astro';
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f4f3ef" />
+    <meta name="description" content="Andrew Pouliot — teaching artificial minds how to design." />
+    <title>Andrew Pouliot — Portrait</title>
+  </head>
+  <body>
+    <main>
+      <header><a class="name" href="/">Andrew Pouliot</a><span class="edition">Portrait / 01</span></header>
+      <section class="composition" aria-label="Interactive portrait">
+        <div class="portrait-stage"><SplatPortrait size={660} eager model="color-sharp" presentation="art" /></div>
+        <div class="intro"><h1>Teaching artificial minds how to design.</h1><a class="work" href="/">Selected work</a></div>
+      </section>
+      <footer>
+        <p id="portrait-status" role="status">A portrait of Andrew.</p>
+        <button id="recenter" type="button" disabled>Recenter</button>
+      </footer>
+    </main>
+  </body>
+</html>
+<script>
+  const portrait = document.querySelector('splat-portrait')!;
+  const status = document.querySelector('#portrait-status')!;
+  const reset = document.querySelector<HTMLButtonElement>('#recenter')!;
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)');
+  function update() {
+    const ready = portrait.getAttribute('data-state') === 'ready' && !reduced.matches;
+    reset.disabled = !ready;
+    status.textContent = reduced.matches ? 'A portrait of Andrew.'
+      : ready ? matchMedia('(any-pointer: coarse)').matches ? 'Drag to look around. Tap to return.' : 'Move to look around.'
+      : portrait.getAttribute('data-state') === 'unavailable' ? 'A portrait of Andrew.' : 'Preparing the portrait…';
+  }
+  portrait.addEventListener('portrait-state', update);
+  reduced.addEventListener('change', update);
+  reset.addEventListener('click', () => portrait.dispatchEvent(new KeyboardEvent('keydown', { key:'Escape' })));
+  update();
+</script>
+<style is:global>
+  :root { color-scheme: light; --paper:#f4f3ef; --ink:#252523; }
+  * { box-sizing:border-box; }
+  html { background:var(--paper); }
+  body { margin:0; color:var(--ink); font-family:Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; -webkit-font-smoothing:antialiased; }
+  a { color:inherit; text-decoration:none; }
+  a:focus-visible, button:focus-visible { outline:1px solid currentColor; outline-offset:6px; }
+  main { max-width:1360px; min-height:100svh; margin:auto; padding:40px 64px 26px; display:flex; flex-direction:column; }
+  header { display:flex; align-items:baseline; justify-content:space-between; gap:24px; }
+  .name { font-size:17px; font-weight:500; letter-spacing:-.035em; }
+  .edition { font-size:10px; letter-spacing:.09em; text-transform:uppercase; color:#6b6b64; }
+  .composition { display:grid; grid-template-columns: .88fr 1.12fr; align-items:center; flex:1; min-width:0; padding:24px 0; }
+  .portrait-stage { grid-column:2; grid-row:1; display:flex; align-items:center; justify-content:center; min-width:0; }
+  .portrait-stage splat-portrait { width:100%; }
+  .intro { grid-column:1; grid-row:1; padding:0 16px 0 0; position:relative; }
+  h1 { margin:0; max-width:510px; font-size:clamp(40px,4.7vw,65px); line-height:1.045; font-weight:450; letter-spacing:-.045em; word-spacing:.018em; text-wrap:balance; }
+  .work { display:inline-block; font-size:13px; margin-top:35px; border-bottom:1px solid #a2a29b; padding:0 0 5px; transition:border-color .2s; }
+  .work:hover { border-color:var(--ink); }
+  footer { display:flex; align-items:center; justify-content:space-between; border-top:1px solid #d9d8d2; padding-top:20px; gap:16px; }
+  footer p { margin:0; color:#6b6b64; font-size:11px; letter-spacing:.01em; }
+  button { border:0; background:none; padding:8px 0 8px 18px; min-height:44px; min-width:70px; font:inherit; font-size:11px; color:#5d5d57; cursor:pointer; }
+  button:disabled { opacity:0; pointer-events:none; }
+  button:hover { color:var(--ink); }
+  @media(min-width:1100px) { .composition { min-height:650px; } }
+  @media(max-width:700px) {
+    main { padding:26px 24px 18px; }
+    .name { font-size:16px; }
+    .edition { font-size:9px; }
+    .composition { grid-template-columns:minmax(0,1fr); gap:2px; padding:8px 0 30px; align-content:center; }
+    .portrait-stage { grid-column:1; grid-row:1; width:calc(100% + 32px); margin-left:-16px; }
+    .intro { grid-column:1; grid-row:2; padding:0; }
+    h1 { font-size:clamp(34px,9.6vw,50px); line-height:1.05; max-width:480px; }
+    .work { margin-top:21px; font-size:12px; }
+    footer { padding-top:12px; }
+    footer p,button { font-size:10px; }
+  }
+</style>

@@ -1,0 +1,15 @@
+{
+  "model": "Depth Anything V2 Large",
+  "representation": "depth",
+  "width": 481,
+  "height": 640,
+  "verticalFov": 37.2,
+  "focusDistance": 3.689028263092041,
+  "defaultAngle": 4,
+  "texture": "/splats/portrait-bw.webp",
+  "textureSource": "src/assets/resources/wubba-lubba-dub-dub.jpg",
+  "appearance": "Original photograph, grayscale; no synthesized facial texture",
+  "source": "https://huggingface.co/spaces/depth-anything/Depth-Anything-V2",
+  "inputSha256": "931e7dd8af0bfcdc43c58c1d7fd625fcbf0ae7a2707eff4e3fff9accdeb3fee2",
+  "depthMapping": "Relative inverse depth mapped to 3.65–5.7 arbitrary units; FOV borrowed from MoGe for comparison"
+}

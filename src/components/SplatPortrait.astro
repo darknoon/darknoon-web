@@ -1,0 +1,114 @@
+---
+import { Image } from 'astro:assets';
+import portrait from '../assets/resources/wubba-lubba-dub-dub.jpg';
+import colorCamera from '../../public/splats/color-moge/portrait-camera.json';
+interface Props { size?: number; eager?: boolean; model?: 'sharp' | 'trellis' | 'moge' | 'dav2' | 'moge-splat' | 'color-moge' | 'color-moge-splat' | 'color-sharp'; presentation?: 'study' | 'art' }
+const { size = 300, eager = false, model = 'sharp', presentation = 'study' } = Astro.props;
+const colorSource = model.startsWith('color-');
+const sourceWidth = colorSource ? colorCamera.sourceWidth : portrait.width;
+const sourceHeight = colorSource ? colorCamera.sourceHeight : portrait.height;
+---
+<splat-portrait
+  style={`--portrait-width: ${size}px; --portrait-aspect: ${sourceWidth} / ${sourceHeight}`}
+  data-eager={eager ? 'true' : undefined}
+  data-state="photo"
+  data-model={model}
+  data-presentation={presentation}
+  role="group"
+  aria-label="Andrew Pouliot, interactive portrait. Drag with one finger, move the pointer, or use the arrow keys to look around. Tap or press Escape to reset the view."
+  tabindex="0"
+>
+  {colorSource
+    ? <img src={model === 'color-sharp' ? '/splats/color-sharp/portrait-poster.webp' : colorCamera.texture} alt="Andrew Pouliot" width={sourceWidth} height={sourceHeight} loading="eager" />
+    : <Image src={portrait} alt="Andrew Pouliot" width={size} widths={[300, 600, 900]} sizes={`(max-width: ${size + 32}px) calc(100vw - 32px), ${size}px`} loading="eager" quality={90} />}
+  <canvas aria-hidden="true"></canvas>
+  <span class="portrait-hint" aria-hidden="true"><span class="mouse-hint">move to look around</span><span class="touch-hint">drag to explore · tap to reset</span></span>
+  <span class="loading-hint" aria-hidden="true">loading interactive portrait…</span>
+</splat-portrait>
+
+<script>
+  class SplatPortrait extends HTMLElement {
+    static observedAttributes = ['data-model'];
+    private dispose?: () => void;
+    private controller?: AbortController;
+    private observer?: IntersectionObserver;
+
+    attributeChangedCallback(_name: string, oldValue: string | null, newValue: string | null) {
+      if (oldValue !== null && oldValue !== newValue && this.isConnected) {
+        this.disconnectedCallback();
+        this.connectedCallback();
+      }
+    }
+
+    connectedCallback() {
+      const controller = new AbortController();
+      this.controller = controller;
+      let started = false;
+      const start = async () => {
+        if (started || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        started = true;
+        this.dataset.view = 'splat';
+        this.dataset.state = 'loading';
+        this.dispatchEvent(new CustomEvent('portrait-state', { detail: 'loading' }));
+        try {
+          const { mountPortrait } = await import('../scripts/portrait-splat');
+          if (controller.signal.aborted) return;
+          this.dispose = await mountPortrait(this, controller.signal);
+        } catch (error) {
+          if (controller.signal.aborted) return;
+          this.dataset.state = 'unavailable';
+          this.dispatchEvent(new CustomEvent('portrait-state', { detail: 'unavailable' }));
+          console.warn('Interactive portrait unavailable; keeping the photograph.', error);
+        }
+      };
+      this.addEventListener('pointerenter', start, { signal: controller.signal });
+      this.addEventListener('pointerdown', start, { signal: controller.signal });
+      this.addEventListener('focus', start, { signal: controller.signal });
+      if (this.dataset.eager === 'true') void start();
+      else if (window.matchMedia('(any-pointer: coarse)').matches) {
+        // Prepare the visible portrait before the first mobile drag begins.
+        this.observer = new IntersectionObserver(([entry]) => {
+          if (entry.isIntersecting) { this.observer?.disconnect(); void start(); }
+        });
+        this.observer.observe(this);
+      }
+    }
+
+    disconnectedCallback() {
+      this.controller?.abort();
+      this.observer?.disconnect();
+      this.dispose?.();
+    }
+  }
+  if (!customElements.get('splat-portrait')) customElements.define('splat-portrait', SplatPortrait);
+</script>
+
+<style>
+  splat-portrait { display: block; position: relative; width: var(--portrait-width); max-width: 100%; aspect-ratio: var(--portrait-aspect); overflow: hidden; border-radius: 30px; outline-offset: 5px; touch-action: pan-y pinch-zoom; }
+  [data-state='ready']:not([data-view='photo']) { touch-action: pinch-zoom; }
+  splat-portrait:focus-visible { outline: 2px solid currentColor; }
+  img { display: block; margin: 0; width: 100%; height: 100%; object-fit: cover; }
+  [data-state='ready']:not([data-view='photo']) { user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; }
+  canvas { display: block; position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 240ms ease; }
+  img, canvas { filter: grayscale(1); }
+  [data-state='ready']:not([data-view='photo']) canvas { opacity: 1; }
+  [data-presentation='art'] { border-radius: 0; cursor: grab; }
+  [data-presentation='art'][data-dragging='true'] { cursor: grabbing; }
+  [data-presentation='art'][data-state='ready']:not([data-view='photo']) img { opacity: 0; }
+  [data-presentation='art'] .portrait-hint, [data-presentation='art'] .loading-hint { display: none; }
+  .portrait-hint, .loading-hint { position: absolute; bottom: 14px; left: 0; right: 0; text-align: center; font-size: 11px; letter-spacing: .02em; color: #fff; text-shadow: 0 1px 5px #000; opacity: 0; pointer-events: none; transition: opacity 200ms; }
+  .touch-hint { display: none; }
+  [data-state='loading'] .loading-hint { opacity: .85; }
+  [data-state='ready']:not([data-view='photo']):is(:hover, :focus-visible) .portrait-hint { opacity: .8; }
+  @media (any-pointer: coarse) {
+    .mouse-hint { display: none; }
+    .touch-hint { display: inline; }
+    [data-state='ready']:not([data-view='photo']) .portrait-hint { opacity: .85; }
+    [data-dragging='true'] .portrait-hint { opacity: 0; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    splat-portrait[data-state] { touch-action: pan-y pinch-zoom; }
+    canvas, .portrait-hint, .loading-hint { display: none; transition: none; }
+    [data-presentation='art'][data-state='ready']:not([data-view='photo']) img { opacity: 1; }
+  }
+</style>

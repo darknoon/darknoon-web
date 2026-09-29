@@ -1,0 +1,13 @@
+{
+  "width": 1422,
+  "height": 1894,
+  "focalLength": 1642.190185546875,
+  "verticalFov": 59.94142294110365,
+  "focusDistance": 0.2679198682308197,
+  "splatCount": 1179587,
+  "bytes": 13596719,
+  "inputSha256": "e76836999206a53a0bcafd8a64ddf45c527328e543ce4fd04339abb8d3624037",
+  "colorSource": "src/assets/resources/wubba-lubba-dub-dub.jpg",
+  "colorMethod": "Bilinear reprojection of the original sRGB photograph through the SHARP camera",
+  "source": "https://huggingface.co/spaces/gagndeep/Apple-Sharp-Image-to-3D-View-Synthesis"
+}

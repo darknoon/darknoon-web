@@ -1,0 +1,26 @@
+{
+  "model": "MoGe-2 (Ultra)",
+  "representation": "splats",
+  "width": 589,
+  "height": 640,
+  "verticalFov": 53.1,
+  "sourceWidth": 1034,
+  "sourceHeight": 1124,
+  "focusDistance": 0.9499562978744507,
+  "defaultAngle": 2,
+  "texture": "/splats/color-moge/portrait-bw.webp",
+  "textureSource": "Screen-Shot-2022-01-30-at-2.51.29-PM-1790706267474-gw1im2.jpg",
+  "sourceImageSha256": "f08aa314bb02f2bd50e29b62f2c268d2e7ba022e2285cdb905189703dfaa55a4",
+  "appearance": "Original photograph, grayscale; no synthesized facial texture",
+  "bridgeDepthEdges": true,
+  "source": "https://huggingface.co/spaces/Ruicheng/MoGe-2",
+  "inputSha256": "b9cb9742f5534ff5af591cf5e14b08f29510f25bdf0795f72260d593ba1122d1",
+  "depthMapping": "Native predicted depth; vertical FOV 53.1 degrees reported by the hosted model",
+  "depthRange": [
+    0.8460806608200073,
+    4.794105052947998
+  ],
+  "splatCount": 376960,
+  "bytes": 2836256,
+  "splatMethod": "One flattened Gaussian per sampled photo pixel at MoGe depth; not learned Gaussian reconstruction"
+}

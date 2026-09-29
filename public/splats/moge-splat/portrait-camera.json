@@ -1,0 +1,18 @@
+{
+  "model": "MoGe-2 (Ultra)",
+  "representation": "splats",
+  "width": 481,
+  "height": 640,
+  "verticalFov": 37.2,
+  "focusDistance": 3.7935800552368164,
+  "defaultAngle": 4,
+  "texture": "/splats/portrait-bw.webp",
+  "textureSource": "src/assets/resources/wubba-lubba-dub-dub.jpg",
+  "appearance": "Original photograph, grayscale; no synthesized facial texture",
+  "source": "https://huggingface.co/spaces/Ruicheng/MoGe-2",
+  "inputSha256": "9adf4d8e91427aa3f1f4e595a1ac5130f5078ab188340f3d6cd3501f5d8b5f57",
+  "depthMapping": "Native predicted depth; vertical FOV 37.2 degrees reported by the hosted model",
+  "splatCount": 307840,
+  "bytes": 2020472,
+  "splatMethod": "One flattened Gaussian per sampled photo pixel at MoGe depth; not learned Gaussian reconstruction"
+}

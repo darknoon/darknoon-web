@@ -1,0 +1,117 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SplatPortrait from './SplatPortrait.astro';
+interface Props { source?: 'original' | 'color' }
+const colorSource = Astro.props.source === 'color';
+const defaultAngle = colorSource ? 2 : 4;
+---
+<Layout title="Portrait in space">
+  <div class="study" data-source={colorSource ? 'color' : 'original'}>
+    <SplatPortrait size={420} eager model={colorSource ? 'color-moge-splat' : 'moge'} />
+    <div class="study-copy">
+      <h1>Portrait in space</h1>
+      <p>{colorSource ? 'Color in. Black and white out. More room to look around.' : 'The original black-and-white photograph, with depth.'}</p>
+      <p class="instructions">Drag gently across the portrait, or move your mouse. Watch the nose, ears, and background shift at different rates. Tap to recenter.</p>
+      <label class="model-label" for="model">Reconstruction</label>
+      <select id="model">
+        {colorSource ? <>
+          <option value="color-moge-splat" selected>MoGe-2 — photo-colored splats</option>
+          <option value="color-moge">MoGe-2 — photograph + depth</option>
+        </> : <>
+          <option value="moge" selected>MoGe-2 — photograph + depth</option>
+          <option value="moge-splat">MoGe-2 — photo-colored splats</option>
+          <option value="dav2">Depth Anything V2 — photograph + depth</option>
+          <option value="sharp">SHARP — original depth estimate</option>
+        </>}
+      </select>
+      <fieldset disabled>
+        <legend>View</legend>
+        <div class="views">
+          <label><input type="radio" name="view" value="photo" /> Photo</label>
+          <label><input type="radio" name="view" value="splat" checked /> 3D</label>
+          <label><input type="radio" name="view" value="gaussians" /> Structure</label>
+        </div>
+        <label class="travel" for="travel">Side-to-side view <output for="travel">±{defaultAngle}°</output></label>
+        <input id="travel" type="range" min="0" max={colorSource ? 6 : 10} step="1" value={defaultAngle} />
+        <p class="fine">Small movements preserve the portrait. Wider views expose missing surfaces. “Structure” shows the mesh or individual splats.</p>
+      </fieldset>
+      <p id="splat-status" class="fine" role="status">Loading the 3D portrait…</p>
+      {colorSource && <>
+        <p data-model-note="color-moge" class="fine" hidden><a href="https://huggingface.co/spaces/Ruicheng/MoGe-2">MoGe-2</a> ran Ultra inference on the full color photo. This comparison uses a continuous textured depth surface: sharper detail, but edge pixels stretch at wider angles.</p>
+        <p data-model-note="color-moge-splat" class="fine"><a href="https://huggingface.co/spaces/Ruicheng/MoGe-2">MoGe-2</a> ran Ultra inference on the full color photo. Its depth is sampled into 376,960 flattened Gaussians, colored from the photograph converted to B/W afterward. 2.8 MB. No synthesized facial texture; these are converted depth samples, not native SHARP output.</p>
+        <p class="fine">Full 1034 × 1124 framing. The room gives a visible depth reference, but newly exposed background behind the face is missing. SHARP's hosted GPU quota prevented a second reconstruction.</p>
+        <p class="fine">This is a different photograph from the smiling portrait, so this comparison cannot isolate whether color improves the model.</p>
+      </>}
+      <p data-model-note="moge" class="fine" hidden={colorSource}><a href="https://huggingface.co/spaces/Ruicheng/MoGe-2">MoGe-2</a>, Ultra inference: predicted depth underneath the original photograph. This is a textured depth surface, not a complete head or learned Gaussian reconstruction.</p>
+      <p data-model-note="moge-splat" class="fine" hidden>The same MoGe-2 depth, represented as 307,840 flattened Gaussians colored from the original B/W photo. 2.0 MB. This conversion uses no invented facial texture.</p>
+      <p data-model-note="dav2" class="fine" hidden><a href="https://huggingface.co/spaces/depth-anything/Depth-Anything-V2">Depth Anything V2 Large</a> with the same original photo texture. Relative depth is calibrated for display, not measured in meters.</p>
+      <p data-model-note="sharp" class="fine" hidden>Geometry from <a href="https://huggingface.co/spaces/gagndeep/Apple-Sharp-Image-to-3D-View-Synthesis">SHARP on Hugging Face</a>, recolored from the original photo. 1,179,587 Gaussians · 13.6 MB. Large offsets expose gaps.</p>
+      <p class="fine">These are near-frontal experiments, not scans. The photograph supplies the likeness; estimated depth supplies the movement. No unseen profile is generated.</p>
+      <p class="fine"><a href={colorSource ? '/splat/' : '/splat/color/'}>{colorSource ? 'Compare the earlier smiling portrait' : 'Try the wider color-source portrait'}</a></p>
+      <p class="fine"><a href="/">Home page</a> (still uses the original SHARP version)</p>
+      <noscript><p>The photograph is available; the interactive view requires JavaScript.</p></noscript>
+    </div>
+  </div>
+</Layout>
+<script>
+  const portrait = document.querySelector('splat-portrait')!;
+  const fieldset = document.querySelector('fieldset')!;
+  const status = document.querySelector('#splat-status')!;
+  const travel = document.querySelector<HTMLInputElement>('#travel')!;
+  const model = document.querySelector<HTMLSelectElement>('#model')!;
+  const output = document.querySelector('output')!;
+  const colorSource = document.querySelector<HTMLElement>('.study')!.dataset.source === 'color';
+  function updateStatus() {
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    fieldset.disabled = portrait.getAttribute('data-state') !== 'ready' || reduced;
+    status.textContent = reduced ? 'Showing the photograph to respect reduced motion.'
+      : portrait.getAttribute('data-state') === 'unavailable' ? '3D is unavailable in this browser. Showing the photograph.'
+      : portrait.getAttribute('data-state') === 'ready' ? window.matchMedia('(any-pointer: coarse)').matches
+        ? 'Drag the portrait with one finger; tap to recenter. Swipe outside it to scroll.'
+        : 'Move the pointer, or focus the portrait and use the arrow keys. Escape recenters.'
+      : 'Loading the 3D portrait…';
+  }
+  portrait.addEventListener('portrait-state', updateStatus);
+  window.matchMedia('(prefers-reduced-motion: reduce)').addEventListener('change', updateStatus);
+  updateStatus();
+  model.addEventListener('change', () => {
+    travel.max = colorSource ? '6' : model.value === 'sharp' ? '15' : '10';
+    travel.value = colorSource ? '2' : model.value === 'sharp' ? '5' : '4';
+    output.textContent = `±${travel.value}°`;
+    document.querySelector<HTMLInputElement>('input[value="splat"]')!.checked = true;
+    document.querySelectorAll<HTMLElement>('[data-model-note]').forEach(note => { note.hidden = note.dataset.modelNote !== model.value; });
+    portrait.setAttribute('data-model', model.value);
+  });
+  portrait.addEventListener('portrait-state', () => {
+    if (portrait.getAttribute('data-state') === 'ready') {
+      portrait.dispatchEvent(new CustomEvent('portrait-options', { detail: { angle: Number(travel.value) } }));
+    }
+  });
+  fieldset.addEventListener('change', () => {
+    const view = document.querySelector<HTMLInputElement>('input[name="view"]:checked')!.value;
+    portrait.dispatchEvent(new CustomEvent('portrait-options', { detail: { view } }));
+  });
+  travel.addEventListener('input', () => {
+    output.textContent = `±${travel.value}°`;
+    portrait.dispatchEvent(new CustomEvent('portrait-options', { detail: { angle: Number(travel.value) } }));
+  });
+</script>
+<style>
+  .study { display: grid; grid-template-columns: minmax(0, 420px) minmax(0, 1fr); gap: 3rem; align-items: start; }
+  h1 { font-size: 1.4rem; font-weight: 500; margin: 0 0 1rem; }
+  p { margin: 0 0 1.2rem; }
+  .instructions { color: var(--text-muted); font-size: .9rem; }
+  fieldset { padding: 0; margin: 2rem 0 1rem; border: 0; min-width: 0; }
+  legend { margin-bottom: .7rem; font-size: .8rem; color: var(--text-muted); }
+  .views { display: flex; gap: 1rem; font-size: .85rem; margin-bottom: 1.8rem; }
+  label { cursor: pointer; }
+  input { accent-color: var(--text); }
+  .model-label { display: block; font-size: .8rem; color: var(--text-muted); margin-bottom: .6rem; }
+  select { width: 100%; max-width: 100%; font: inherit; font-size: .85rem; padding: .7rem; border: 1px solid currentColor; border-radius: 8px; background: transparent; color: inherit; }
+  .travel { display: flex; justify-content: space-between; font-size: .8rem; }
+  output { color: var(--text-muted); font-variant-numeric: tabular-nums; }
+  input[type='range'] { width: 100%; margin: .7rem 0 1rem; }
+  .fine { font-size: .75rem; line-height: 1.5; color: var(--text-muted); }
+  .fine a { color: inherit; }
+  @media (max-width: 700px) { .study { grid-template-columns: minmax(0, 1fr); gap: 1.5rem; } .study-copy { min-width: 0; max-width: 420px; } }
+</style>

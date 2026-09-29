@@ -1,0 +1,54 @@
+{
+  "width": 1422,
+  "height": 1894,
+  "verticalFov": 40,
+  "focusDistance": 1.9286766386913883,
+  "cameraPosition": [
+    0,
+    0,
+    1.9286766386913883
+  ],
+  "target": [
+    0,
+    0,
+    0
+  ],
+  "defaultAngle": 28,
+  "model": "TRELLIS-image-large",
+  "splatCount": 682105,
+  "bytes": 9898828,
+  "inputSha256": "522af3250c37290ac13594fe9511860d094d86767d2b1f403f992ba18964bc85",
+  "source": "https://huggingface.co/spaces/trellis-community/TRELLIS",
+  "sourceRevision": "91c1b5afbf24094b3ec7d8a27ae2e49608bd668f",
+  "generation": {
+    "seed": 42,
+    "sparseStructureSteps": 25,
+    "structuredLatentSteps": 25,
+    "sparseGuidance": 7.5,
+    "latentGuidance": 3
+  },
+  "colorMethod": "Native TRELLIS spherical-harmonic DC colors; no photograph reprojection",
+  "coordinates": "TRELLIS PLY centered at bounding-box midpoint; viewer rotates X by pi; arbitrary scale",
+  "bounds": {
+    "min": [
+      -0.3733065128326416,
+      -0.4952768087387085,
+      -0.3987208604812622
+    ],
+    "max": [
+      0.37328827381134033,
+      0.4986879825592041,
+      0.39866018295288086
+    ],
+    "center": [
+      -0.000009119510650634766,
+      0.0017055869102478027,
+      -0.000030338764190673828
+    ],
+    "extent": [
+      0.7465947866439819,
+      0.9939647912979126,
+      0.7973810434341431
+    ]
+  }
+}

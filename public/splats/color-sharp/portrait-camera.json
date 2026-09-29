@@ -1,0 +1,75 @@
+{
+  "model": "SHARP",
+  "representation": "splats",
+  "width": 1034,
+  "height": 1124,
+  "focalLength": 1058.96630859375,
+  "verticalFov": 55.91034007712964,
+  "focusDistance": 0.41502994298934937,
+  "defaultAngle": 6,
+  "splatCount": 397568,
+  "nativeSplatCount": 1179648,
+  "bytes": 5621695,
+  "source": "https://github.com/apple-aiml-research/ml-sharp",
+  "sourceRevision": "aed6527499ef91cba3b54c18d49a870f25947190",
+  "sourceImage": "Screen-Shot-2022-01-30-at-2.51.29-PM-1790706267474-gw1im2.jpg",
+  "sourceImageSha256": "f08aa314bb02f2bd50e29b62f2c268d2e7ba022e2285cdb905189703dfaa55a4",
+  "inputSha256": "5ba3e282a459f0f4d473ea58a6b7c6ada4046ec8e5d800e3b890aaced8c9ec52",
+  "reconstruction": "Native SHARP predicted means, rotations, scales, and opacities; not sampled monocular depth",
+  "appearance": "Grayscale source photograph reprojected through the source camera, tone-matched to the original B/W portrait",
+  "toneTransfer": {
+    "reference": "src/assets/resources/wubba-lubba-dub-dub.jpg",
+    "quantiles": [
+      0,
+      0.02,
+      0.1,
+      0.25,
+      0.5,
+      0.75,
+      0.9,
+      0.98,
+      1
+    ],
+    "sourceKnots": [
+      0,
+      19,
+      53,
+      100,
+      152,
+      204,
+      223,
+      235,
+      255
+    ],
+    "referenceKnots": [
+      0,
+      26,
+      92,
+      161,
+      221,
+      247,
+      252,
+      252,
+      255
+    ],
+    "strength": 0.88,
+    "shadowContrast": 18,
+    "sourceSharpen": {
+      "sigma": 0.8,
+      "m1": 1,
+      "m2": 2
+    }
+  },
+  "isolation": "Native distance matte plus lower-shirt and outer-edge opacity feathering",
+  "isolationParameters": {
+    "depth": [
+      1.4,
+      1.8
+    ],
+    "bottom": [
+      0.82,
+      0.96
+    ],
+    "side": 0.065
+  }
+}
