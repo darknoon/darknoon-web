@@ -31,7 +31,7 @@ const sections = [
         <nav class="group-list" aria-label={label ?? 'Selected work'}>
           <ul>
             {items.map(({ year, name, href, current }) => (
-              <li><a href={href}><span class="year">{year}</span>{current && <span class="dot" aria-hidden="true"></span>}<span class="link-name">{name}</span>{current && <span class="sr-only">(current)</span>}</a></li>
+              <li><a href={href}><span class="year">{year}</span><span class="link-name">{name}</span>{current && <span class="dot" aria-hidden="true"></span>}{current && <span class="sr-only">(current)</span>}</a></li>
             ))}
           </ul>
         </nav>
@@ -51,7 +51,7 @@ const sections = [
   .group-list a { position: relative; color: inherit; display: inline-flex; align-items: baseline; padding: 0.2rem 0; text-decoration: none; }
   .group-list a:hover .link-name { text-decoration: underline; }
   .group-list a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
-  .dot { position: absolute; left: -0.9rem; top: 50%; transform: translateY(-50%); width: 0.5rem; height: 0.5rem; aspect-ratio: 1; border-radius: 50%; background: currentColor; }
+  .dot { align-self: center; flex: none; width: 0.5rem; height: 0.5rem; aspect-ratio: 1; border-radius: 50%; background: currentColor; margin-left: 0.45rem; }
   .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
   .year { flex: 0 0 3rem; margin-left: -4rem; margin-right: 1rem; text-align: right; font-size: 0.8rem; font-variant-numeric: tabular-nums; opacity: 0; pointer-events: none; }
   a:hover .year, a:focus-visible .year { opacity: 0.5; }
