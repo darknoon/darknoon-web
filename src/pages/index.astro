@@ -49,6 +49,9 @@ const sections: { label: string | null; items: WorkItem[] }[] = [
         <label for="beat-strength">Strength</label>
         <input id="beat-strength" type="range" min="0" max="0.8" step="0.01" value="0.18" />
         <output id="beat-strength-value" for="beat-strength">0.18</output>
+        <label for="dot-size">Size</label>
+        <input id="dot-size" type="range" min="0.12" max="0.8" step="0.02" value="0.4" />
+        <output id="dot-size-value" for="dot-size">0.40rem</output>
       </div>
     )}
   </div>
@@ -110,6 +113,21 @@ const sections: { label: string | null; items: WorkItem[] }[] = [
     if (modeSelect) modeSelect.addEventListener('change', apply);
     apply();
   }
+
+  const sizeSlider = document.getElementById('dot-size');
+  const sizeReadout = document.getElementById('dot-size-value');
+  if (sizeSlider instanceof HTMLInputElement && sizeReadout) {
+    const applySize = () => {
+      const size = Number(sizeSlider.value);
+      sizeReadout.textContent = `${size.toFixed(2)}rem`;
+      for (const dot of dots) {
+        dot.style.width = `${size}rem`;
+        dot.style.height = `${size}rem`;
+      }
+    };
+    sizeSlider.addEventListener('input', applySize);
+    applySize();
+  }
 </script>
 <style>
   .portrait { position: relative; }
@@ -123,7 +141,7 @@ const sections: { label: string | null; items: WorkItem[] }[] = [
   .group-list a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
   .dot { align-self: center; position: relative; top: 0.06rem; flex: none; width: 0.4rem; height: 0.4rem; aspect-ratio: 1; border-radius: 50%; background: currentColor; margin-left: 0.38rem; transform-origin: 50% 50%; animation: heartbeat 1.05s cubic-bezier(0.22, 0.61, 0.36, 1) infinite; }
   .beat-tuner { position: fixed; right: 1rem; bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; padding: 0.45rem 0.75rem; border: 1px solid color-mix(in srgb, var(--text-muted) 40%, transparent); border-radius: 999px; background: color-mix(in srgb, var(--background) 88%, var(--text) 12%); color: var(--text-muted); font-size: 0.8rem; z-index: 10; }
-  .beat-tuner input { width: 8rem; }
+  .beat-tuner input { width: 6rem; }
   .beat-tuner select { font: inherit; color: inherit; background: transparent; border: 1px solid color-mix(in srgb, var(--text-muted) 40%, transparent); border-radius: 6px; padding: 0.1rem 0.25rem; }
   .beat-tuner output { min-width: 2.2rem; text-align: right; font-variant-numeric: tabular-nums; }
   :global(:root) { --beat: 0.18; }
