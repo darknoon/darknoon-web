@@ -5,7 +5,7 @@ import portrait from '../assets/resources/wubba-lubba-dub-dub.jpg';
 
 // Selected work, split into professional work and personal/fun projects.
 const sections = [
-  { label: 'Work', items: [
+  { label: null, items: [
     { year: 2026, name: 'Fieldwork', href: 'https://fieldwork.software/' },
     { year: 2024, name: 'Prefix Canvas', href: 'https://canvas.prefix.design/files/Colored%20Boxes' },
     { year: 2022, name: 'Diagram', href: 'https://www.figma.com/blog/ai-the-next-chapter-in-design/' },
@@ -26,9 +26,9 @@ const sections = [
   <div class="home-copy">
     <p>I'm teaching artificial minds how to design</p>
     {sections.map(({ label, items }) => (
-      <section class="group" aria-label={label}>
-        <h2 class="group-label">{label}</h2>
-        <nav class="group-list">
+      <section class="group">
+        {label && <h2 class="group-label">{label}</h2>}
+        <nav class="group-list" aria-label={label ?? 'Selected work'}>
           <ul>
             {items.map(({ year, name, href }) => (
               <li><a href={href}><span class="year">{year}</span><span class="link-name">{name}</span></a></li>
@@ -49,11 +49,11 @@ const sections = [
   .group-list ul { list-style: none; margin: 0; padding: 0; }
   .group-list li { margin: 0; }
   .group-list a { position: relative; color: inherit; display: inline-flex; align-items: baseline; padding: 0.2rem 0; text-decoration: none; }
-  .group-list a:hover .link-name, .more:hover { text-decoration: underline; }
+  .group-list a:hover .link-name { text-decoration: underline; }
   .group-list a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
   .year { flex: 0 0 3rem; margin-left: -4rem; margin-right: 1rem; text-align: right; font-size: 0.8rem; font-variant-numeric: tabular-nums; opacity: 0; pointer-events: none; }
   a:hover .year, a:focus-visible .year { opacity: 0.5; }
-  .more { display: inline-block; margin-top: 2rem; padding-bottom: 2rem; color: var(--text-muted); }
+  .more { display: inline-block; margin-top: 2rem; padding-bottom: 2rem; color: var(--text-muted); text-decoration: none; }
   @media (max-width: 1100px) {
     .group { padding-left: 3.5rem; }
   }
