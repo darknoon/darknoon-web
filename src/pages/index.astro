@@ -40,8 +40,13 @@ const sections: { label: string | null; items: WorkItem[] }[] = [
     ))}
     <a class="more" href="/old/">Writing</a>
     {import.meta.env.DEV && (
-      <div class="beat-tuner" role="group" aria-label="Heartbeat strength">
-        <label for="beat-strength">Heartbeat</label>
+      <div class="beat-tuner" role="group" aria-label="Dot animation">
+        <label for="beat-mode">Motion</label>
+        <select id="beat-mode">
+          <option value="breathe">Breathe</option>
+          <option value="heartbeat">Heartbeat</option>
+        </select>
+        <label for="beat-strength">Strength</label>
         <input id="beat-strength" type="range" min="0" max="0.8" step="0.01" value="0.18" />
         <output id="beat-strength-value" for="beat-strength">0.18</output>
       </div>
@@ -49,35 +54,60 @@ const sections: { label: string | null; items: WorkItem[] }[] = [
   </div>
 </Layout>
 <script>
+  type Mode = 'breathe' | 'heartbeat';
+  const modeSelect = document.getElementById('beat-mode');
   const slider = document.getElementById('beat-strength');
   const readout = document.getElementById('beat-strength-value');
   const dots = Array.from(document.querySelectorAll<HTMLElement>('.dot'));
+
+  const specs: Record<Mode, { duration: number; easing: string; frames: (v: number) => Keyframe[] }> = {
+    breathe: {
+      duration: 3600,
+      easing: 'ease-in-out',
+      frames: (v) => [
+        { transform: 'scale(1)', offset: 0 },
+        { transform: `scale(${1 + v})`, offset: 0.5 },
+        { transform: 'scale(1)', offset: 1 },
+      ],
+    },
+    heartbeat: {
+      duration: 1400,
+      easing: 'ease-in-out',
+      frames: (v) => [
+        { transform: 'scale(1)', offset: 0 },
+        { transform: `scale(${1 + v})`, offset: 0.12 },
+        { transform: `scale(${1 + v * 0.08})`, offset: 0.34 },
+        { transform: `scale(${1 + v * 0.5})`, offset: 0.46 },
+        { transform: 'scale(1)', offset: 0.68 },
+        { transform: 'scale(1)', offset: 1 },
+      ],
+    },
+  };
+
   if (slider instanceof HTMLInputElement && readout && dots.length > 0) {
-    const frames = (v: number): Keyframe[] => [
-      { transform: 'scale(1)', offset: 0 },
-      { transform: `scale(${1 + v})`, offset: 0.08 },
-      { transform: `scale(${1 - v * 0.06})`, offset: 0.16 },
-      { transform: `scale(${1 + v * 0.5})`, offset: 0.24 },
-      { transform: 'scale(1)', offset: 0.32 },
-      { transform: 'scale(1)', offset: 1 },
-    ];
     const apply = () => {
       const value = Number(slider.value);
       readout.textContent = value.toFixed(2);
+      const mode: Mode =
+        modeSelect instanceof HTMLSelectElement && modeSelect.value === 'heartbeat'
+          ? 'heartbeat'
+          : 'breathe';
+      const spec = specs[mode];
       const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       for (const dot of dots) {
         dot.style.animation = 'none';
         for (const animation of dot.getAnimations()) animation.cancel();
         if (value > 0 && !reduced) {
-          dot.animate(frames(value), {
-            duration: 1050,
+          dot.animate(spec.frames(value), {
+            duration: spec.duration,
             iterations: Infinity,
-            easing: 'cubic-bezier(0.22, 0.61, 0.36, 1)',
+            easing: spec.easing,
           });
         }
       }
     };
     slider.addEventListener('input', apply);
+    if (modeSelect) modeSelect.addEventListener('change', apply);
     apply();
   }
 </script>
@@ -94,6 +124,7 @@ const sections: { label: string | null; items: WorkItem[] }[] = [
   .dot { align-self: center; flex: none; width: 0.4rem; height: 0.4rem; aspect-ratio: 1; border-radius: 50%; background: currentColor; margin-left: 0.45rem; transform-origin: 50% 50%; animation: heartbeat 1.05s cubic-bezier(0.22, 0.61, 0.36, 1) infinite; }
   .beat-tuner { position: fixed; right: 1rem; bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; padding: 0.45rem 0.75rem; border: 1px solid color-mix(in srgb, var(--text-muted) 40%, transparent); border-radius: 999px; background: color-mix(in srgb, var(--background) 88%, var(--text) 12%); color: var(--text-muted); font-size: 0.8rem; z-index: 10; }
   .beat-tuner input { width: 8rem; }
+  .beat-tuner select { font: inherit; color: inherit; background: transparent; border: 1px solid color-mix(in srgb, var(--text-muted) 40%, transparent); border-radius: 6px; padding: 0.1rem 0.25rem; }
   .beat-tuner output { min-width: 2.2rem; text-align: right; font-variant-numeric: tabular-nums; }
   :global(:root) { --beat: 0.18; }
   @keyframes heartbeat {
