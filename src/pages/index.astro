@@ -3,35 +3,21 @@ import Layout from '../layouts/Layout.astro';
 import { Image } from 'astro:assets';
 import portrait from '../assets/resources/wubba-lubba-dub-dub.jpg';
 
-// Selected work, rather than a complete archive.
-const selectedWork = [
-  { year: 2026, items: [
-    { name: 'Fieldwork', href: 'https://fieldwork.software/' },
-    { name: 'Drawing Room', href: 'https://brush.tips/' },
+// Selected work, split into professional work and personal/fun projects.
+const sections = [
+  { label: 'Work', items: [
+    { year: 2026, name: 'Fieldwork', href: 'https://fieldwork.software/' },
+    { year: 2024, name: 'Prefix Canvas', href: 'https://canvas.prefix.design/files/Colored%20Boxes' },
+    { year: 2022, name: 'Diagram', href: 'https://www.figma.com/blog/ai-the-next-chapter-in-design/' },
+    { year: 2019, name: 'Statue of Liberty official app', href: 'https://apps.apple.com/us/story/id1464767766' },
+    { year: 2018, name: 'Flower Petals', href: '/projects/#meyohas-petals' },
+    { year: 2017, name: 'Lobe', href: 'https://lobe.ai/' },
+    { year: 2016, name: 'Origami Studio', href: 'https://origami.design' },
+    { year: 2014, name: 'Facebook Paper', href: 'https://www.youtube.com/watch?v=Zq6-b9_V9lA' },
   ] },
-  { year: 2024, items: [
-    { name: 'Prefix Canvas', href: 'https://canvas.prefix.design/files/Colored%20Boxes' },
-  ] },
-  { year: 2022, items: [
-    { name: 'Diagram', href: 'https://www.figma.com/blog/ai-the-next-chapter-in-design/' },
-  ] },
-  { year: 2020, items: [
-    { name: 'GAN bending', href: '/2020/03/03/gan-hacking/' },
-  ] },
-  { year: 2019, items: [
-    { name: 'Statue of Liberty official app', href: 'https://apps.apple.com/us/story/id1464767766' },
-  ] },
-  { year: 2018, items: [
-    { name: 'Flower Petals', href: '/projects/#meyohas-petals' },
-  ] },
-  { year: 2017, items: [
-    { name: 'Lobe', href: 'https://lobe.ai/' },
-  ] },
-  { year: 2016, items: [
-    { name: 'Origami Studio', href: 'https://origami.design' },
-  ] },
-  { year: 2014, items: [
-    { name: 'Facebook Paper', href: 'https://www.youtube.com/watch?v=Zq6-b9_V9lA' },
+  { label: 'Fun', items: [
+    { year: 2026, name: 'Drawing Room', href: 'https://brush.tips/' },
+    { year: 2020, name: 'GAN bending', href: '/2020/03/03/gan-hacking/' },
   ] },
 ];
 ---
@@ -39,30 +25,36 @@ const selectedWork = [
   <div class="portrait"><Image src={portrait} alt="Andrew Pouliot" width={300} widths={[300, 600]} sizes="300px" loading="eager" quality={90} /></div>
   <div class="home-copy">
     <p>I'm teaching artificial minds how to design</p>
-    <nav class="selected-work" aria-label="Selected work by year">
-      <ul>
-        {selectedWork.flatMap(({ year, items }) => items.map(({ name, href }) => (
-          <li><a href={href}><span class="year">{year}</span><span class="link-name">{name}</span></a></li>
-        )))}
-      </ul>
-      <a class="more" href="/old/">More</a>
-    </nav>
+    {sections.map(({ label, items }) => (
+      <section class="group" aria-label={label}>
+        <h2 class="group-label">{label}</h2>
+        <nav class="group-list">
+          <ul>
+            {items.map(({ year, name, href }) => (
+              <li><a href={href}><span class="year">{year}</span><span class="link-name">{name}</span></a></li>
+            ))}
+          </ul>
+        </nav>
+      </section>
+    ))}
+    <a class="more" href="/old/">More</a>
   </div>
 </Layout>
 <style>
   .portrait { position: relative; }
   .portrait img { margin: 0; width: 300px; height: auto; border-radius: 30px; }
   .home-copy > p { margin-top: 1rem; max-width: 44rem; }
-  .selected-work { margin-top: 2rem; padding-bottom: 2rem; }
-  .selected-work ul { list-style: none; margin: 0; padding: 0; }
-  .selected-work li { margin: 0; }
-  .selected-work a { position: relative; color: inherit; display: inline-flex; align-items: baseline; padding: 0.2rem 0; text-decoration: none; }
-  .selected-work a:hover .link-name, .selected-work .more:hover { text-decoration: underline; }
-  .selected-work a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
+  .group { margin-top: 2rem; }
+  .group-label { margin: 0 0 0.5rem; font-size: 0.75rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); }
+  .group-list ul { list-style: none; margin: 0; padding: 0; }
+  .group-list li { margin: 0; }
+  .group-list a { position: relative; color: inherit; display: inline-flex; align-items: baseline; padding: 0.2rem 0; text-decoration: none; }
+  .group-list a:hover .link-name, .more:hover { text-decoration: underline; }
+  .group-list a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
   .year { flex: 0 0 3rem; margin-left: -4rem; margin-right: 1rem; text-align: right; font-size: 0.8rem; font-variant-numeric: tabular-nums; opacity: 0; pointer-events: none; }
   a:hover .year, a:focus-visible .year { opacity: 0.5; }
-  .selected-work .more { margin-top: 1rem; color: var(--text-muted); }
+  .more { display: inline-block; margin-top: 2rem; padding-bottom: 2rem; color: var(--text-muted); }
   @media (max-width: 1100px) {
-    .selected-work { padding-left: 3.5rem; }
+    .group { padding-left: 3.5rem; }
   }
 </style>
