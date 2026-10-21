@@ -51,10 +51,31 @@ const sections: { label: string | null; items: WorkItem[] }[] = [
 <script>
   const slider = document.getElementById('beat-strength');
   const readout = document.getElementById('beat-strength-value');
-  if (slider instanceof HTMLInputElement && readout) {
+  const dots = Array.from(document.querySelectorAll<HTMLElement>('.dot'));
+  if (slider instanceof HTMLInputElement && readout && dots.length > 0) {
+    const frames = (v: number): Keyframe[] => [
+      { transform: 'scale(1)', offset: 0 },
+      { transform: `scale(${1 + v})`, offset: 0.08 },
+      { transform: `scale(${1 - v * 0.06})`, offset: 0.16 },
+      { transform: `scale(${1 + v * 0.5})`, offset: 0.24 },
+      { transform: 'scale(1)', offset: 0.32 },
+      { transform: 'scale(1)', offset: 1 },
+    ];
     const apply = () => {
-      document.documentElement.style.setProperty('--beat', slider.value);
-      readout.textContent = Number(slider.value).toFixed(2);
+      const value = Number(slider.value);
+      readout.textContent = value.toFixed(2);
+      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      for (const dot of dots) {
+        dot.style.animation = 'none';
+        for (const animation of dot.getAnimations()) animation.cancel();
+        if (value > 0 && !reduced) {
+          dot.animate(frames(value), {
+            duration: 1050,
+            iterations: Infinity,
+            easing: 'cubic-bezier(0.22, 0.61, 0.36, 1)',
+          });
+        }
+      }
     };
     slider.addEventListener('input', apply);
     apply();
