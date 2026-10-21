@@ -18,14 +18,14 @@ const sections = [
   ] },
 ];
 ---
-<Layout title="Work/Fun label variants">
-  <h1>Section label variants</h1>
-  <p class="note">Same list, five ways to head the two sections. Click a heading to compare. Years appear on hover, as on the real page.</p>
+<Layout title="Work/Fun label options">
+  <h1>Section labels — same size</h1>
+  <p class="note">All three keep the label at the list's font size. Only weight or color changes.</p>
 
   <section class="variant">
-    <h2 class="variant-name">A · Quiet sentence case</h2>
+    <h2 class="variant-name">1 · Bold, same color</h2>
     {sections.map(({ label, items }) => (
-      <div class="group var-a">
+      <div class="group opt-bold">
         <p class="label">{label}</p>
         <ul>{items.map(({ year, name, href }) => (
           <li><a href={href}><span class="year">{year}</span><span class="link-name">{name}</span></a></li>
@@ -35,9 +35,9 @@ const sections = [
   </section>
 
   <section class="variant">
-    <h2 class="variant-name">B · Hairline rule over the list</h2>
+    <h2 class="variant-name">2 · Muted color, regular weight</h2>
     {sections.map(({ label, items }) => (
-      <div class="group var-b">
+      <div class="group opt-muted">
         <p class="label">{label}</p>
         <ul>{items.map(({ year, name, href }) => (
           <li><a href={href}><span class="year">{year}</span><span class="link-name">{name}</span></a></li>
@@ -47,45 +47,10 @@ const sections = [
   </section>
 
   <section class="variant">
-    <h2 class="variant-name">C · Bold inline heading</h2>
+    <h2 class="variant-name">3 · Accent color, regular weight</h2>
     {sections.map(({ label, items }) => (
-      <div class="group var-c">
+      <div class="group opt-accent">
         <p class="label">{label}</p>
-        <ul>{items.map(({ year, name, href }) => (
-          <li><a href={href}><span class="year">{year}</span><span class="link-name">{name}</span></a></li>
-        ))}</ul>
-      </div>
-    ))}
-  </section>
-
-  <section class="variant">
-    <h2 class="variant-name">D · Larger heading, normal weight</h2>
-    {sections.map(({ label, items }) => (
-      <div class="group var-d">
-        <p class="label">{label}</p>
-        <ul>{items.map(({ year, name, href }) => (
-          <li><a href={href}><span class="year">{year}</span><span class="link-name">{name}</span></a></li>
-        ))}</ul>
-      </div>
-    ))}
-  </section>
-
-  <section class="variant">
-    <h2 class="variant-name">E · Label in the year gutter</h2>
-    {sections.map(({ label, items }) => (
-      <div class="group var-e">
-        <p class="label">{label}</p>
-        <ul>{items.map(({ year, name, href }) => (
-          <li><a href={href}><span class="year">{year}</span><span class="link-name">{name}</span></a></li>
-        ))}</ul>
-      </div>
-    ))}
-  </section>
-
-  <section class="variant">
-    <h2 class="variant-name">F · No label, divider + spacing</h2>
-    {sections.map(({ items }, i) => (
-      <div class={`group var-f${i ? ' divided' : ''}`}>
         <ul>{items.map(({ year, name, href }) => (
           <li><a href={href}><span class="year">{year}</span><span class="link-name">{name}</span></a></li>
         ))}</ul>
@@ -98,30 +63,17 @@ const sections = [
   .note { color: var(--text-muted); max-width: 44rem; }
   .variant { margin: 2.5rem 0 4rem; }
   .variant-name { font-size: 0.9rem; font-weight: 600; margin: 0 0 1rem; color: var(--text-muted); }
-  .group { margin-bottom: 2rem; }
+  .group { margin-bottom: 1.5rem; }
   .group ul { list-style: none; margin: 0; padding: 0; }
   .group li { margin: 0; }
   .group a { position: relative; color: inherit; display: inline-flex; align-items: baseline; padding: 0.2rem 0; text-decoration: none; }
   .group a:hover .link-name { text-decoration: underline; }
   .group .year { flex: 0 0 3rem; margin-left: -4rem; margin-right: 1rem; text-align: right; font-size: 0.8rem; font-variant-numeric: tabular-nums; opacity: 0; pointer-events: none; }
   .group a:hover .year { opacity: 0.5; }
-  .group .label { margin: 0 0 0.35rem; }
 
-  /* A — quiet sentence case */
-  .var-a .label { font-size: 1rem; color: var(--text); }
-
-  /* B — hairline rule over the list */
-  .var-b .label { font-size: 0.85rem; color: var(--text-muted); padding-bottom: 0.35rem; border-bottom: 1px solid color-mix(in srgb, var(--text-muted) 35%, transparent); }
-
-  /* C — bold inline heading */
-  .var-c .label { font-size: 1rem; font-weight: 700; }
-
-  /* D — larger heading, normal weight */
-  .var-d .label { font-size: 1.35rem; line-height: 1.2; color: var(--text); }
-
-  /* E — label in the year gutter */
-  .var-e .label { flex: 0 0 3rem; margin: 0 1rem 0.35rem -4rem; text-align: right; font-size: 0.8rem; color: var(--text-muted); }
-
-  /* F — no label, divider + spacing */
-  .var-f.divided { margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid color-mix(in srgb, var(--text-muted) 25%, transparent); }
+  /* Every label matches the list font size. */
+  .group .label { font-size: inherit; line-height: 1.45; margin: 0 0 0.2rem; }
+  .opt-bold .label { font-weight: 700; }
+  .opt-muted .label { color: var(--text-muted); }
+  .opt-accent .label { color: var(--accent-1); }
 </style>
