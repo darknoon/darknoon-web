@@ -27,7 +27,7 @@ const sections = [
     <p>I'm teaching artificial minds how to design</p>
     {sections.map(({ label, items }) => (
       <section class="group">
-        {label && <h2 class="group-label">{label}</h2>}
+        {label && <h2 class="sr-only">{label}</h2>}
         <nav class="group-list" aria-label={label ?? 'Selected work'}>
           <ul>
             {items.map(({ year, name, href, current }) => (
@@ -45,7 +45,6 @@ const sections = [
   .portrait img { margin: 0; width: 300px; height: auto; border-radius: 30px; }
   .home-copy > p { margin-top: 1rem; max-width: 44rem; }
   .group { margin-top: 2rem; }
-  .group-label { margin: 0 0 0.2rem; font-size: inherit; font-weight: normal; color: var(--text-muted); }
   .group-list ul { list-style: none; margin: 0; padding: 0; }
   .group-list li { margin: 0; }
   .group-list a { position: relative; color: inherit; display: inline-flex; align-items: baseline; padding: 0.2rem 0; text-decoration: none; }
