@@ -4,7 +4,8 @@ import { Image } from 'astro:assets';
 import portrait from '../assets/resources/wubba-lubba-dub-dub.jpg';
 
 // Selected work, split into professional work and personal/fun projects.
-const sections = [
+type WorkItem = { year: number; name: string; href: string; current?: boolean };
+const sections: { label: string | null; items: WorkItem[] }[] = [
   { label: null, items: [
     { year: 2026, name: 'Fieldwork', href: 'https://fieldwork.software/', current: true },
     { year: 2024, name: 'Prefix Canvas', href: 'https://canvas.prefix.design/files/Colored%20Boxes' },
@@ -38,8 +39,27 @@ const sections = [
       </section>
     ))}
     <a class="more" href="/old/">Writing</a>
+    {import.meta.env.DEV && (
+      <div class="beat-tuner" role="group" aria-label="Heartbeat strength">
+        <label for="beat-strength">Heartbeat</label>
+        <input id="beat-strength" type="range" min="0" max="0.8" step="0.01" value="0.18" />
+        <output id="beat-strength-value" for="beat-strength">0.18</output>
+      </div>
+    )}
   </div>
 </Layout>
+<script>
+  const slider = document.getElementById('beat-strength');
+  const readout = document.getElementById('beat-strength-value');
+  if (slider instanceof HTMLInputElement && readout) {
+    const apply = () => {
+      document.documentElement.style.setProperty('--beat', slider.value);
+      readout.textContent = Number(slider.value).toFixed(2);
+    };
+    slider.addEventListener('input', apply);
+    apply();
+  }
+</script>
 <style>
   .portrait { position: relative; }
   .portrait img { margin: 0; width: 300px; height: auto; border-radius: 30px; }
@@ -50,12 +70,16 @@ const sections = [
   .group-list a { position: relative; color: inherit; display: inline-flex; align-items: baseline; padding: 0.2rem 0; text-decoration: none; }
   .group-list a:hover .link-name, .group-list a:focus-visible .link-name { color: var(--accent-1); }
   .group-list a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
-  .dot { align-self: center; flex: none; width: 0.5rem; height: 0.5rem; aspect-ratio: 1; border-radius: 50%; background: currentColor; margin-left: 0.45rem; transform-origin: 50% 50%; animation: heartbeat 1.05s cubic-bezier(0.22, 0.61, 0.36, 1) infinite; }
+  .dot { align-self: center; flex: none; width: 0.4rem; height: 0.4rem; aspect-ratio: 1; border-radius: 50%; background: currentColor; margin-left: 0.45rem; transform-origin: 50% 50%; animation: heartbeat 1.05s cubic-bezier(0.22, 0.61, 0.36, 1) infinite; }
+  .beat-tuner { position: fixed; right: 1rem; bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; padding: 0.45rem 0.75rem; border: 1px solid color-mix(in srgb, var(--text-muted) 40%, transparent); border-radius: 999px; background: color-mix(in srgb, var(--background) 88%, var(--text) 12%); color: var(--text-muted); font-size: 0.8rem; z-index: 10; }
+  .beat-tuner input { width: 8rem; }
+  .beat-tuner output { min-width: 2.2rem; text-align: right; font-variant-numeric: tabular-nums; }
+  :global(:root) { --beat: 0.18; }
   @keyframes heartbeat {
     0% { transform: scale(1); }
-    8% { transform: scale(1.32); }
-    16% { transform: scale(0.98); }
-    24% { transform: scale(1.16); }
+    8% { transform: scale(calc(1 + var(--beat))); }
+    16% { transform: scale(calc(1 - var(--beat) * 0.06)); }
+    24% { transform: scale(calc(1 + var(--beat) * 0.5)); }
     32% { transform: scale(1); }
     100% { transform: scale(1); }
   }
