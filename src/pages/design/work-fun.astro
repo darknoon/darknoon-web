@@ -17,63 +17,61 @@ const sections = [
     { year: 2018, name: 'Flower Petals', href: '/projects/#meyohas-petals' },
   ] },
 ];
+
+const variants = [
+  { id: 'v1', name: 'V1 · Current (label above list)' },
+  { id: 'v2', name: 'V2 · Label in the year gutter, right-aligned' },
+  { id: 'v3', name: 'V3 · Label above, list indented under it' },
+  { id: 'v4', name: 'V4 · Label above, more air between groups' },
+];
 ---
-<Layout title="Work/Fun label options">
-  <h1>Section labels — same size</h1>
-  <p class="note">All three keep the label at the list's font size. Only weight or color changes.</p>
+<Layout title="Work/Fun refinements">
+  <h1>Same size, muted — placement refinements</h1>
+  <p class="note">All keep the label at the list's font size and use the muted color. Only position and spacing change.</p>
 
-  <section class="variant">
-    <h2 class="variant-name">1 · Bold, same color</h2>
-    {sections.map(({ label, items }) => (
-      <div class="group opt-bold">
-        <p class="label">{label}</p>
-        <ul>{items.map(({ year, name, href }) => (
-          <li><a href={href}><span class="year">{year}</span><span class="link-name">{name}</span></a></li>
-        ))}</ul>
+  {variants.map(({ id, name }) => (
+    <section class="variant">
+      <h2 class="variant-name">{name}</h2>
+      <div class={id}>
+        {sections.map(({ label, items }) => (
+          <div class="group">
+            <p class="label">{label}</p>
+            <ul>{items.map(({ year, name, href }) => (
+              <li><a href={href}><span class="year">{year}</span><span class="link-name">{name}</span></a></li>
+            ))}</ul>
+          </div>
+        ))}
       </div>
-    ))}
-  </section>
-
-  <section class="variant">
-    <h2 class="variant-name">2 · Muted color, regular weight</h2>
-    {sections.map(({ label, items }) => (
-      <div class="group opt-muted">
-        <p class="label">{label}</p>
-        <ul>{items.map(({ year, name, href }) => (
-          <li><a href={href}><span class="year">{year}</span><span class="link-name">{name}</span></a></li>
-        ))}</ul>
-      </div>
-    ))}
-  </section>
-
-  <section class="variant">
-    <h2 class="variant-name">3 · Accent color, regular weight</h2>
-    {sections.map(({ label, items }) => (
-      <div class="group opt-accent">
-        <p class="label">{label}</p>
-        <ul>{items.map(({ year, name, href }) => (
-          <li><a href={href}><span class="year">{year}</span><span class="link-name">{name}</span></a></li>
-        ))}</ul>
-      </div>
-    ))}
-  </section>
+    </section>
+  ))}
 </Layout>
 
 <style>
   .note { color: var(--text-muted); max-width: 44rem; }
   .variant { margin: 2.5rem 0 4rem; }
   .variant-name { font-size: 0.9rem; font-weight: 600; margin: 0 0 1rem; color: var(--text-muted); }
-  .group { margin-bottom: 1.5rem; }
+  .group { margin: 0; }
   .group ul { list-style: none; margin: 0; padding: 0; }
   .group li { margin: 0; }
   .group a { position: relative; color: inherit; display: inline-flex; align-items: baseline; padding: 0.2rem 0; text-decoration: none; }
   .group a:hover .link-name { text-decoration: underline; }
   .group .year { flex: 0 0 3rem; margin-left: -4rem; margin-right: 1rem; text-align: right; font-size: 0.8rem; font-variant-numeric: tabular-nums; opacity: 0; pointer-events: none; }
   .group a:hover .year { opacity: 0.5; }
+  .group .label { font-size: inherit; line-height: 1.45; margin: 0 0 0.2rem; color: var(--text-muted); }
 
-  /* Every label matches the list font size. */
-  .group .label { font-size: inherit; line-height: 1.45; margin: 0 0 0.2rem; }
-  .opt-bold .label { font-weight: 700; }
-  .opt-muted .label { color: var(--text-muted); }
-  .opt-accent .label { color: var(--accent-1); }
+  /* V1 — label above, list flush left (current) */
+  .v1 .group { margin-bottom: 1.5rem; }
+  .v1 .label { margin-bottom: 0.2rem; }
+
+  /* V2 — label in the year gutter */
+  .v2 .group { margin-bottom: 1.5rem; }
+  .v2 .label { width: 3rem; margin: -0.1rem 0 0.2rem -4rem; text-align: right; }
+
+  /* V3 — label above, list indented under it */
+  .v3 .group { margin-bottom: 1.5rem; padding-left: 1.25rem; }
+  .v3 .label { margin-left: -1.25rem; }
+
+  /* V4 — label above, more air between groups */
+  .v4 .group { margin-bottom: 3rem; }
+  .v4 .label { margin-bottom: 0.4rem; }
 </style>
