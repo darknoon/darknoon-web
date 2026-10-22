@@ -86,7 +86,7 @@ node scripts/review-native-portrait.mjs ws://isolated-chromium-cdp-endpoint
 ```
 
 Raw inference output is preserved on the GPU box and in thread artifacts.
-The private HTTPS preview described below is unchanged; production is untouched.
+The private HTTPS preview described below is separate from production, which is untouched.
 See `design-qa.md` for the visual review, test evidence, and remaining device-test gap.
 
 #### Earlier depth-sampling comparison (rejected)
@@ -134,19 +134,32 @@ node scripts/check-portrait-browser.mjs ws://isolated-chromium-cdp-endpoint http
 
 The preview runs privately on prefix-mini; it is not deployed to production.
 
-Private mobile preview on prefix-mini: use
-`https://prefix-mini.tail06618c.ts.net:5960/splat/color/`, not HTTPS on port 5961.
-The existing Tailscale Serve listener on 5960 terminates TLS and forwards to the
-Astro HTTP server at `127.0.0.1:5961`. The app is loopback-only; no public Funnel
-is enabled. Restart this worktree's app with:
+Private mobile preview on prefix-mini (updated October 21):
+`https://prefix-mini.tail06618c.ts.net:6362/splat/color/`.
+The old 5960 link is retired: that development port was reassigned to another
+project after the portrait server stopped. Do not change its current proxy.
+
+The `portrait splat` persistent server now serves a static build from the
+independent checkout at
+`/Users/andrew/.bb/thread-storage/thr_db4bfshps9/portrait-preview-checkout`.
+It binds only `127.0.0.1:6362`; BB owns the same-port private HTTPS proxy.
+No public Funnel or production deployment is used. Its health check requests
+`/splat/color/` and requires both HTML 200 and `data-model="color-sharp"`, so an
+unrelated application's 200 response does not count as healthy. The supervisor
+restarts unhealthy/exited processes and starts it again when BB loads.
 
 ```sh
-bb dev-servers start --command 'npm run dev -- --host 127.0.0.1 --port {port+1}'
+bb dev-servers persist logs 'portrait splat' --lines 20
+bb dev-servers persist restart 'portrait splat'
 ```
 
-The 5960→5961 private proxy persists across app restarts. Port 5960 is occupied
-by that proxy, so the app must use its allocated offset slot rather than trying
-to bind the HTTPS listener's port itself.
+This is a saved preview, not a live worktree mount. Refresh its build deliberately
+after reviewing changes; never point the persistent command back into a managed
+worktree. For temporary development use the allocated app base instead:
+
+```sh
+bb dev-servers start --name 'portrait development' --command 'npm run dev -- --host 127.0.0.1 --port {port}'
+```
 
 ### Photo-preserving alternatives (September 17, 2026)
 
