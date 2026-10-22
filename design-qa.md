@@ -1,8 +1,23 @@
 # Portrait design QA — September 29, 2026
 
+## Acceptance update — October 22, 2026
+
+**Superseded by user feedback: not accepted.** Andrew expected the portrait to
+remain in the existing site layout and reports that the depth is still not
+readily perceptible. The standalone redesign was a scope mistake. The historical
+technical checks below do not establish a successful design or 3D effect.
+See `PORTRAIT_HANDOFF.md` for findings, preserved artifacts and next steps.
+
+- **P1: Layout diverges from the intended integration.** Return to the existing
+  portrait slot; preserve the surrounding site design.
+- **P1: Perceived depth does not meet the brief.** Verify actual phone rendering
+  and compare camera/geometry choices before claiming success or changing style.
+
 ## Findings
 
-No actionable P0/P1/P2 findings remain in the reviewed states. This is a new
+The historical review reported no actionable P0/P1/P2 findings; that assessment
+did not capture the intended layout or perceptual-depth acceptance criteria and
+is superseded by the update above. This is a new
 portrait composition, not a pixel clone of a supplied UI mockup. The source
 photographs define likeness and B/W art direction; the existing site's name,
 headline, and restrained typography supply the content context.
@@ -151,8 +166,7 @@ were rerun using `scripts/review-native-portrait.mjs`.
 
 ## Follow-up polish
 
-No additional P3 visual change is required for this preview. Final aesthetic
-acceptance remains Andrew's; this report records the inspected result, not an
-objective claim that a single-view portrait is a perfect reconstruction.
+The two P1 findings above take priority over further polish. Do not interpret
+the earlier test passes as user acceptance or a reason to ship this design.
 
-final result: passed
+final result: blocked

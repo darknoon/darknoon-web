@@ -23,6 +23,11 @@ splat use browser JavaScript; both keep their images readable without it.
 
 ## Portrait splat experiment
 
+**October 22 handoff: not accepted.** The standalone portrait page changed the
+layout beyond Andrew's intent, and the perceived 3D effect is still insufficient.
+Start with [`PORTRAIT_HANDOFF.md`](./PORTRAIT_HANDOFF.md) before continuing; it
+records findings, next steps, artifact locations, and the persistent preview.
+
 The home portrait loads its 3D version on hover or keyboard focus, or when it
 becomes visible on a touch device so the first drag is ready. `/splat/`
 loads a photo-preserving MoGe-2 depth surface immediately. Its selector compares
